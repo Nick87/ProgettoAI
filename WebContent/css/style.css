@@ -1,0 +1,163 @@
+/* Getting the new tags to behave */
+article, aside, audio, canvas, command, datalist, details, embed, figcaption, figure, footer, header, hgroup, keygen, meter, nav, output, progress, section, source, video{display:block}
+mark, rp, rt, ruby, summary, time{display:inline }
+
+/* Left & Right alignment */
+
+.left {float:left}
+.right {float:right}
+.wrapper {width:100%;overflow:hidden}
+
+/* Global properties ======================================================== */
+
+body{background:#000;border:0;font:14px "Trebuchet MS", Arial, Helvetica, sans-serif;color:#696969;line-height:22px;font-style:italic}
+.body1{background:url(../images/bg.jpg) bottom center repeat}
+.body3{background:#fff}
+.body4{background:url(../images/bg.jpg) top center repeat; }
+.main {margin:0 auto;width:940px}
+
+/* ============================= main layout ====================== */
+
+a{color:#696969;text-decoration:underline;outline:none}
+a:hover{text-decoration:none}
+h1{float:left}
+h2{font-size:35px;font-style:normal;font-weight:400;line-height:1.2em;padding:20px 0 11px 0;color:#000;letter-spacing:-1px}
+h2.under{border-bottom:1px solid #e5e5e5;margin-bottom:25px}
+h3{font-size:26px;color:#000;line-height:1.2em;letter-spacing:-0px;padding-bottom:16px;font-weight:400;font-style:normal}
+h3 span{display:block;margin-top:-7px}
+* + html h3 span{margin-top:-25px}
+h4{font-size:26px;line-height:1.2em;color:#fff;font-weight:400;padding:43px 0 15px 0}
+h5{font-size:33px;color:#000;line-height:1.7em;padding:0 0 16px 0;font-weight:400;font-style:normal}
+h6{font-size:20px;line-height:1.2em;color:#000;padding:0 0 5px 0;font-style:normal;font-weight:400}
+p{padding-bottom:22px}
+
+/* ============================= messageBox ====================== */
+
+#warningpanel > div:last-child { display:none; }
+#warningpanel { cursor:default; padding:5px 0px; font:16px "Trebuchet MS", Arial, Helvetica, sans-serif; font-weight:bold; border-}
+.msgpanel
+{
+	position: fixed;
+	top: auto;
+	text-align: center;
+	font-weight: bold;
+	margin-left: 0;
+	margin-right: 0;
+	z-index: 10;
+	opacity: 0;
+	filter:alpha(opacity=0);
+	letter-spacing:3px;
+	color:#888888;
+}
+.msgpanel-info-msg
+{
+	background: white none repeat scroll 0% 0%;
+}
+.msgpanel-warning-msg
+{
+	background: white none repeat scroll 0% 0%;
+}
+
+/* ============================= header ====================== */
+
+.overflowVisible {overflow:visible;}
+header{padding-top:34px;height:148px}
+#title { float:left; position:relative; top:30px;}
+#title > div:nth-child(1) { color:white; font-size:100px; }
+#title > div:nth-child(2) { color:gray; font-size:20px; margin-top:30px;}
+.slider{top:162px;position:absolute;z-index:1}
+.slider .items{display:none}
+.slider .pagination{position:absolute;z-index:2;bottom:47px;left:432px}
+.slider .pagination li{float:left;padding-right:4px}
+.slider .pagination a{display:block;width:16px;height:16px;text-indent:-9999px;background:url(../images/buttons.png) right 0 no-repeat}
+.slider .pagination a:hover, .slider  .pagination .current a{background-position:left}
+
+/* ============================= menu ====================== */
+
+#div_registrazione {float:right; margin-right:180px; margin-top:10px;}
+#div_registrazione a{display:block;font:20px "Trebuchet MS", Arial, Helvetica, sans-serif;line-height:1.2em;color:#bbb;text-transform:uppercase;text-decoration:none;text-align:center;letter-spacing:-1px;height:60px;font-style:normal;font-weight:700}
+#div_registrazione a span{font-size:13px;line-height:1.2em;color:#666666;display:block;letter-spacing:-1px;margin-top:-3px;font-weight:normal}
+#div_registrazione a:hover, #menu .active a{color:#497e04}
+#div_registrazione a:hover span, #menu .active a span{color:#fff}
+#div_registrazione a{background:url(../images/menu_icon1.gif) bottom center no-repeat}
+#div_registrazione a:hover {background:url(../images/menu_icon1_active.gif) bottom center no-repeat}
+
+/* ============================= loginForm ====================== */
+
+#loginForm {float:right;margin-top:-5px;}
+#loginForm table { border-collapse: collapse; }
+#loginForm table td { padding:7px; }
+#loginForm input[type=text], #loginForm input[type=password] { border-radius:5px; padding:3px 5px; border:1px solid white;}
+#loginForm input[type=text]:focus, #loginForm input[type=password]:focus { border:1px solid green; box-shadow: 0px 0px 10px green; }
+
+#loginForm input[type=submit]
+{ 
+	font:14px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	border-radius:7px;
+	color:white;
+	font-weight:bold;
+	background-color:green;
+	padding:5px 10px;
+	text-shadow:1px 1px 1px black;	
+	background: #d2ff52;
+	background: -moz-linear-gradient(top,  #d2ff52 0%, #91e842 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d2ff52), color-stop(100%,#91e842));
+	background: -webkit-linear-gradient(top,  #d2ff52 0%,#91e842 100%);
+	background: -o-linear-gradient(top,  #d2ff52 0%,#91e842 100%);
+	background: -ms-linear-gradient(top,  #d2ff52 0%,#91e842 100%);
+	background: linear-gradient(to bottom,  #d2ff52 0%,#91e842 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2ff52', endColorstr='#91e842',GradientType=0 );	
+}
+
+#loginForm input[type=submit]:hover
+{
+	cursor:pointer;
+	background: #f8ffe8;
+	background: -moz-linear-gradient(top,  #f8ffe8 0%, #e3f5ab 33%, #b7df2d 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f8ffe8), color-stop(33%,#e3f5ab), color-stop(100%,#b7df2d));
+	background: -webkit-linear-gradient(top,  #f8ffe8 0%,#e3f5ab 33%,#b7df2d 100%);
+	background: -o-linear-gradient(top,  #f8ffe8 0%,#e3f5ab 33%,#b7df2d 100%);
+	background: -ms-linear-gradient(top,  #f8ffe8 0%,#e3f5ab 33%,#b7df2d 100%);
+	background: linear-gradient(to bottom,  #f8ffe8 0%,#e3f5ab 33%,#b7df2d 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8ffe8', endColorstr='#b7df2d',GradientType=0 );	
+}
+
+#loginForm input[type=submit]:active { position:relative; top:2px; }
+
+/* ============================= content ====================== */
+
+#content{padding-bottom:36px}
+#content2{padding-bottom:50px}
+.pad_left1{padding-left:50px}
+.pad_left2{padding-left:40px}
+.pad_bot1{padding-bottom:8px}
+.pad_bot2{padding-bottom:40px}
+.marg_right1{margin-right:20px}
+.link1{color:#60b000;font-style:normal}
+.testimonials{width:100%;position:relative;z-index:1;height:210px;overflow:hidden}
+#testimonials div{background:url(../images/bg_testimonials.gif) 0 bottom no-repeat #f5f5f5;padding:25px 27px 53px 29px}
+#testimonials span{display:block;padding:0 0 0 11px;font-style:normal}
+.testimonials li{height:210px}
+.up, .down{position:absolute;z-index:2;bottom:8px;right:0;width:32px;height:32px;display:block}
+.up{right:33px;background:url(../images/marker_up.gif) 0 0 no-repeat}
+.down{background:url(../images/marker_down.gif) 0 0 no-repeat}
+.up:hover, .down:hover{background-position:bottom}
+.color1{color:#000}
+.color2{color:#60b000}
+.list1 li:first-child { border-top:1px solid #444444; }
+.list1 li { line-height:35px; border-bottom:1px solid #444444; }
+.list1 a{color:#696969;text-decoration:none;font-style:normal;padding-left:14px;background:url(../images/marker_1.gif) 0 5px no-repeat}
+.list1 a:hover{color:#fff}
+.address li{border-bottom:1px solid #444444;line-height:35px;}
+.address li:first-child { border-top:1px solid #444444; }
+.address span{padding-left:4px;float:left;width:65px}
+.address a{color:#fff}
+#contacts { width:250px; }
+#authors li a:hover
+{
+  -moz-transition-property: margin-left;
+  -moz-transition-duration: .1s;
+  -moz-transition-delay: 0s;
+  -moz-transition-timing-function:ease-in;
+  margin-left:5px;
+}*/

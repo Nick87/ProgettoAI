@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.custom.i18n.resources" value="ApplicationResources" />
+	<package name="GAS" extends="struts-default" namespace="/">
+	    <interceptors>
+			<interceptor name="loginInterceptor" class="gas.Interceptors.LoginInterceptor" />
+			<interceptor-stack name="myInterceptorStack">
+				<interceptor-ref name="loginInterceptor"/>
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+	    
+	    <global-results>
+			<result name="login">index.jsp</result>
+			<result name="loggato">welcome.jsp</result>
+		</global-results>
+	    
+		<action name="login" class="gas.Controller.LoginAction">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+			<result name="success">welcome.jsp</result>
+			<result name="error">login_retry.jsp</result>
+			<result name="input">login_retry.jsp</result>
+			<result name="ErroreDB">errore_db.jsp</result>
+		</action>
+		<action name="logout" class="gas.Controller.LogoutAction">		    
+			<result>index.jsp</result>			
+		</action>
+		<action name="listaOrdiniAperti" class="gas.Controller.ListaOrdiniAperti">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		    <result name="success">ordiniAperti.jsp</result>
+		</action>
+		<action name="listaProdottiAcquistabili" class="gas.Controller.ListaProdottiAcquistabili">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		    <result name="success">prodottiAcquistabili.jsp</result>
+		</action>
+		<action name="mieiOrdini" class="gas.Controller.MieiOrdini">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		    <result name="success">mieiOrdini.jsp</result>
+		</action>
+		<action name="dettaglioOrdine" class="gas.Controller.DettaglioOrdine">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		    <result name="success">dettaglioOrdine.jsp</result>
+		</action>
+		<action name="aggiornaQuantita" class="gas.Controller.AggiornaQuantita">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		    <result name="success">dettaglioOrdine.jsp</result>
+		    <result name="input">dettaglioOrdine.jsp</result>
+		    <result name="error">dettaglioOrdine.jsp</result>
+		</action> 
+		
+		<action name="*">
+		    <result>{1}.jsp</result>
+		</action>
+	</package>
+</struts>
