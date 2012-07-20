@@ -29,7 +29,7 @@ $(document).ready(function () {
     		}, 5000);
         	return false;
         }
-    }); 
+    });
     $("#loginForm input").focus(function(e){
     	if($(this).is("input[type=submit]")) return;
     	$('#warningpanel').data('msgpanel').hidePanel();
@@ -41,7 +41,7 @@ $(document).ready(function () {
 		preset:'diagonalFade',
 		easing:'easeOutQuad',
 		duration:800,
-		pagination:true,
+		pagination:false,
 		slideshow:6000
 	});
 	$("#testimonials").jCarouselLite({
@@ -54,6 +54,12 @@ $(document).ready(function () {
         circular: true,
 		easing: 'easeOutCirc'
 	});
+	if($("#erroreDB").val() == "true"){
+		$('#warningpanel').data('msgpanel').showPanel($("#erroreDBMessage").val());
+		setTimeout(function(){
+			$('#warningpanel').data('msgpanel').hidePanel();
+		}, 5000);
+    }
 });
 function animate(id, effect)
 {
@@ -66,6 +72,8 @@ function animate(id, effect)
 </script>
 </head>
 <body id="page1">
+<s:hidden id="erroreDB" value="%{erroreDB}"/>
+<s:hidden id="erroreDBMessage" value="%{erroreDBMessage}"/>
 <div class="body1">
 	<div id="warningpanel"></div>
 	<div class="body2">
@@ -88,10 +96,18 @@ function animate(id, effect)
 				<div class="wrapper">
 					<div class="slider">
 					  <ul class="items">
+					  
 						<li><img src="images/img1.jpg" alt=""></li>
 						<li><img src="images/img2.jpg" alt=""></li>
 						<li><img src="images/img3.jpg" alt=""></li>
 						<li><img src="images/img4.jpg" alt=""></li>
+						<!--
+						<li><img src="images/slider_1.jpg" alt=""></li>
+						<li><img src="images/slider_2.jpg" alt=""></li>
+						<li><img src="images/slider_3.jpg" alt=""></li>
+						<li><img src="images/slider_4.jpg" alt=""></li>
+						<li><img src="images/slider_5.jpg" alt=""></li>
+						-->
 					  </ul>
 					</div>
 				</div>
@@ -104,7 +120,7 @@ function animate(id, effect)
 			<article id="content">
 				<div class="wrapper">
 					<section class="col1">
-						<h2 class="under">Benvenuto!</h2>
+						<h2 class="under">A tutto GAS!</h2>
 						<div class="wrapper">
 							<p class="pad_bot1">ndcaecati cupiditate non provident, similique sunt in culpa.</p>
 							<p>Et harum quidem r eligendi optio cumque nihil impedit quo minus id quod maxime placeat</p>
@@ -157,7 +173,7 @@ function animate(id, effect)
 							<li><span>Citt&agrave;:</span>Torino</li>
 							<li><span>Indirizzo:</span>Corso Duca degli Abruzzi, 24</li>
 							<li><span>Telefono:</span>011 0906254</li>
-							<li><span>Sito web:</span><a href="www.polito.it">Politecnico di Torino</a></li>
+							<li><span>Sito web:</span><a href="http://www.polito.it">Politecnico di Torino</a></li>
 						</ul>
 					</section>
 				</div>

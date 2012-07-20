@@ -17,9 +17,13 @@ public class LoginAction extends ActionSupport
 {	
 	private String username;
 	private String password;
+	private String erroreDBMessage;
+	private boolean erroreDB;
 	
 	public String execute()
 	{
+		this.erroreDBMessage = "";
+		this.erroreDB = false;
 		Map<String, Object> sessionMap = ActionContext.getContext().getSession();
 		if(sessionMap.containsKey("user") && sessionMap.containsKey("status"))
 			return Action.SUCCESS;
@@ -32,6 +36,8 @@ public class LoginAction extends ActionSupport
 			Log.addLog("Login errato. Username: " + username + ". Password: " + password);
 			return Action.ERROR;
 		} catch (DBException e) {
+			this.erroreDBMessage = getText("error.DB");
+			this.erroreDB = true;
 			addActionError(getText("error.DB"));
 			return "ErroreDB";
 		}
@@ -56,5 +62,21 @@ public class LoginAction extends ActionSupport
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getErroreDBMessage() {
+		return erroreDBMessage;
+	}
+
+	public void setErroreDBMessage(String erroreDBMessage) {
+		this.erroreDBMessage = erroreDBMessage;
+	}
+
+	public boolean isErroreDB() {
+		return erroreDB;
+	}
+
+	public void setErroreDB(boolean erroreDB) {
+		this.erroreDB = erroreDB;
 	}
 }

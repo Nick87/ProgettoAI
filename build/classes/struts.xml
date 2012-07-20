@@ -23,7 +23,7 @@
 			<result name="success">welcome.jsp</result>
 			<result name="error">login_retry.jsp</result>
 			<result name="input">login_retry.jsp</result>
-			<result name="ErroreDB">errore_db.jsp</result>
+			<result name="ErroreDB">index.jsp</result>
 		</action>
 		<action name="logout" class="gas.Controller.LogoutAction">		    
 			<result>index.jsp</result>			

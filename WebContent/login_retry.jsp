@@ -57,7 +57,7 @@
 						<li><span>Citt&agrave;:</span>Torino</li>
 						<li><span>Indirizzo:</span>Corso Duca degli Abruzzi, 24</li>
 						<li><span>Telefono:</span>011 0906254</li>
-						<li><span>Sito web:</span><a href="www.polito.it">Politecnico di Torino</a></li>
+						<li><span>Sito web:</span><a href="http://www.polito.it">Politecnico di Torino</a></li>
 					</ul>
 				</section>
 			</div>

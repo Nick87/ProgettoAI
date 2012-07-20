@@ -159,5 +159,9 @@ header{padding-top:34px;height:148px}
   -moz-transition-duration: .1s;
   -moz-transition-delay: 0s;
   -moz-transition-timing-function:ease-in;
+  -webkit-transition-property: margin-left;
+  -webkit-transition-duration: .1s;
+  -webkit-transition-delay: 0s;
+  -webkit-transition-timing-function:ease-in;
   margin-left:5px;
 }*/

@@ -112,6 +112,7 @@ $(function(){
 <link rel="stylesheet" href="css/admin/style.css" type="text/css"/>
 <script src="js/jquery-1.7.2.min.js"></script>
 <script>
+var windowLoaded = false;
 $(function(){
 	$.fn.serializeJSON = function() {
 		var json = {};
@@ -155,8 +156,18 @@ $(function(){
 		}
 	});
 	$("#breadcrumbs_container a").click(function(){ return false; });
+	
+	/***** 
+		Chrome quando l'utente entra mostra la welcome dentro la welcome
+		perche' l'evento 'popstate' viene scatenato anche al caricamento
+		della pagina
+	*****/
 	window.addEventListener("popstate", function(e){
-		if(window.location.href.split("/").pop() == "login"){
+		if(windowLoaded){
+			windowLoaded = false;
+			return;
+		}
+		if(window.location.href.split("/").pop() == "login.action"){
 			$("#content").empty();
 			return;
 		}
@@ -164,6 +175,9 @@ $(function(){
 			$("#content").html(data);
 		});
 	});
+});
+$(window).load(function(){
+	windowLoaded = true;
 });
 </script>
 </head>
@@ -177,7 +191,6 @@ $(function(){
 			</div>
 		</div>
 	</header>
-	
 	<section id="secondary_bar">
 		<div class="user">
 			<p><%= username %></p>
