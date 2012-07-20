@@ -124,6 +124,40 @@ public class Discussione
 		return map;
 	}
 	
+	public static List<Discussione> getDiscussioneFromId(int idDiscussione) throws SQLException, DBException
+	{
+		Connection conn = null;
+		List<Discussione> list = new ArrayList<Discussione>();
+		String query;
+		PreparedStatement ps;
+		ResultSet rs;
+		Discussione d;
+		try
+		{
+			conn = DBConnection.getDBConnection();
+			query = "SELECT * FROM discussione WHERE ID_Discussione = ? ORDER BY data";
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, idDiscussione);
+			rs = ps.executeQuery();
+			while(rs.next())
+			{
+				d = new Discussione();
+				d.setID_Discussione(rs.getInt("ID_Discussione"));
+				d.setID_Membro_Mittente(rs.getInt("ID_Messaggio_Discussione"));
+				d.setID_Membro_Mittente(rs.getInt("ID_Membro_Mittente"));
+				d.setID_Membro_Destinatario(rs.getInt("ID_Membro_Destinatario"));
+				d.setData(rs.getDate("data"));
+				d.setTesto(rs.getString("testo"));
+				boolean letta = rs.getInt("letta") == 1 ? true : false;
+				d.setLetta(letta);
+				list.add(d);
+			}
+		} finally {
+			DBConnection.closeConnection(conn);
+		}
+		return list;
+	}
+	
 	public static List<Discussione> getDiscussioniFromIdMembro(int idMembro) throws DBException, SQLException
 	{
 		Connection conn = null;

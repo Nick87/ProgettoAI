@@ -65,6 +65,11 @@
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result>sommarioDiscussioni.jsp</result>
 		</action>
+		<action name="showChat" class="gas.Controller.ShowChat">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		    <result>showChat.jsp</result>
+		</action>
+		
 		
 		<action name="*">
 		    <result>{1}.jsp</result>
