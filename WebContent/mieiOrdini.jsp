@@ -43,6 +43,6 @@ $("#listaOrdini").on("click", "a", function(e){
 	});
 });
 $("#breadcrumbs_container > article").html(
-	"<a href='#'>Home</a><div class='breadcrumb_divider'></div><a href='#'>I miei ordini</a><div class='breadcrumb_divider'></div><a href='#' class='current'>Ordini " + $("#tipoOrdini").val() + "</a>"
+	"<a href='#'>Home</a><div class='breadcrumb_divider'></div><a href='#'>Ordini</a><div class='breadcrumb_divider'></div><a href='#'>I miei ordini</a><div class='breadcrumb_divider'></div><a href='#' class='current'>Ordini " + $("#tipoOrdini").val() + "</a>"
 );
 </script>

@@ -47,7 +47,7 @@ $("#listaProdottiForm").on("submit", function(e){
 		idOrdine:$("#idOrdine").val(),
 		idMembro:$("#idMembro").val(),
 		quantita:$(this).serializeJSON()
-	};	
+	};
 	for(key in params.quantita){
 		if(!/^(0|([1-9]+))$/.test(params.quantita[key])){
 			alert("Errore input quantità (" + params.quantita[key] + ")");

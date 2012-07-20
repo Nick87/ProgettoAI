@@ -58,7 +58,7 @@ public class Prodotto
 		this.acquistabile = acquistabile;
 	}
 	
-	public static Prodotto getProdotto(int idProdotto) throws DBException, ItemNotFoundException
+	public static Prodotto getProdotto(int idProdotto) throws DBException, ItemNotFoundException, SQLException
 	{
 		Prodotto p = new Prodotto();
 		Connection conn = DBConnection.getDBConnection();
@@ -88,15 +88,13 @@ public class Prodotto
 			p.setFine_disponibilita(rs.getDate("fine_disponibilita"));
 			boolean acquistabile = (rs.getInt("acquistabile") == 1) ? true : false;
 			p.setAcquistabile(acquistabile);
-		} catch (SQLException ex) {
-	    	throw new DBException(ex.getMessage());
-	    } finally {
+		} finally {
 			DBConnection.closeConnection(conn);
 		}
 		return p;
 	}
 	
-	public static List<Prodotto> getListaProdottiFromOrdine(int idOrdine) throws DBException
+	public static List<Prodotto> getListaProdottiFromOrdine(int idOrdine) throws DBException, SQLException
 	{
 		ArrayList<Prodotto> lista = new ArrayList<Prodotto>();
 		Connection conn = DBConnection.getDBConnection();
@@ -147,15 +145,13 @@ public class Prodotto
 				p.setAcquistabile(val);
 				lista.add(p);
 			}
-	    } catch (SQLException ex) {
-	    	throw new DBException(ex.getMessage());
 	    } finally {
 			DBConnection.closeConnection(conn);
 		}
 		return lista;
 	}
 	
-	public static List<Prodotto> getListaProdottiFromSchedaAcquisto(int idOrdine, int idMembro) throws DBException
+	public static List<Prodotto> getListaProdottiFromSchedaAcquisto(int idOrdine, int idMembro) throws DBException, SQLException
 	{
 		ArrayList<Prodotto> lista = new ArrayList<Prodotto>();
 		Connection conn = DBConnection.getDBConnection();
@@ -207,15 +203,13 @@ public class Prodotto
 				p.setAcquistabile(val);
 				lista.add(p);
 			}
-	    } catch (SQLException ex) {
-	    	throw new DBException(ex.getMessage());
 	    } finally {
 			DBConnection.closeConnection(conn);
 		}
 		return lista;
 	}
 	
-	public static int getDisponibilitaProdotto(int idProdotto) throws DBException
+	public static int getDisponibilitaProdotto(int idProdotto) throws DBException, SQLException
 	{
 		Connection conn = DBConnection.getDBConnection();
 		int totale = 0, prenotati = 0;
@@ -242,15 +236,13 @@ public class Prodotto
 			rs = ps.executeQuery();
 			rs.next();
 			prenotati = rs.getInt("prenotati");
-		} catch (SQLException ex) {
-			throw new DBException(ex.getMessage());
 		} finally {
 			DBConnection.closeConnection(conn);
 		}
 		return totale-prenotati;
 	}
 	
-	public static int getQuantitaRichiesta(int idOrdine, int idMembro, int idProdotto) throws InvalidOperationException, DBException
+	public static int getQuantitaRichiesta(int idOrdine, int idMembro, int idProdotto) throws InvalidOperationException, DBException, SQLException
 	{
 		Connection conn = DBConnection.getDBConnection();
 		int quantita;
@@ -275,8 +267,6 @@ public class Prodotto
 	    	if(!rs.next())
 	    		throw new InvalidOperationException("Errore inaspettato");
 	    	quantita = rs.getInt("old_quantita");
-		} catch (SQLException ex) {
-			throw new DBException(ex.getMessage());
 		} finally {
 			DBConnection.closeConnection(conn);
 		}

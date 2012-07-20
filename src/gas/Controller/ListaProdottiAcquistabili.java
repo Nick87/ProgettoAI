@@ -3,6 +3,7 @@ package gas.Controller;
 import gas.DAO.Prodotto;
 import gas.Exception.DBException;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.opensymphony.xwork2.Action;
@@ -19,6 +20,9 @@ public class ListaProdottiAcquistabili extends ActionSupport
 		try {
 			listaProdotti = (ArrayList<Prodotto>) Prodotto.getListaProdottiFromOrdine(idOrdine);
 		} catch (DBException e) {
+			System.out.println(e.getMessage());
+			return Action.ERROR;
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return Action.ERROR;
 		}

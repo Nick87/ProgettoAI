@@ -4,6 +4,7 @@ import gas.DAO.Date_Ordine;
 import gas.DAO.Prodotto;
 import gas.Exception.DBException;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +37,9 @@ public class DettaglioOrdine extends ActionSupport
 				disponibilitaProdotti.put(p.getID_Prodotto(),
 										  Prodotto.getDisponibilitaProdotto(p.getID_Prodotto()));
 		} catch (DBException e) {
+			System.out.println(e.getMessage());
+			return Action.ERROR;
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return Action.ERROR;
 		}

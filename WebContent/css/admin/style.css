@@ -378,6 +378,18 @@ section#contentWrapper
 	cursor:default;
 }
 
+.loader
+{
+	display: block;
+	width: 220px;
+	margin: 0 auto;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	background:url(../../images/admin/ajax-loader.gif) no-repeat;
+	padding: 10px 0;;
+	cursor:default;
+}
+
 ul.errorMessage { list-style: none; }
 ul.errorMessage li
 {
@@ -397,3 +409,6 @@ ul.errorMessage li
 	font-size: 14px;
 	cursor:default;
 }
+
+#sendDiscussioneResultBox { margin-bottom:10px }
+#listaUtentiDestinatari span.userName { cursor:pointer; }

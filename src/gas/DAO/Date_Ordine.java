@@ -26,7 +26,7 @@ public class Date_Ordine
 		this.data_chiusura = data_chiusura;
 	}
 
-	public static List<Date_Ordine> getOrdini(TipoOrdine tipoOrdine, int idMembro) throws DBException
+	public static List<Date_Ordine> getOrdini(TipoOrdine tipoOrdine, int idMembro) throws DBException, SQLException
 	{
 		Connection conn = DBConnection.getDBConnection();
 		ArrayList<Date_Ordine> list = new ArrayList<Date_Ordine>();
@@ -62,15 +62,13 @@ public class Date_Ordine
 	    	while(rs.next()){	    		
 	    		list.add(new Date_Ordine(rs.getInt("ID_Ordine"), rs.getDate("data_apertura"), rs.getDate("data_chiusura")));
 	    	}
-		} catch (SQLException e) {
-			throw new DBException(e.getMessage());
 		} finally {
 			DBConnection.closeConnection(conn);
 		}
 		return list;
 	}
 	
-	public static boolean isOrdineChiuso(int idOrdine) throws DBException
+	public static boolean isOrdineChiuso(int idOrdine) throws DBException, SQLException
 	{
 		Connection conn = DBConnection.getDBConnection();
 		String query = "SELECT * FROM date_ordine D " +
@@ -85,8 +83,6 @@ public class Date_Ordine
 	    	ps.setDate(2, date);
 			ResultSet rs = ps.executeQuery();
 			chiuso = (rs.next()) ? true : false;
-		} catch (SQLException e) {
-			throw new DBException(e.getMessage());
 		} finally {
 			DBConnection.closeConnection(conn);
 		}

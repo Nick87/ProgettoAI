@@ -1,25 +1,35 @@
 package gas.Controller;
 
-import gas.DAO.Date_Ordine;
-import gas.DAO.Date_Ordine.TipoOrdine;
+import java.sql.SQLException;
+import java.util.List;
+
+import gas.DAO.Membro;
+import gas.DAO.Membro.memberType;
 import gas.Exception.DBException;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class ListaOrdiniAperti extends ActionSupport
+public class InviaDiscussione extends ActionSupport
 {
+	private List<Membro> utenti;
 	private int idMembro;
 	private String tipoMembro;
 	private String username;
-	private ArrayList<Date_Ordine> ordiniAperti;
 	
 	public String execute()
 	{
 		try {
-			ordiniAperti = (ArrayList<Date_Ordine>) Date_Ordine.getOrdini(TipoOrdine.APERTO, -1);
+			this.utenti = Membro.getMembriFromType(memberType.UTENTE);
+			int index = 0;
+			for(Membro m : utenti){
+				if(m.getID_Membro() == this.idMembro){
+					index = utenti.indexOf(m);
+					break;
+				}
+			}
+			// Elimino il mittente dalla lista. Non ha senso che mi mandi messaggi da solo
+			this.utenti.remove(index);
 		} catch (DBException e) {
 			System.out.println(e.getMessage());
 			return Action.ERROR;
@@ -29,31 +39,27 @@ public class ListaOrdiniAperti extends ActionSupport
 		}
 		return Action.SUCCESS;
 	}
-	
-	public ArrayList<Date_Ordine> getOrdiniAperti() {
-		return ordiniAperti;
+	public List<Membro> getUtenti() {
+		return utenti;
 	}
-
+	public void setUtenti(List<Membro> utenti) {
+		this.utenti = utenti;
+	}
 	public int getIdMembro() {
 		return idMembro;
 	}
-
 	public void setIdMembro(int idMembro) {
 		this.idMembro = idMembro;
 	}
-
 	public String getTipoMembro() {
 		return tipoMembro;
 	}
-
 	public void setTipoMembro(String tipoMembro) {
 		this.tipoMembro = tipoMembro;
 	}
-
 	public String getUsername() {
 		return username;
 	}
-
 	public void setUsername(String username) {
 		this.username = username;
 	}

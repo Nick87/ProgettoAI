@@ -28,7 +28,7 @@ public class Membro
 	public Membro() {}
 	public enum memberType { ADMIN, UTENTE, FORNITORE, RESPONSABILE };
 	
-	public static LoginStatus checkPassword(String username, String password) throws DBException, LoginException
+	public static LoginStatus checkPassword(String username, String password) throws DBException, LoginException, SQLException
 	{
 		Connection conn = DBConnection.getDBConnection();
 		LoginStatus status = null;
@@ -51,8 +51,6 @@ public class Membro
 				status = new LoginStatus(tipo_membro, username, ID_Membro);
 			else
 				throw new LoginException("Password errata");
-	    } catch (SQLException ex) {
-	    	throw new DBException(ex.getMessage());
 	    } finally {
 			DBConnection.closeConnection(conn);
 		}
@@ -72,9 +70,8 @@ public class Membro
 				query += " OR tipo_membro = ?";
 			PreparedStatement ps = conn.prepareStatement(query);
 			for(int i = 0; i < tipi.length; i++)
-				ps.setString(i, memberTypeToString(tipi[i]));
+				ps.setString(i+1, memberTypeToString(tipi[i]));
 			
-			System.out.println(ps.toString());
 			ResultSet rs = ps.executeQuery();
 			Membro m;
 			while(rs.next())

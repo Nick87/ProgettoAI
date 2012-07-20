@@ -41,7 +41,7 @@
 		});
 	});
 	$("#breadcrumbs_container > article").html(
-		"<a href='#'>Home</a><div class='breadcrumb_divider'></div><a href='#' class='current'>Ordini aperti</a>"
+		"<a href='#'>Home</a><div class='breadcrumb_divider'></div><a href='#'>Ordini</a><div class='breadcrumb_divider'></div><a href='#' class='current'>Ordini aperti</a>"
 	);
 	</script>
 </s:else>

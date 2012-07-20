@@ -1,25 +1,25 @@
 package gas.Controller;
 
-import gas.DAO.Date_Ordine;
-import gas.DAO.Date_Ordine.TipoOrdine;
+import gas.DAO.Discussione;
 import gas.Exception.DBException;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.Map;
+
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class ListaOrdiniAperti extends ActionSupport
+public class SommarioDiscussioni extends ActionSupport
 {
+	private Map<Integer, String> sommarioDiscussioni;
 	private int idMembro;
 	private String tipoMembro;
 	private String username;
-	private ArrayList<Date_Ordine> ordiniAperti;
 	
 	public String execute()
 	{
 		try {
-			ordiniAperti = (ArrayList<Date_Ordine>) Date_Ordine.getOrdini(TipoOrdine.APERTO, -1);
+			sommarioDiscussioni = Discussione.getSommarioDiscussioniFromIdMembro(idMembro);
 		} catch (DBException e) {
 			System.out.println(e.getMessage());
 			return Action.ERROR;
@@ -29,9 +29,13 @@ public class ListaOrdiniAperti extends ActionSupport
 		}
 		return Action.SUCCESS;
 	}
-	
-	public ArrayList<Date_Ordine> getOrdiniAperti() {
-		return ordiniAperti;
+
+	public Map<Integer, String> getSommarioDiscussioni() {
+		return sommarioDiscussioni;
+	}
+
+	public void setSommarioDiscussioni(Map<Integer, String> sommarioDiscussioni) {
+		this.sommarioDiscussioni = sommarioDiscussioni;
 	}
 
 	public int getIdMembro() {

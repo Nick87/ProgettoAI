@@ -2,6 +2,8 @@ package gas.Controller;
 
 import gas.DAO.Date_Ordine;
 import gas.Exception.DBException;
+
+import java.sql.SQLException;
 import java.util.List;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
@@ -22,6 +24,9 @@ public class MieiOrdini extends ActionSupport
 			else
 				listaOrdini = Date_Ordine.getOrdini(Date_Ordine.TipoOrdine.CHIUSO, idMembro);
 		} catch (DBException e) {
+			System.out.println(e.getMessage());
+			return Action.ERROR;
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return Action.ERROR;
 		}

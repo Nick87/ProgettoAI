@@ -5,6 +5,7 @@ import gas.DAO.Membro;
 import gas.Exception.DBException;
 import gas.Exception.LoginException;
 
+import java.sql.SQLException;
 import java.util.Map;
 
 import util.LoginStatus;
@@ -39,6 +40,11 @@ public class LoginAction extends ActionSupport
 			this.erroreDBMessage = getText("error.DB");
 			this.erroreDB = true;
 			addActionError(getText("error.DB"));
+			return "ErroreDB";
+		} catch (SQLException e) {
+			this.erroreDBMessage = "Errore query SQL";
+			this.erroreDB = true;
+			addActionError("Errore query SQL");
 			return "ErroreDB";
 		}
 		

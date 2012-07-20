@@ -49,7 +49,22 @@
 		    <result name="success">dettaglioOrdine.jsp</result>
 		    <result name="input">dettaglioOrdine.jsp</result>
 		    <result name="error">dettaglioOrdine.jsp</result>
-		</action> 
+		</action>
+		<action name="inviaDiscussione" class="gas.Controller.InviaDiscussione">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		    <result>inviaDiscussione.jsp</result>
+		</action>
+		<action name="doInviaDiscussione" class="gas.Controller.DoInviaDiscussione">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		  	<result type="stream">
+		  	    <param name="contentType">plain/text</param>
+		  	    <param name="inputName">inputStream</param>
+		  	</result>
+		</action>
+		<action name="sommarioDiscussioni" class="gas.Controller.SommarioDiscussioni">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		    <result>sommarioDiscussioni.jsp</result>
+		</action>
 		
 		<action name="*">
 		    <result>{1}.jsp</result>

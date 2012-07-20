@@ -102,6 +102,8 @@ public class AggiornaQuantita extends ActionSupport
 										  Prodotto.getDisponibilitaProdotto(p.getID_Prodotto()));
 		} catch (DBException e) {
 			System.out.println(e.getMessage());
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 		}
 	}
 	
