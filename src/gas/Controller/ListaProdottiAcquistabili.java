@@ -4,7 +4,9 @@ import gas.DAO.Prodotto;
 import gas.Exception.DBException;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
@@ -13,12 +15,20 @@ public class ListaProdottiAcquistabili extends ActionSupport
 {	
 	private int idMembro;
 	private int idOrdine;
-	ArrayList<Prodotto>listaProdotti;
+	private List<Prodotto>listaProdotti;
+	private Map<Integer, Integer> disponibilitaProdotti;
 	
 	public String execute()
 	{
 		try {
-			listaProdotti = (ArrayList<Prodotto>) Prodotto.getListaProdottiFromOrdine(idOrdine);
+			listaProdotti = Prodotto.getListaProdottiFromOrdine(idOrdine);
+			
+			if(disponibilitaProdotti == null)
+				disponibilitaProdotti = new HashMap<Integer, Integer>();
+			disponibilitaProdotti.clear();
+			for(Prodotto p : listaProdotti)
+				disponibilitaProdotti.put(p.getID_Prodotto(),
+										  Prodotto.getDisponibilitaProdotto(p.getID_Prodotto()));
 		} catch (DBException e) {
 			System.out.println(e.getMessage());
 			return Action.ERROR;
@@ -28,8 +38,19 @@ public class ListaProdottiAcquistabili extends ActionSupport
 		}
 		return Action.SUCCESS;
 	}
+	public Map<Integer, Integer> getDisponibilitaProdotti() {
+		return disponibilitaProdotti;
+	}
+
+	public void setDisponibilitaProdotti(Map<Integer, Integer> disponibilitaProdotti) {
+		this.disponibilitaProdotti = disponibilitaProdotti;
+	}
+
+	public void setListaProdotti(List<Prodotto> listaProdotti) {
+		this.listaProdotti = listaProdotti;
+	}
 	
-	public ArrayList<Prodotto> getListaProdotti() {
+	public List<Prodotto> getListaProdotti() {
 		return listaProdotti;
 	}
 

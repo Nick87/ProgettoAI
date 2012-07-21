@@ -26,14 +26,14 @@ public class Date_Ordine
 		this.data_chiusura = data_chiusura;
 	}
 
-	public static List<Date_Ordine> getOrdini(TipoOrdine tipoOrdine, int idMembro) throws DBException, SQLException
+	public static List<Date_Ordine> getOrdini(TipoOrdine tipoOrdine, int idMembro, int flag) throws DBException, SQLException
 	{
 		Connection conn = DBConnection.getDBConnection();
 		ArrayList<Date_Ordine> list = new ArrayList<Date_Ordine>();
 		String query = "SELECT DISTINCT D.ID_Ordine, D.data_apertura, D.data_chiusura " +
 				       "FROM date_ordine D";
 		
-		if(idMembro > 0)
+		if(idMembro > 0 && flag == 1)
 			query += ", scheda_di_acquisto S";
 		
 		if(tipoOrdine == TipoOrdine.APERTO)
@@ -41,9 +41,10 @@ public class Date_Ordine
 		else if(tipoOrdine == TipoOrdine.CHIUSO)
 			query += " WHERE D.data_chiusura <= ?";
 		
-		if(idMembro > 0)
+		if(idMembro > 0 && flag == 1)
 			query += " AND D.ID_Ordine = S.ID_Ordine AND S.ID_membro_che_acquista = ?";
-		
+		if(flag == -1)
+			query+="AND D.ID_Ordine NOT IN(SELECT DISTINCT ID_Ordine from scheda_di_acquisto where ID_membro_che_acquista = ?)";
 		try
 		{
 			PreparedStatement ps = conn.prepareStatement(query);
@@ -52,12 +53,15 @@ public class Date_Ordine
 		    	java.sql.Date date = new java.sql.Date(now.getTime());
 		    	ps.setDate(1, date);
 			}
-			if(idMembro > 0){
+			if(idMembro > 0 && flag == 1){
 				if(tipoOrdine == TipoOrdine.ANY)
 					ps.setInt(1, idMembro);
 				else
 					ps.setInt(2, idMembro);
 			}
+			if(flag == -1)
+				ps.setInt(2, idMembro);
+			System.out.println(ps.toString());
 			ResultSet rs = ps.executeQuery();
 	    	while(rs.next()){	    		
 	    		list.add(new Date_Ordine(rs.getInt("ID_Ordine"), rs.getDate("data_apertura"), rs.getDate("data_chiusura")));

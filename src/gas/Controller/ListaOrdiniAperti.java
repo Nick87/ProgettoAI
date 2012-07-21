@@ -5,7 +5,8 @@ import gas.DAO.Date_Ordine.TipoOrdine;
 import gas.Exception.DBException;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
+
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -14,12 +15,12 @@ public class ListaOrdiniAperti extends ActionSupport
 	private int idMembro;
 	private String tipoMembro;
 	private String username;
-	private ArrayList<Date_Ordine> ordiniAperti;
+	private List<Date_Ordine> ordiniAperti;
 	
 	public String execute()
 	{
 		try {
-			ordiniAperti = (ArrayList<Date_Ordine>) Date_Ordine.getOrdini(TipoOrdine.APERTO, -1);
+			ordiniAperti = Date_Ordine.getOrdini(TipoOrdine.APERTO, idMembro, -1);
 		} catch (DBException e) {
 			System.out.println(e.getMessage());
 			return Action.ERROR;
@@ -30,7 +31,7 @@ public class ListaOrdiniAperti extends ActionSupport
 		return Action.SUCCESS;
 	}
 	
-	public ArrayList<Date_Ordine> getOrdiniAperti() {
+	public List<Date_Ordine> getOrdiniAperti() {
 		return ordiniAperti;
 	}
 

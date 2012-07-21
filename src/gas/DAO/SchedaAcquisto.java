@@ -6,6 +6,7 @@ import gas.Exception.ItemNotFoundException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
@@ -31,7 +32,7 @@ public class SchedaAcquisto
 		this.ritirato = ritirato;
 	}
 	
-	public static void AggiornaScheda(int idOrdine, int idMembro, Map<Integer, Integer> newQuantita) throws InvalidOperationException, DBException, SQLException, ItemNotFoundException
+	public static void Aggiorna_Crea_Scheda(int idOrdine, int idMembro, Map<Integer, Integer> newQuantita, String operation) throws InvalidOperationException, DBException, SQLException, ItemNotFoundException
 	{
 		Connection conn = null;
 		int idProdotto, newAmount, old_quantita_richiesta, disponibilita_attuale, diff;
@@ -55,35 +56,65 @@ public class SchedaAcquisto
 					throw new InvalidOperationException("Prodotto non disponibile");
 		    	if(!p.isAcquistabile())
 					throw new InvalidOperationException("Prodotto non acquistabile");
-		    	// Può darsi che questa richiesta non può essere soddisfatta perchè
-		    	// un aumento di prodotti richiesti superi la quantita massima messa a disposizione
-		    	// dal fornitore		    	
-		    	old_quantita_richiesta = Prodotto.getQuantitaRichiesta(idOrdine, idMembro, idProdotto);
-		    	disponibilita_attuale = Prodotto.getDisponibilitaProdotto(idProdotto);
-		    	diff = newAmount - old_quantita_richiesta;
-		    	if(diff > disponibilita_attuale)
-		    		throw new InvalidOperationException("Quantita massima superata per il prodotto");
+		    	
+		    	if(operation.equals("AGGIORNA"))
+		    	{
+			    	// Puï¿½ darsi che questa richiesta non puï¿½ essere soddisfatta perchï¿½
+			    	// un aumento di prodotti richiesti superi la quantita massima messa a disposizione
+			    	// dal fornitore		    	
+			    	old_quantita_richiesta = Prodotto.getQuantitaRichiesta(idOrdine, idMembro, idProdotto);
+			    	disponibilita_attuale = Prodotto.getDisponibilitaProdotto(idProdotto);
+			    	diff = newAmount - old_quantita_richiesta;
+			    	if(diff > disponibilita_attuale)
+			    		throw new InvalidOperationException("Quantita massima superata per il prodotto");
+		    	}
 			}
 			
-			conn = DBConnection.getDBConnection();
-			conn.setAutoCommit(false);
-			query = "UPDATE scheda_di_acquisto " +
+			if(operation.equals("AGGIORNA"))
+			{
+				conn = DBConnection.getDBConnection();
+				conn.setAutoCommit(false);
+				query = "UPDATE scheda_di_acquisto " +
 					"SET quantita = ? " +
 					"WHERE ID_Prodotto = ? AND ID_Ordine = ? AND ID_membro_che_acquista = ?";
-			
-	    	// Adesso possiamo aggiornare la scheda di acquisto
-			for(Integer key : newQuantita.keySet())
-			{
-				idProdotto = key.intValue();
-				newAmount = newQuantita.get(key);
-				ps = conn.prepareStatement(query);
-				ps.setInt(1, newAmount);
-				ps.setInt(2, idProdotto);
-				ps.setInt(3, idOrdine);
-				ps.setInt(4, idMembro);
-				if(ps.executeUpdate() != 1)
-					throw new InvalidOperationException("Errore update scheda di acquisto");
+				for(Integer key : newQuantita.keySet())
+				{
+					idProdotto = key.intValue();
+					newAmount = newQuantita.get(key);
+					ps = conn.prepareStatement(query);
+					ps.setInt(1, newAmount);
+					ps.setInt(2, idProdotto);
+					ps.setInt(3, idOrdine);
+					ps.setInt(4, idMembro);
+					if(ps.executeUpdate() != 1)
+						throw new InvalidOperationException("Errore update scheda di acquisto");
+				}
 			}
+			else
+			{				
+				int id_scheda=get_max_ID();
+				id_scheda++;
+				conn = DBConnection.getDBConnection();
+				conn.setAutoCommit(false);
+				//ID_Scheda;ID_Ordine;ID_Prodotto;ID_membro_che_acquista;quantita;ritirato;ID_membro_che_ritira
+				query = "INSERT INTO scheda_di_acquisto VALUES(?,?,?,?,?,?,?)";
+				for(Integer key : newQuantita.keySet())
+				{
+					idProdotto = key.intValue();
+					newAmount = newQuantita.get(key);
+					ps = conn.prepareStatement(query);
+					ps.setInt(1, id_scheda);
+					ps.setInt(2, idOrdine);
+					ps.setInt(3, idProdotto);
+					ps.setInt(4, idMembro);
+					ps.setInt(5, newAmount);
+					ps.setInt(6, 0);
+					ps.setInt(7, -1);
+					if(ps.executeUpdate() != 1)
+						throw new InvalidOperationException("Errore inserimento scheda di acquisto");
+				}
+			}
+	    	// Adesso possiamo inserire la nuova scheda di acquisto
 			conn.commit();
 			conn.setAutoCommit(true);
 		} catch (ItemNotFoundException e) {
@@ -97,6 +128,25 @@ public class SchedaAcquisto
 		}
 	}
 	
+	private static int get_max_ID() throws DBException, SQLException
+	{
+		//Cerco il prossimo id_scheda prendendo il massimo dalla tabella scheda_acquisto
+		Connection conn = DBConnection.getDBConnection();
+		int id=0;
+		String query="SELECT max( ID_Scheda )FROM scheda_di_acquisto";
+		PreparedStatement ps;
+		try {
+			ps = conn.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				id=rs.getInt(1);
+			}
+		} finally {
+			DBConnection.closeConnection(conn);
+		}
+		return id;
+	}
+
 	public int getID_Scheda() {
 		return ID_Scheda;
 	}

@@ -67,7 +67,7 @@ public class AggiornaQuantita extends ActionSupport
 			}
 		}
 		try {
-			SchedaAcquisto.AggiornaScheda(idOrdine, idMembro, newQuantita);
+			SchedaAcquisto.Aggiorna_Crea_Scheda(idOrdine, idMembro, newQuantita, "AGGIORNA");
 			Log.addLog("Aggiornata scheda d'acquisto con idOrdine " + idOrdine + " del membro " + idMembro);
 		} catch (InvalidOperationException e) {
 			System.out.println(e.getMessage());

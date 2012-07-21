@@ -69,7 +69,12 @@
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result>showChat.jsp</result>
 		</action>
-		
+		<action name="confermaSchedaAcquisto" class="gas.Controller.confermaSchedaAcquisto">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		    <result name="success">confermaSchedaAcquisto.jsp</result>
+		    <result name="input">dettaglioOrdine.jsp</result>
+		    <result name="error">dettaglioOrdine.jsp</result>
+		</action>
 		
 		<action name="*">
 		    <result>{1}.jsp</result>

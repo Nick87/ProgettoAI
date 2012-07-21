@@ -116,12 +116,17 @@ public class Prodotto
 					   "       P.fine_disponibilita," +
 					   "       P.acquistabile " +
 				       "FROM prodotto P, ordine O " +
-				       "WHERE O.ID_Prodotto = P.ID_Prodotto AND O.ID_Ordine = ?";
+				       "WHERE O.ID_Prodotto = P.ID_Prodotto AND P.acquistabile='1'" +
+				       " AND O.ID_Ordine = ? AND P.inizio_disponibilita <= ?";
 
 	    try
 	    {
 	    	PreparedStatement ps = conn.prepareStatement(query);
 	    	ps.setInt(1, idOrdine);
+	    	//Controllo se il prodotto e' disponibile nella data attuale
+	    	java.util.Date now = new java.util.Date();
+	    	java.sql.Date date = new java.sql.Date(now.getTime());
+	    	ps.setDate(2, date);
 			ResultSet rs = ps.executeQuery();
 			Prodotto p;
 			while(rs.next()){
@@ -380,12 +385,15 @@ public class Prodotto
 	public String getNome() {
 		return nome;
 	}
+	
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
 	public int getID_Prodotto() {
 		return ID_Prodotto;
 	}
+	
 	public void setID_Prodotto(int iD_Prodotto) {
 		ID_Prodotto = iD_Prodotto;
 	}
