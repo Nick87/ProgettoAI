@@ -57,6 +57,25 @@ public class Membro
 		return status;
 	}
 	
+	public static String getUsernameFromId(int idMembro) throws DBException, SQLException
+	{
+		Connection conn = null;
+		String username = null;
+		try
+		{
+			conn = DBConnection.getDBConnection();
+			String query = "SELECT username FROM membro WHERE ID_Membro = ?";
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, idMembro);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			username = rs.getString("username");
+		} finally {
+			DBConnection.closeConnection(conn);
+		}
+		return username;
+	}
+	
 	public static List<Membro> getMembriFromType(memberType ... tipi) throws DBException, SQLException
 	{
 		ArrayList<Membro> lista = new ArrayList<Membro>();
