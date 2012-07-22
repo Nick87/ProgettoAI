@@ -8,7 +8,8 @@
 		<ul id="messageList">
 			<s:iterator value="chat">
 				<li>
-					<div class="dateSenderDiv"><s:property value="data"/>
+					<div class="dateSenderDiv">
+						<span class="dateSpan"><s:date name="timestamp" format="dd/MM/yyyy - kk:mm:ss"/></span>
 						<span class="senderSpan"><s:property value="%{mapIdMembroUsername.get(ID_Membro_Mittente)}"/></span>
 					</div>
 					<div class="contentMessageDiv"><s:property value="testo"/></div>
@@ -31,7 +32,15 @@ $("#sendMessageBtn").click(function(){
 		messageContent:messageContent
 	};
 	$.get("doInviaDiscussione", params, function(data){
-		$("ul#messageList").append($("<li>").html(messageContent));
+		var ret = JSON.parse(data);
+		var li = $("<li>");
+		var dateSenderDiv = $("<div>").addClass("dateSenderDiv");
+		var dateSpan = $("<span>").addClass("dateSpan").html(ret.timestamp);
+		var senderSpan = $("<span>").addClass("senderSpan").html(ret.usernameMittente);
+		var contentMessageDiv = $("<div>").addClass("contentMessageDiv").html(ret.testo);
+		dateSenderDiv.append(dateSpan).append(senderSpan);		
+		li.append(dateSenderDiv).append(contentMessageDiv);
+		$("ul#messageList").append(li);
 		$("#textareaMessage").empty();
 	});
 });
@@ -95,14 +104,10 @@ ul#messageList li:not(:last-child)
 	font-size:12px;
 	color:red;
 	font-weight:bold;
-}
-.senderSpan
-{
-	font-size:12px;
-	color:green;
 	font-style:italic;
-	font-weight:bold;
 }
+.dateSpan { color:red; }
+.senderSpan { color:green; }
 .senderSpan:after { content:":"; }
 .clearfix:after
 {

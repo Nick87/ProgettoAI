@@ -4,10 +4,10 @@ import gas.Exception.DBException;
 import gas.Exception.InvalidOperationException;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,30 +19,31 @@ public class Discussione
 	private int ID_Messaggio_Discussione;
 	private int ID_Membro_Mittente;
 	private int ID_Membro_Destinatario;
-	private Date data;
+	private Timestamp timestamp;
 	private String testo;
 	private boolean letta;
 	
 	public Discussione() {}
 	
 	public Discussione(int iD_Discussione, int iD_Messaggio_Discussione,
-			int iD_Membro_Mittente, int iD_Membro_Destinatario, Date data,
+			int iD_Membro_Mittente, int iD_Membro_Destinatario, Timestamp timestamp,
 			String testo, boolean letta) {
 		this.ID_Discussione = iD_Discussione;
 		this.ID_Messaggio_Discussione = iD_Messaggio_Discussione;
 		this.ID_Membro_Mittente = iD_Membro_Mittente;
 		this.ID_Membro_Destinatario = iD_Membro_Destinatario;
-		this.data = data;
+		this.setTimestamp(timestamp);
 		this.testo = testo;
 		this.letta = letta;
 	}
 	
-	public static void addDiscussione(int idMittente, int idDestinatario, String testo) throws SQLException, InvalidOperationException, DBException
+	public static Discussione addDiscussione(int idMittente, int idDestinatario, String testo) throws SQLException, InvalidOperationException, DBException
 	{
 		Connection conn = null;
 		String query;
 		PreparedStatement ps;
 		ResultSet rs;
+		Discussione discussione = null;
 		try
 		{
 			conn = DBConnection.getDBConnection();
@@ -60,7 +61,7 @@ public class Discussione
 			idDiscussione = rs.getInt("ID_Discussione") == 0 ? 1 : rs.getInt("ID_Discussione");
 			idMessaggioDiscussione = rs.getInt("maximum") + 1;
 			
-			query = "INSERT INTO `discussione`(`ID_Discussione`, `ID_Messaggio_Discussione`, `ID_Membro_Mittente`, `ID_Membro_Destinatario`, `data`, `testo`, `letta`) " +
+			query = "INSERT INTO `discussione`(`ID_Discussione`, `ID_Messaggio_Discussione`, `ID_Membro_Mittente`, `ID_Membro_Destinatario`, `timestamp`, `testo`, `letta`) " +
 					"VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP, ?, ?)";
 
 			ps = conn.prepareStatement(query);
@@ -72,9 +73,24 @@ public class Discussione
 		    ps.setInt(6, 0);
 		    if(ps.executeUpdate() != 1)
 		    	throw new InvalidOperationException("Errore insert discussione");
+		    query = "SELECT * FROM discussione " +
+		    		"WHERE ID_Discussione = ? AND ID_Messaggio_Discussione = ?";
+		    ps = conn.prepareStatement(query);
+		    ps.setInt(1, idDiscussione);
+		    ps.setInt(2, idMessaggioDiscussione);
+		    rs = ps.executeQuery();
+		    rs.next();
+		    discussione = new Discussione();
+		    discussione.setID_Discussione(rs.getInt("ID_Discussione"));
+		    discussione.setID_Membro_Mittente(rs.getInt("ID_Messaggio_Discussione"));
+		    discussione.setID_Membro_Mittente(rs.getInt("ID_Membro_Mittente"));
+		    discussione.setID_Membro_Destinatario(rs.getInt("ID_Membro_Destinatario"));
+		    discussione.setTimestamp(rs.getTimestamp("timestamp"));
+		    discussione.setTesto(rs.getString("testo"));
 		} finally {
 			DBConnection.closeConnection(conn);
 		}
+		return discussione;
 	}
 	
 	public static Map<Integer, String> getSommarioDiscussioniFromIdMembro(int idMembro) throws DBException, SQLException
@@ -135,7 +151,7 @@ public class Discussione
 		try
 		{
 			conn = DBConnection.getDBConnection();
-			query = "SELECT * FROM discussione WHERE ID_Discussione = ? ORDER BY data";
+			query = "SELECT * FROM discussione WHERE ID_Discussione = ? ORDER BY timestamp";
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, idDiscussione);
 			rs = ps.executeQuery();
@@ -146,7 +162,7 @@ public class Discussione
 				d.setID_Membro_Mittente(rs.getInt("ID_Messaggio_Discussione"));
 				d.setID_Membro_Mittente(rs.getInt("ID_Membro_Mittente"));
 				d.setID_Membro_Destinatario(rs.getInt("ID_Membro_Destinatario"));
-				d.setData(rs.getDate("data"));
+				d.setTimestamp(rs.getTimestamp("timestamp"));
 				d.setTesto(rs.getString("testo"));
 				boolean letta = rs.getInt("letta") == 1 ? true : false;
 				d.setLetta(letta);
@@ -179,7 +195,7 @@ public class Discussione
 				d.setID_Messaggio_Discussione(rs.getInt("ID_Messaggio_Discussione"));
 				d.setID_Membro_Mittente(rs.getInt("ID_Membro_Mittente"));
 				d.setID_Membro_Destinatario(rs.getInt("ID_Membro_Destinatario"));
-				d.setData(rs.getDate("data"));
+				d.setTimestamp(rs.getTimestamp("timestamp"));
 				d.setTesto(rs.getString("testo"));
 				boolean letta = rs.getInt("letta") == 1 ? true : false;
 				d.setLetta(letta);
@@ -215,12 +231,13 @@ public class Discussione
 	public void setID_Membro_Destinatario(int iD_Membro_Destinatario) {
 		ID_Membro_Destinatario = iD_Membro_Destinatario;
 	}
-	public Date getData() {
-		return data;
+	public Timestamp getTimestamp() {
+		return timestamp;
 	}
-	public void setData(Date data) {
-		this.data = data;
+	public void setTimestamp(Timestamp timestamp) {
+		this.timestamp = timestamp;
 	}
+
 	public String getTesto() {
 		return testo;
 	}

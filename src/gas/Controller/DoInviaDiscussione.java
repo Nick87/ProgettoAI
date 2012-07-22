@@ -2,6 +2,7 @@ package gas.Controller;
 import com.google.gson.*;
 
 import gas.DAO.Discussione;
+import gas.DAO.Membro;
 import gas.Exception.DBException;
 import gas.Exception.InvalidOperationException;
 
@@ -9,6 +10,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,9 +31,18 @@ public class DoInviaDiscussione extends ActionSupport
 		Map<String, String> message = new HashMap<String, String>();
 		try
 		{
-			Discussione.addDiscussione(idMittente, idDestinatario, messageContent);
+			Discussione d = Discussione.addDiscussione(idMittente, idDestinatario, messageContent);
 			message.put("result", "success");
 			message.put("message", "Messaggio inviato correttamente");
+			message.put("idDiscussione", Integer.toString(d.getID_Discussione()));
+			message.put("idMessaggioDiscussione", Integer.toString(d.getID_Messaggio_Discussione()));
+			message.put("idMittente", Integer.toString(d.getID_Membro_Mittente()));
+			message.put("usernameMittente", Membro.getUsernameFromId(d.getID_Membro_Mittente()));
+			message.put("usernameDestinatario", Membro.getUsernameFromId(d.getID_Membro_Destinatario()));
+			message.put("idDestinatario", Integer.toString(d.getID_Membro_Destinatario()));
+			String date = new SimpleDateFormat("dd/MM/yyyy - kk:mm:ss").format(d.getTimestamp());
+			message.put("timestamp", date);
+			message.put("testo", d.getTesto());
 			json = gson.toJson(message);
 			setInputStream(new ByteArrayInputStream(json.getBytes("UTF-8")));
 		} catch (UnsupportedEncodingException e) {
