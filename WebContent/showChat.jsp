@@ -23,6 +23,7 @@
 	</div>
 </div>
 <script>
+$("#messagesArea").animate({ scrollTop:$("#messagesArea")[0].scrollHeight-$('#messagesArea').height() }, 300);
 $("#sendMessageBtn").click(function(){
 	var messageContent = $("#textareaMessage").html();
 	if(messageContent == "") return;
@@ -35,13 +36,14 @@ $("#sendMessageBtn").click(function(){
 		var ret = JSON.parse(data);
 		var li = $("<li>");
 		var dateSenderDiv = $("<div>").addClass("dateSenderDiv");
-		var dateSpan = $("<span>").addClass("dateSpan").html(ret.timestamp);
+		var dateSpan = $("<span>").addClass("dateSpan").html(ret.timestamp + "&nbsp;");
 		var senderSpan = $("<span>").addClass("senderSpan").html(ret.usernameMittente);
 		var contentMessageDiv = $("<div>").addClass("contentMessageDiv").html(ret.testo);
 		dateSenderDiv.append(dateSpan).append(senderSpan);		
 		li.append(dateSenderDiv).append(contentMessageDiv);
 		$("ul#messageList").append(li);
 		$("#textareaMessage").empty();
+		$("#messagesArea").animate({ scrollTop:$("#messagesArea")[0].scrollHeight-$('#messagesArea').height() }, 200);
 	});
 });
 </script>
