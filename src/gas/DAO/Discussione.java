@@ -207,6 +207,12 @@ public class Discussione
 		return list;
 	}
 	
+	public static List<Discussione> getDeltaDiscussioni(int idDiscussione, Timestamp ts)
+	{
+		ArrayList<Discussione> lista = new ArrayList<Discussione>();
+		return lista;
+	}
+	
 	public int getID_Discussione() {
 		return ID_Discussione;
 	}

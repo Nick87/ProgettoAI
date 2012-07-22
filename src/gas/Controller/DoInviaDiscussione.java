@@ -44,7 +44,7 @@ public class DoInviaDiscussione extends ActionSupport
 			message.put("timestamp", date);
 			message.put("testo", d.getTesto());
 			json = gson.toJson(message);
-			setInputStream(new ByteArrayInputStream(json.getBytes("UTF-8")));
+			this.inputStream = new ByteArrayInputStream(json.getBytes("UTF-8"));
 		} catch (UnsupportedEncodingException e) {
 			System.out.println(e.getMessage());
 			message.put("result", "error");

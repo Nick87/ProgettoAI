@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
+<s:hidden id="idDiscussione" value="%{idDiscussione}"/>
 <s:hidden id="idMittente" value="%{idMittente}"/>
 <s:hidden id="idDestinatario" value="%{idDestinatario}"/>
 <div id="chatWrapper">
@@ -9,8 +10,7 @@
 			<s:iterator value="chat">
 				<li>
 					<div class="dateSenderDiv">
-						<span class="dateSpan"><s:date name="timestamp" format="dd/MM/yyyy - kk:mm:ss"/></span>
-						<span class="senderSpan"><s:property value="%{mapIdMembroUsername.get(ID_Membro_Mittente)}"/></span>
+						<span class="dateSpan"><s:date name="timestamp" format="dd/MM/yyyy - kk:mm:ss"/></span><span class="senderSpan"><s:property value="%{mapIdMembroUsername.get(ID_Membro_Mittente)}"/></span>
 					</div>
 					<div class="contentMessageDiv"><s:property value="testo"/></div>
 				</li>
@@ -36,7 +36,7 @@ $("#sendMessageBtn").click(function(){
 		var ret = JSON.parse(data);
 		var li = $("<li>");
 		var dateSenderDiv = $("<div>").addClass("dateSenderDiv");
-		var dateSpan = $("<span>").addClass("dateSpan").html(ret.timestamp + "&nbsp;");
+		var dateSpan = $("<span>").addClass("dateSpan").html(ret.timestamp);
 		var senderSpan = $("<span>").addClass("senderSpan").html(ret.usernameMittente);
 		var contentMessageDiv = $("<div>").addClass("contentMessageDiv").html(ret.testo);
 		dateSenderDiv.append(dateSpan).append(senderSpan);		
@@ -46,6 +46,18 @@ $("#sendMessageBtn").click(function(){
 		$("#messagesArea").animate({ scrollTop:$("#messagesArea")[0].scrollHeight-$('#messagesArea').height() }, 200);
 	});
 });
+refresh_chat();
+function refresh_chat()
+{
+	var params = {
+		idDiscussione:$("#idMittente").val(),
+		timestamp:$("ul#messageList > li:last-child span.dateSpan").html()
+	};
+	$.get("getDeltaDiscussioni", params, function(data){
+		
+	});	
+	setTimeout(refresh_chat, 1000);
+}
 </script>
 <style>
 #chatWrapper
@@ -109,7 +121,7 @@ ul#messageList li:not(:last-child)
 	font-style:italic;
 }
 .dateSpan { color:red; }
-.senderSpan { color:green; }
+.senderSpan { color:green; margin-left:3px; }
 .senderSpan:after { content:":"; }
 .clearfix:after
 {

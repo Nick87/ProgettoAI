@@ -69,6 +69,13 @@
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result>showChat.jsp</result>
 		</action>
+		<action name="getDeltaDiscussioni" class="gas.Controller.GetDeltaDiscussioni">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		  	<result type="stream">
+		  	    <param name="contentType">plain/text</param>
+		  	    <param name="inputName">inputStream</param>
+		  	</result>
+		</action>
 		<action name="confermaSchedaAcquisto" class="gas.Controller.confermaSchedaAcquisto">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result name="success">confermaSchedaAcquisto.jsp</result>

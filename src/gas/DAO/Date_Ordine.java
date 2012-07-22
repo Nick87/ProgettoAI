@@ -61,7 +61,6 @@ public class Date_Ordine
 			}
 			if(flag == -1)
 				ps.setInt(2, idMembro);
-			System.out.println(ps.toString());
 			ResultSet rs = ps.executeQuery();
 	    	while(rs.next()){	    		
 	    		list.add(new Date_Ordine(rs.getInt("ID_Ordine"), rs.getDate("data_apertura"), rs.getDate("data_chiusura")));
