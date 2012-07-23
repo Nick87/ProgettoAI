@@ -18,7 +18,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class GetDeltaDiscussioni extends ActionSupport
 {
 	private int idDiscussione;
-	private String timestamp;
+	private int lastIdMessaggioDiscussione;
 	private InputStream inputStream;
 	
 	public String execute()
@@ -26,20 +26,12 @@ public class GetDeltaDiscussioni extends ActionSupport
 		Gson gson = new Gson();
 		try
 		{
-			/*SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - kk:mm:ss");
-			Date parsedDate = dateFormat.parse(timestamp);
-			Timestamp ts = new Timestamp(parsedDate.getTime());
-			List<Discussione> deltaDiscussioni = Discussione.getDeltaDiscussioni(idDiscussione, ts);*/
-			
-			
+			List<Discussione> deltaDiscussioni = Discussione.getDeltaDiscussioni(idDiscussione, lastIdMessaggioDiscussione);
 			this.inputStream = new ByteArrayInputStream("CIAO".getBytes("UTF-8"));
 		} catch (UnsupportedEncodingException e) {
 			System.out.println(e.getMessage());
 			return Action.ERROR;
-		} /*catch (ParseException e) {
-			System.out.println(e.getMessage());
-			return Action.ERROR;
-		}*/
+		}
 		return Action.SUCCESS;
 	}
 
@@ -50,20 +42,20 @@ public class GetDeltaDiscussioni extends ActionSupport
 	public void setIdDiscussione(int idDiscussione) {
 		this.idDiscussione = idDiscussione;
 	}
-
-	public String getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(String timestamp) {
-		this.timestamp = timestamp;
-	}
-
+	
 	public InputStream getInputStream() {
 		return inputStream;
 	}
 
 	public void setInputStream(InputStream inputStream) {
 		this.inputStream = inputStream;
+	}
+
+	public int getLastIdMessaggioDiscussione() {
+		return lastIdMessaggioDiscussione;
+	}
+
+	public void setLastIdMessaggioDiscussione(int lastIdMessaggioDiscussione) {
+		this.lastIdMessaggioDiscussione = lastIdMessaggioDiscussione;
 	}
 }
