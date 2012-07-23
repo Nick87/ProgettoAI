@@ -82,7 +82,7 @@ public class Discussione
 		    rs.next();
 		    discussione = new Discussione();
 		    discussione.setID_Discussione(rs.getInt("ID_Discussione"));
-		    discussione.setID_Membro_Mittente(rs.getInt("ID_Messaggio_Discussione"));
+		    discussione.setID_Messaggio_Discussione(rs.getInt("ID_Messaggio_Discussione"));
 		    discussione.setID_Membro_Mittente(rs.getInt("ID_Membro_Mittente"));
 		    discussione.setID_Membro_Destinatario(rs.getInt("ID_Membro_Destinatario"));
 		    discussione.setTimestamp(rs.getTimestamp("timestamp"));
@@ -159,7 +159,7 @@ public class Discussione
 			{
 				d = new Discussione();
 				d.setID_Discussione(rs.getInt("ID_Discussione"));
-				d.setID_Membro_Mittente(rs.getInt("ID_Messaggio_Discussione"));
+				d.setID_Messaggio_Discussione(rs.getInt("ID_Messaggio_Discussione"));
 				d.setID_Membro_Mittente(rs.getInt("ID_Membro_Mittente"));
 				d.setID_Membro_Destinatario(rs.getInt("ID_Membro_Destinatario"));
 				d.setTimestamp(rs.getTimestamp("timestamp"));
@@ -207,7 +207,7 @@ public class Discussione
 		return list;
 	}
 	
-	public static List<Discussione> getDeltaDiscussioni(int idDiscussione, Timestamp ts)
+	public static List<Discussione> getDeltaDiscussioni(int idDiscussione, int idMessaggioDiscussione)
 	{
 		ArrayList<Discussione> lista = new ArrayList<Discussione>();
 		return lista;

@@ -9,6 +9,7 @@
 		<ul id="messageList">
 			<s:iterator value="chat">
 				<li>
+					<input type="hidden" class="idMessaggioDiscussione" value="<s:property value="ID_Messaggio_Discussione"/>"/>
 					<div class="dateSenderDiv">
 						<span class="dateSpan"><s:date name="timestamp" format="dd/MM/yyyy - kk:mm:ss"/></span><span class="senderSpan"><s:property value="%{mapIdMembroUsername.get(ID_Membro_Mittente)}"/></span>
 					</div>
@@ -21,7 +22,7 @@
 		<div id="textareaMessage" contenteditable="true"></div>
 		<button id="sendMessageBtn">Invia</button>
 	</div>
-</div>
+
 <script>
 $("#messagesArea").animate({ scrollTop:$("#messagesArea")[0].scrollHeight-$('#messagesArea').height() }, 300);
 $("#sendMessageBtn").click(function(){
@@ -35,11 +36,15 @@ $("#sendMessageBtn").click(function(){
 	$.get("doInviaDiscussione", params, function(data){
 		var ret = JSON.parse(data);
 		var li = $("<li>");
+		var hidden = $("<input>").attr("type", "hidden")
+								 .attr("class", "idMessaggioDiscussione")
+								 .attr("value", ret.idMessaggioDiscussione);
 		var dateSenderDiv = $("<div>").addClass("dateSenderDiv");
 		var dateSpan = $("<span>").addClass("dateSpan").html(ret.timestamp);
 		var senderSpan = $("<span>").addClass("senderSpan").html(ret.usernameMittente);
 		var contentMessageDiv = $("<div>").addClass("contentMessageDiv").html(ret.testo);
 		dateSenderDiv.append(dateSpan).append(senderSpan);		
+		li.append(hidden);
 		li.append(dateSenderDiv).append(contentMessageDiv);
 		$("ul#messageList").append(li);
 		$("#textareaMessage").empty();
@@ -51,14 +56,16 @@ function refresh_chat()
 {
 	var params = {
 		idDiscussione:$("#idMittente").val(),
-		timestamp:$("ul#messageList > li:last-child span.dateSpan").html()
+		lastIdMessaggioDiscussione:$("ul#messageList > li:last-child input[type=hidden].idMessaggioDiscussione").val()
 	};
+	if(!params.idDiscussione || !params.lastIdMessaggioDiscussione) return;
 	$.get("getDeltaDiscussioni", params, function(data){
 		
 	});	
 	setTimeout(refresh_chat, 1000);
 }
 </script>
+</div>
 <style>
 #chatWrapper
 {

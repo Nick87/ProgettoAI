@@ -26,20 +26,20 @@ public class GetDeltaDiscussioni extends ActionSupport
 		Gson gson = new Gson();
 		try
 		{
-			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - kk:mm:ss");
+			/*SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - kk:mm:ss");
 			Date parsedDate = dateFormat.parse(timestamp);
 			Timestamp ts = new Timestamp(parsedDate.getTime());
-			List<Discussione> deltaDiscussioni = Discussione.getDeltaDiscussioni(idDiscussione, ts);
+			List<Discussione> deltaDiscussioni = Discussione.getDeltaDiscussioni(idDiscussione, ts);*/
 			
 			
 			this.inputStream = new ByteArrayInputStream("CIAO".getBytes("UTF-8"));
 		} catch (UnsupportedEncodingException e) {
 			System.out.println(e.getMessage());
 			return Action.ERROR;
-		} catch (ParseException e) {
+		} /*catch (ParseException e) {
 			System.out.println(e.getMessage());
 			return Action.ERROR;
-		}
+		}*/
 		return Action.SUCCESS;
 	}
 
