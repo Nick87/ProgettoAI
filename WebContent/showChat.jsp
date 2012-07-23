@@ -31,8 +31,9 @@ $("#sendMessageBtn").click(function(){
 	var params = {
 		idMittente:$("#idMittente").val(),
 		idDestinatario:$("#idDestinatario").val(),
-		messageContent:messageContent
+		messageContent:messageContent.trim()
 	};
+	console.log(params.messageContent);
 	$.get("doInviaDiscussione", params, function(data){
 		var ret = JSON.parse(data);
 		var li = $("<li>");
@@ -55,14 +56,44 @@ refresh_chat();
 function refresh_chat()
 {
 	var params = {
-		idDiscussione:$("#idMittente").val(),
+		idDiscussione:$("#idDiscussione").val(),
 		lastIdMessaggioDiscussione:$("ul#messageList > li:last-child input[type=hidden].idMessaggioDiscussione").val()
 	};
 	if(!params.idDiscussione || !params.lastIdMessaggioDiscussione) return;
 	$.get("getDeltaDiscussioni", params, function(data){
-		
+		if(data != "")
+		{
+			var map = JSON.parse(data);
+			var mappaIdUsername = map.mappaIdUsername;
+			var deltaDiscussioni = map.deltaDiscussioni;
+			$.each(deltaDiscussioni, function(index, item){
+				var date = new Date(item.timestamp);
+				var day = date.getDate();
+				var month = date.getMonth() + 1;
+				if(month < 10) month = "0" + month;
+				var year = date.getFullYear();
+				var hour = date.getHours();
+				var minutes = date.getMinutes();
+				var seconds = date.getSeconds();
+				var stringDate = day + "/" + month + "/" + year + " - " + hour + ":" + minutes + ":" + seconds;
+				
+				var li = $("<li>");
+				var hidden = $("<input>").attr("type", "hidden")
+										 .attr("class", "idMessaggioDiscussione")
+										 .attr("value", item.ID_Messaggio_Discussione);
+				var dateSenderDiv = $("<div>").addClass("dateSenderDiv");
+				var dateSpan = $("<span>").addClass("dateSpan").html(stringDate);
+				var senderSpan = $("<span>").addClass("senderSpan").html(mappaIdUsername[item.ID_Membro_Mittente]);
+				var contentMessageDiv = $("<div>").addClass("contentMessageDiv").html(item.testo);
+				dateSenderDiv.append(dateSpan).append(senderSpan);		
+				li.append(hidden);
+				li.append(dateSenderDiv).append(contentMessageDiv);
+				$("ul#messageList").append(li);
+				$("#messagesArea").animate({ scrollTop:$("#messagesArea")[0].scrollHeight-$('#messagesArea').height() }, 200);
+			});
+		}
 	});	
-	setTimeout(refresh_chat, 1000);
+	//setTimeout(refresh_chat, 1000);
 }
 </script>
 </div>

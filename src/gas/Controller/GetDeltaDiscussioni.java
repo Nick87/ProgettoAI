@@ -1,15 +1,16 @@
 package gas.Controller;
 
 import gas.DAO.Discussione;
+import gas.DAO.Membro;
+import gas.Exception.DBException;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.google.gson.Gson;
 import com.opensymphony.xwork2.Action;
@@ -23,12 +24,31 @@ public class GetDeltaDiscussioni extends ActionSupport
 	
 	public String execute()
 	{
-		Gson gson = new Gson();
 		try
 		{
+			Map<String, Object> map;
+			Map<Integer, String> mappaIdUsername;
 			List<Discussione> deltaDiscussioni = Discussione.getDeltaDiscussioni(idDiscussione, lastIdMessaggioDiscussione);
-			this.inputStream = new ByteArrayInputStream("CIAO".getBytes("UTF-8"));
+			String json = "";
+			if(deltaDiscussioni.size() > 0){
+				mappaIdUsername = new HashMap<Integer, String>();
+				Discussione d = deltaDiscussioni.get(0);
+				mappaIdUsername.put(d.getID_Membro_Mittente(), Membro.getUsernameFromId(d.getID_Membro_Mittente()));
+				mappaIdUsername.put(d.getID_Membro_Destinatario(), Membro.getUsernameFromId(d.getID_Membro_Destinatario()));
+				map = new HashMap<String, Object>();
+				map.put("mappaIdUsername", mappaIdUsername);
+				map.put("deltaDiscussioni", deltaDiscussioni);
+				Gson gson = new Gson();
+				json = gson.toJson(map);
+			}
+			this.inputStream = new ByteArrayInputStream(json.getBytes("UTF-8"));
 		} catch (UnsupportedEncodingException e) {
+			System.out.println(e.getMessage());
+			return Action.ERROR;
+		} catch (DBException e) {
+			System.out.println(e.getMessage());
+			return Action.ERROR;
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return Action.ERROR;
 		}

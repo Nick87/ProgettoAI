@@ -207,10 +207,38 @@ public class Discussione
 		return list;
 	}
 	
-	public static List<Discussione> getDeltaDiscussioni(int idDiscussione, int idMessaggioDiscussione)
+	public static List<Discussione> getDeltaDiscussioni(int idDiscussione, int idMessaggioDiscussione) throws DBException, SQLException
 	{
-		ArrayList<Discussione> lista = new ArrayList<Discussione>();
-		return lista;
+		List<Discussione> list = new ArrayList<Discussione>();
+		Connection conn = null;
+		try
+		{
+			conn = DBConnection.getDBConnection();
+			String query = "SELECT * FROM discussione " +
+						   "WHERE ID_Discussione = ? AND ID_Messaggio_Discussione > ? " +
+						   "ORDER BY ID_Messaggio_Discussione";
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, idDiscussione);
+			ps.setInt(2, idMessaggioDiscussione);
+			ResultSet rs = ps.executeQuery();
+			Discussione d;
+			while(rs.next())
+			{
+				d = new Discussione();
+				d.setID_Discussione(rs.getInt("ID_Discussione"));
+				d.setID_Messaggio_Discussione(rs.getInt("ID_Messaggio_Discussione"));
+				d.setID_Membro_Mittente(rs.getInt("ID_Membro_Mittente"));
+				d.setID_Membro_Destinatario(rs.getInt("ID_Membro_Destinatario"));
+				d.setTimestamp(rs.getTimestamp("timestamp"));
+				d.setTesto(rs.getString("testo"));
+				boolean letta = rs.getInt("letta") == 1 ? true : false;
+				d.setLetta(letta);
+				list.add(d);
+			}
+		} finally {
+			DBConnection.closeConnection(conn);
+		}
+		return list;
 	}
 	
 	public int getID_Discussione() {
