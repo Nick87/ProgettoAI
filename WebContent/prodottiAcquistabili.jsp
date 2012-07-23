@@ -15,30 +15,43 @@
 							<th>Descrizione</th>
 							<th>Costo Unitario</th>
 							<th>Costo Trasporto</th>
-							<th>Qtà minima</th>
+							<th>Qta' minima</th>
 							<th>Step</th>
-			<!-- 				<th>Inizio disponibilità</th> -->
-							<th>Fine disponibilità</th>
-							<th>Qtà da ordinare</th>
-							<th>Qtà disponibile</th>
+			<!-- 				<th>Inizio disponibilita'</th> -->
+							<th>Fine disponibilita'</th>
+							<th>Qta' da ordinare</th>
+							<th>Qta' disponibile</th>
 						</tr>
 					</thead>
 					<tbody>
 					    <s:iterator value="listaProdotti" var="p">
-							<tr>
-			<%-- 					<td><s:property value="ID_Prodotto"/></td> --%>
-								<td><s:property value="nome"/></td>
-								<td><s:property value="categoria"/></td>
-								<td><s:property value="descrizione"/></td>
-								<td><s:property value="costo_unitario"/></td>
-								<td><s:property value="costo_trasporto"/></td>
-								<td><s:property value="pezzatura_min_utente"/></td>
-								<td><s:property value="step"/></td>
-			<%-- 					<td><s:property value="inizio_disponibilita"/></td> --%>
-								<td><s:property value="fine_disponibilita"/></td>
-								<td><input type="text" name="<s:property value="ID_Prodotto"/>" size="3" value="<s:property value=""/>"/></td>
+							<s:if test="%{disponibilitaProdotti.get(#p.ID_Prodotto)==0}">
+								<tr style="color:red;">
+							</s:if>
+							<s:else>
+								<tr>
+							</s:else>
+			<%--				<tr id="ID_Prodotto">
+			 					<td><s:property value="ID_Prodotto"/></td> --%>
+									<td><s:property value="nome"/></td>
+									<td><s:property value="categoria"/></td>
+									<td><s:property value="descrizione"/></td>
+									<td><s:property value="costo_unitario"/></td>
+									<td><s:property value="costo_trasporto"/></td>
+									<td><s:property value="pezzatura_min_utente"/></td>
+									<td><s:property value="step"/></td>
+				<%-- 					<td><s:property value="inizio_disponibilita"/></td> --%>
+									<td><s:property value="fine_disponibilita"/></td>
+							<s:if test="%{disponibilitaProdotti.get(#p.ID_Prodotto)==0}">
+								<td><input type="text" name="<s:property value="ID_Prodotto"/>" disabled="disabled" size="3" value="<s:property value="0"/>"/></td>
+								<td>Terminato</td>
+							</s:if>
+							<s:else>
+								<td><input type="text" name="<s:property value="ID_Prodotto"/>" size="3" value="<s:property value="0"/>"/></td>
 								<td><s:property value="%{disponibilitaProdotti.get(#p.ID_Prodotto)}"/></td>
-							</tr>
+							</s:else>
+									
+								</tr>
 						</s:iterator>
 					</tbody>
 				</tbody>
@@ -61,7 +74,7 @@ $("#listaProdottiForm").on("submit", function(e){
 	console.log(params.quantita);
 	for(key in params.quantita){
 		if(!/^(0|([1-9]+))$/.test(params.quantita[key])){
-			alert("Errore input quantità (" + params.quantita[key] + ")");
+			alert("Errore input quantita' (" + params.quantita[key] + ")");
 			return;
 		}
 	}

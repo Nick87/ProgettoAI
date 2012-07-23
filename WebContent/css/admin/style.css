@@ -340,7 +340,7 @@ section#contentWrapper
 	cursor:default;
 }
 
-.alert_error
+.alert_error, ul.errorMessage li
 {
 	display: block;
 	width: 95%;
@@ -359,7 +359,7 @@ section#contentWrapper
 	cursor:default;
 }
 
-.alert_success
+.alert_success, ul.actionMessage li
 {
 	display: block;
 	width: 95%;
@@ -391,24 +391,7 @@ section#contentWrapper
 }
 
 ul.errorMessage { list-style: none; }
-ul.errorMessage li
-{
-	display: block;
-	width: 95%;
-	margin: 20px 3% 0 3%;
-	margin-top: 20px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	background: #F3D9D9 url(../../images/admin/icn_alert_error.png) no-repeat;
-	background-position: 10px 10px;
-	border: 1px solid #D20009;
-	color: #7B040F;
-	padding: 10px 0;
-	text-indent: 40px;
-	font-size: 14px;
-	cursor:default;
-}
+ul.actionMessage { list-style:none; }
 
 #sendDiscussioneResultBox { margin-bottom:10px }
 #listaUtentiDestinatari span.userName { cursor:pointer; }

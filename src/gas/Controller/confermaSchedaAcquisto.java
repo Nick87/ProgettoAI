@@ -67,13 +67,12 @@ public class confermaSchedaAcquisto extends ActionSupport{
 			updateProdotti();
 		}
 		return Action.SUCCESS;
-		
 	}
 	
 	private void updateProdotti()
 	{
 		try {
-			listaProdotti = Prodotto.getListaProdottiFromSchedaAcquisto(idOrdine, idMembro);
+			listaProdotti = Prodotto.getListaProdottiFromOrdine(idOrdine);
 			disponibilitaProdotti = new HashMap<Integer, Integer>();
 			for(Prodotto p : listaProdotti)
 				disponibilitaProdotti.put(p.getID_Prodotto(),
@@ -139,5 +138,4 @@ public class confermaSchedaAcquisto extends ActionSupport{
 	public void setDisponibilitaProdotti(Map<Integer, Integer> disponibilitaProdotti) {
 		this.disponibilitaProdotti = disponibilitaProdotti;
 	}
-
 }

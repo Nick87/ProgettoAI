@@ -93,7 +93,7 @@ function refresh_chat()
 			});
 		}
 	});	
-	//setTimeout(refresh_chat, 1000);
+	setTimeout(refresh_chat, 1000);
 }
 </script>
 </div>

@@ -79,8 +79,8 @@
 		<action name="confermaSchedaAcquisto" class="gas.Controller.confermaSchedaAcquisto">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result name="success">confermaSchedaAcquisto.jsp</result>
-		    <result name="input">dettaglioOrdine.jsp</result>
-		    <result name="error">dettaglioOrdine.jsp</result>
+		    <result name="input">prodottiAcquistabili.jsp</result>
+		    <result name="error">prodottiAcquistabili.jsp</result>
 		</action>
 		
 		<action name="*">

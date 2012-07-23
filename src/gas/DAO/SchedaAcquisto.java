@@ -47,9 +47,9 @@ public class SchedaAcquisto
 				newAmount = newQuantita.get(key);
 				p = Prodotto.getProdotto(idProdotto);
 				if(newAmount % p.getStep() != 0)
-					throw new InvalidOperationException("Quantita' non e' multiplo dello step");
+					throw new InvalidOperationException("Quantita' non e' multiplo dello step (" + p.getStep() + ")");
 				if(newAmount < p.getPezzatura_min_utente())
-					throw new InvalidOperationException("Quantita' e' minore della pezzatura minima utente");
+					throw new InvalidOperationException("Quantita' e' minore della pezzatura minima utente (" + p.getPezzatura_min_utente() + ")");
 				java.util.Date now = new java.util.Date();
 		    	java.sql.Date date = new java.sql.Date(now.getTime());
 		    	if(p.getFine_disponibilita().before(date))
@@ -59,14 +59,21 @@ public class SchedaAcquisto
 		    	
 		    	if(operation.equals("AGGIORNA"))
 		    	{
-			    	// Pu� darsi che questa richiesta non pu� essere soddisfatta perch�
+			    	// Puo' darsi che questa richiesta non pu� essere soddisfatta perch�
 			    	// un aumento di prodotti richiesti superi la quantita massima messa a disposizione
 			    	// dal fornitore		    	
 			    	old_quantita_richiesta = Prodotto.getQuantitaRichiesta(idOrdine, idMembro, idProdotto);
 			    	disponibilita_attuale = Prodotto.getDisponibilitaProdotto(idProdotto);
 			    	diff = newAmount - old_quantita_richiesta;
 			    	if(diff > disponibilita_attuale)
-			    		throw new InvalidOperationException("Quantita massima superata per il prodotto");
+			    		throw new InvalidOperationException("Quantita massima superata per il prodotto (" + disponibilita_attuale + ")");
+		    	}
+		    	else
+		    	{
+		    		//Controllo se la nuova quantita richiesta non superi quella disponibile
+		    		disponibilita_attuale = Prodotto.getDisponibilitaProdotto(idProdotto);
+		    		if(newAmount > disponibilita_attuale)
+		    			throw new InvalidOperationException("Quantita massima superata per il prodotto (" + disponibilita_attuale + ")");
 		    	}
 			}
 			

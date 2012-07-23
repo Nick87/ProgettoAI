@@ -6,7 +6,10 @@
 	<div class="alert_info">Non ci sono prodotti in quest'ordine</div>
 </s:if>
 <s:else>
-	<s:actionerror/>
+	<div id="resultNotificationArea">
+		<s:actionerror/>
+		<s:actionmessage/>
+	</div>
 	<s:form id="listaProdottiForm" action="aggiornaQuantita" method="post">
 		<table id="listaProdotti">
 			<thead>
@@ -49,8 +52,13 @@ $("#listaProdottiForm").on("submit", function(e){
 		quantita:$(this).serializeJSON()
 	};
 	for(key in params.quantita){
-		if(!/^(0|([1-9]+))$/.test(params.quantita[key])){
-			alert("Errore input quantità (" + params.quantita[key] + ")");
+		if(!/^(0|([1-9][0-9]*))$/.test(params.quantita[key])){
+			var ul = $("<ul>").addClass("errorMessage");
+			var li = $("<li>");
+			var span = $("<span>").html("Errore input quantità (" + params.quantita[key] + ")");
+			li.append(span);
+			ul.append(li);
+			$("#resultNotificationArea").empty().append(ul);
 			return;
 		}
 	}

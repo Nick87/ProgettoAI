@@ -24,9 +24,9 @@ $(function(){
 		});
 		return json;
 	};
-	$("html").on("click", "ul.errorMessage li, .alert_info, .alert_warning, .alert_error, .alert_success", function(){
+	$("html").on("click", "ul.errorMessage li, ul.actionMessage li, .alert_info, .alert_warning, .alert_error, .alert_success", function(){
 		var target;
-		if($(this).is("ul.errorMessage li"))
+		if($(this).is("ul.errorMessage li") || $(this).is("ul.actionMessage li"))
 			target = $(this).closest("ul");
 		else
 			target = $(this);

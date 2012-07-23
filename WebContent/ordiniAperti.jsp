@@ -3,7 +3,7 @@
 
 <s:hidden id="idMembro" value="%{idMembro}"></s:hidden>
 <s:if test="%{ordiniAperti.size() == 0}">
-	<div class="alert_info">Non ci sono ordini aperti</div>
+	<div class="alert_info">Non ci sono nuovi ordini aperti</div>
 </s:if>
 <s:else>
 	<!-- <h3 class="pageTitle">Ordini aperti</h3> -->
@@ -36,6 +36,7 @@
 		e.preventDefault();
 		e.stopPropagation();
 		var target = $(e.target);
+		history.pushState(null, null, target.attr("href"));
 		$.get(target.attr("href"), /*params,*/ function(data){
 			$("#content").html(data);
 		});

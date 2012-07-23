@@ -13,7 +13,7 @@
 		<s:iterator value="utenti" var="u">
 			<tr>
 				<td>
-					<span class="userName"><s:property value="nome"/></span><br/>
+					<span class="userName"><s:property value="username"/></span><br/>
 					<div class="textareaMessageDiv">
 						<textarea placeholder="Inserisci il testo del messaggio..." rows="3" cols="50"></textarea><br/>
 						<button class="inviaMessaggioBtn">Invia</button>
