@@ -14,8 +14,13 @@
 		<table id="listaProdotti">
 			<thead>
 				<tr>
-					<th>ID Prodotto</th>
 					<th>Nome</th>
+					<th>Descrizione</th>
+					<th>Categoria</th>
+					<th>Costo unitario</th>
+					<th>Costo trasporto</th>
+					<th>Fine disponibilita'</th>
+					<th>Pezzatura minima</th>
 					<th>Quantita' prenotata</th>
 					<th>Disponibilita' totale attuale</th>
 				</tr>
@@ -23,8 +28,13 @@
 			<tbody>
 			    <s:iterator value="listaProdotti" var="p">
 					<tr>
-						<td><s:property value="ID_Prodotto"/></td>
 						<td><s:property value="nome"/></td>
+						<td><s:property value="descrizione"/></td>
+						<td><s:property value="categoria"/></td>
+						<td><s:property value="costo_unitario"/></td>
+						<td><s:property value="costo_trasporto"/></td>
+						<td><s:property value="fine_disponibilita"/></td>
+						<td><s:property value="pezzatura_min_utente"/></td>
 						<s:if test="%{editable == true}">
 							<td><input type="text" name="<s:property value="ID_Prodotto"/>" size="3" value="<s:property value="quantita"/>"/></td>
 						</s:if>

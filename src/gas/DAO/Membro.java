@@ -75,7 +75,34 @@ public class Membro
 		}
 		return username;
 	}
-	
+	public static List<Membro> getMembriDelegabili(int idMembroRichiedente) throws DBException, SQLException
+	{
+		ArrayList<Membro> lista = new ArrayList<Membro>();
+		Connection conn = null;
+		try
+		{
+			conn = DBConnection.getDBConnection();
+			String query = "SELECT * FROM membro WHERE";
+			query += " tipo_membro = ? AND ID_Membro != ? AND abilitato = ?";
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setString(1, "U");
+			ps.setInt(2, idMembroRichiedente);
+			ps.setInt(3, 1);
+			ResultSet rs = ps.executeQuery();
+			Membro m;
+			while(rs.next())
+			{
+				m = new Membro();
+				m.setID_Membro(rs.getInt("ID_membro"));
+				m.setNome(rs.getString("nome"));
+				m.setCognome(rs.getString("cognome"));
+				lista.add(m);
+			}
+		} finally {
+			DBConnection.closeConnection(conn);
+		}
+		return lista;
+	}
 	public static List<Membro> getMembriFromType(memberType ... tipi) throws DBException, SQLException
 	{
 		ArrayList<Membro> lista = new ArrayList<Membro>();

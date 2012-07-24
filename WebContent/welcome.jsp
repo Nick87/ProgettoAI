@@ -13,6 +13,15 @@
 <head>
 <title>Pannello di amministrazione</title>
 <link rel="stylesheet" href="css/admin/style.css" type="text/css"/>
+<style>
+.toggleLink
+{
+	font-size: 10px !important;
+	margin-right:10px !important;
+	float: right;
+}
+.toggleLink:hover { color: #77BACE !important; }
+</style>
 <script src="js/jquery-1.7.2.min.js"></script>
 <script>
 var windowLoaded = false;
@@ -36,19 +45,22 @@ $(function(){
 	});
 	$("#allCommands").on("click", "li > a", function(e){
 		e.stopPropagation();
+		e.preventDefault();
 		var target = $(e.target);
-		if(target.attr("id") == "logout")
+		if(target.attr("id") == "logout" || target.attr("href") == "#")
 			return true;
 		if(target.attr("href") == "listaMieiOrdini" ||
 		   target.attr("href") == "listaMessaggi" ||
 		   target.attr("href") == "listaDiscussioni")
 		{
-			e.preventDefault();
 			$("ul#" + target.attr("href")).slideToggle();
+			if(target.html() == "HIDE")
+				target.html("SHOW");
+			else
+				target.html("HIDE");
 		}
 		else
 		{
-			e.preventDefault();
 			var params = { 
 				idMembro:<%= idMembro %>,
 				tipoMembro:"<%= tipoMembro %>",
@@ -112,7 +124,7 @@ $(window).load(function(){
 			<h3>Ordini</h3>
 			<ul>
 		 	  	<li><a href="listaOrdiniAperti">Ordini Aperti</a></li>
-		 	  	<li><a href="listaMieiOrdini">I miei ordini</a>
+		 	  	<li><a href="#">I miei ordini</a><a class="toggleLink" href="listaMieiOrdini">HIDE</a>
 		 	  		<ul id="listaMieiOrdini">
 		 	  			<s:url action="mieiOrdini" var="ordiniAperti">
 						  	<s:param name="tipoOrdini">aperti</s:param>
@@ -129,7 +141,7 @@ $(window).load(function(){
 	 	  	<ul>
 		 	  	<li><a href="notifiche">Notifiche</a></li>
 		 	  	<li><a href="listaMessaggi">Messaggi</a></li>
-		 	  	<li><a href="listaDiscussioni">Discussioni</a>
+		 	  	<li><a href="#">Discussioni</a><a class="toggleLink" href="listaDiscussioni">HIDE</a>
 		 	  		<ul id="listaDiscussioni">
 		 	  			<li><a href="nuovaDiscussione">Nuova Discussione</a></li>
 		 	  			<li><a href="sommarioDiscussioni">Discussioni esistenti</a></li>

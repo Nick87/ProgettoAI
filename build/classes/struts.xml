@@ -76,13 +76,24 @@
 		  	    <param name="inputName">inputStream</param>
 		  	</result>
 		</action>
-		<action name="confermaSchedaAcquisto" class="gas.Controller.confermaSchedaAcquisto">
+		<action name="confermaSchedaAcquisto" class="gas.Controller.ConfermaSchedaAcquisto">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result name="success">confermaSchedaAcquisto.jsp</result>
 		    <result name="input">prodottiAcquistabili.jsp</result>
 		    <result name="error">prodottiAcquistabili.jsp</result>
 		</action>
-		
+		<action name="delega" class="gas.Controller.Delega">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		    <result name="success">delega.jsp</result>
+		    <result name="input">delega.jsp</result>
+		    <result name="error">delega.jsp</result>
+		</action>
+		<action name="creaDelega" class="gas.Controller.CreaDelega">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		    <result name="success">confermaDelega.jsp</result>
+		    <result name="input">delega.jsp</result>
+		    <result name="error">delega.jsp</result>
+		</action>
 		<action name="*">
 		    <result>{1}.jsp</result>
 		</action>

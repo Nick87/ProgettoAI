@@ -3,54 +3,54 @@
 
 <s:actionerror/>
 <s:form id="listaProdottiForm" action="confermaSchedaAcquisto" method="post">
-			<table id="listaProdotti">
-				<tbody>
-					<thead>
+	<table id="listaProdotti">
+		<tbody>
+			<thead>
+				<tr>
+					<th>Nome</th>
+					<th>Categoria</th>
+					<th>Descrizione</th>
+					<th>Costo Unitario</th>
+					<th>Costo Trasporto</th>
+					<th>Qta' minima</th>
+					<th>Step</th>
+					<th>Fine disponibilita'</th>
+					<th>Qta' da ordinare</th>
+					<th>Qta' disponibile</th>
+				</tr>
+			</thead>
+			<tbody>
+			    <s:iterator value="listaProdotti" var="p">
+					<s:if test="%{disponibilitaProdotti.get(#p.ID_Prodotto) == 0}">
+						<tr style="color:red;">
+					</s:if>
+					<s:else>
 						<tr>
-							<th>Nome</th>
-							<th>Categoria</th>
-							<th>Descrizione</th>
-							<th>Costo Unitario</th>
-							<th>Costo Trasporto</th>
-							<th>Qta' minima</th>
-							<th>Step</th>
-							<th>Fine disponibilita'</th>
-							<th>Qta' da ordinare</th>
-							<th>Qta' disponibile</th>
-						</tr>
-					</thead>
-					<tbody>
-					    <s:iterator value="listaProdotti" var="p">
+					</s:else>
+							<td><s:property value="nome"/></td>
+							<td><s:property value="categoria"/></td>
+							<td><s:property value="descrizione"/></td>
+							<td><s:property value="costo_unitario"/></td>
+							<td><s:property value="costo_trasporto"/></td>
+							<td><s:property value="pezzatura_min_utente"/></td>
+							<td><s:property value="step"/></td>
+							<td><s:property value="fine_disponibilita"/></td>
 							<s:if test="%{disponibilitaProdotti.get(#p.ID_Prodotto) == 0}">
-								<tr style="color:red;">
+								<td><input type="text" name="<s:property value="ID_Prodotto"/>" disabled="disabled" size="3" value="<s:property value="0"/>"/></td>
+								<td>Terminato</td>
 							</s:if>
 							<s:else>
-								<tr>
+								<td><input type="text" name="<s:property value="ID_Prodotto"/>" size="3" value="<s:property value="0"/>"/></td>
+								<td><s:property value="%{disponibilitaProdotti.get(#p.ID_Prodotto)}"/></td>
 							</s:else>
-									<td><s:property value="nome"/></td>
-									<td><s:property value="categoria"/></td>
-									<td><s:property value="descrizione"/></td>
-									<td><s:property value="costo_unitario"/></td>
-									<td><s:property value="costo_trasporto"/></td>
-									<td><s:property value="pezzatura_min_utente"/></td>
-									<td><s:property value="step"/></td>
-									<td><s:property value="fine_disponibilita"/></td>
-									<s:if test="%{disponibilitaProdotti.get(#p.ID_Prodotto) == 0}">
-										<td><input type="text" name="<s:property value="ID_Prodotto"/>" disabled="disabled" size="3" value="<s:property value="0"/>"/></td>
-										<td>Terminato</td>
-									</s:if>
-									<s:else>
-										<td><input type="text" name="<s:property value="ID_Prodotto"/>" size="3" value="<s:property value="0"/>"/></td>
-										<td><s:property value="%{disponibilitaProdotti.get(#p.ID_Prodotto)}"/></td>
-									</s:else>
-								</tr>
-						</s:iterator>
-					</tbody>
-				</tbody>
-			</table>
-			<s:hidden id="idOrdine" value="%{idOrdine}"></s:hidden>
-			<s:hidden id="idMembro" value="%{idMembro}"></s:hidden>
-			<s:submit method="execute" value="Conferma" align="left" />
+						</tr>
+				</s:iterator>
+			</tbody>
+		</tbody>
+	</table>
+	<s:hidden id="idOrdine" value="%{idOrdine}"></s:hidden>
+	<s:hidden id="idMembro" value="%{idMembro}"></s:hidden>
+	<s:submit method="execute" value="Conferma" align="left" />
 </s:form>
 <script>
 $("#breadcrumbs_container > article").html(

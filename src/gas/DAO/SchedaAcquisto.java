@@ -31,7 +31,31 @@ public class SchedaAcquisto
 		this.quantita = quantita;
 		this.ritirato = ritirato;
 	}
-	
+	public static void Aggiungi_Delega(int idMembroCompratore, int idordinescelto,int idutentescelto) throws InvalidOperationException, DBException, SQLException, ItemNotFoundException
+	{
+		Connection conn = null;
+		String query = "";
+		PreparedStatement ps;
+		try
+		{
+			conn = DBConnection.getDBConnection();
+			conn.setAutoCommit(false);
+			query = "UPDATE scheda_di_acquisto " +
+				"SET ID_membro_che_ritira = ? " +
+				"WHERE ID_Ordine = ? AND ID_membro_che_acquista = ?";
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, idutentescelto);
+			ps.setInt(2, idordinescelto);
+			ps.setInt(3, idMembroCompratore);
+			ps.executeUpdate();
+			// Adesso possiamo inserire la nuova scheda di acquisto
+			conn.commit();
+			conn.setAutoCommit(true);
+		}
+		finally {
+			DBConnection.closeConnection(conn);
+		}
+	}
 	public static void Aggiorna_Crea_Scheda(int idOrdine, int idMembro, Map<Integer, Integer> newQuantita, String operation) throws InvalidOperationException, DBException, SQLException, ItemNotFoundException
 	{
 		Connection conn = null;
