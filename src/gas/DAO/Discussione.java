@@ -201,7 +201,7 @@ public class Discussione
 				d.setID_Membro_Mittente(rs.getInt("ID_Membro_Mittente"));
 				d.setID_Membro_Destinatario(rs.getInt("ID_Membro_Destinatario"));
 				d.setTimestamp(rs.getTimestamp("timestamp"));
-				d.setTesto(rs.getString("testo"));
+				d.setTesto(rs.getString("testo")/*.replaceAll("(\r\n|\n|\r)", "<br/>")*/);
 				boolean letta = rs.getInt("letta") == 1 ? true : false;
 				d.setLetta(letta);
 				list.add(d);
@@ -268,7 +268,7 @@ public class Discussione
 				d.setID_Membro_Mittente(rs.getInt("ID_Membro_Mittente"));
 				d.setID_Membro_Destinatario(rs.getInt("ID_Membro_Destinatario"));
 				d.setTimestamp(rs.getTimestamp("timestamp"));
-				d.setTesto(rs.getString("testo"));
+				d.setTesto(rs.getString("testo")/*.replaceAll("(\r\n|\n|\r)", "<br/>")*/);
 				boolean letta = rs.getInt("letta") == 1 ? true : false;
 				d.setLetta(letta);
 				list.add(d);

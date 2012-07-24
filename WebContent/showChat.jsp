@@ -15,13 +15,13 @@
 					<div class="dateSenderDiv">
 						<span class="dateSpan"><s:date name="timestamp" format="dd/MM/yyyy - kk:mm:ss"/></span><span class="senderSpan"><s:property value="%{mapIdMembroUsername.get(ID_Membro_Mittente)}"/></span>
 					</div>
-					<div class="contentMessageDiv"><s:property value="testo"/></div>
+					<div class="contentMessageDiv"><pre class="innerText"><s:property value="testo"/></pre></div>
 				</li>
 			</s:iterator>
 		</ul>
 	</div>
 	<div id="textareaDiv" class="clearfix">
-		<div id="textareaMessage" contenteditable="true"></div>
+		<textarea id="textareaMessage"></textarea>
 		<button id="sendMessageBtn">Invia</button>
 	</div>
 
@@ -31,7 +31,7 @@ $("#breadcrumbs_container > article").html(
 );
 $("#messagesArea").animate({ scrollTop:$("#messagesArea")[0].scrollHeight-$('#messagesArea').height() }, 300);
 $("#sendMessageBtn").click(function(){
-	var messageContent = $("#textareaMessage").html();
+	var messageContent = $("#textareaMessage").val();
 	if(messageContent == "") return;
 	var params = {
 		idMittente:$("#idMittente").val(),
@@ -52,7 +52,9 @@ $("#sendMessageBtn").click(function(){
 		var dateSenderDiv = $("<div>").addClass("dateSenderDiv");
 		var dateSpan = $("<span>").addClass("dateSpan").html(ret.timestamp);
 		var senderSpan = $("<span>").addClass("senderSpan").html(ret.usernameMittente);
-		var contentMessageDiv = $("<div>").addClass("contentMessageDiv").html(ret.testo);
+		var contentMessageDiv = $("<div>").addClass("contentMessageDiv");
+		var pre = $("<pre>").addClass("innerText").text(ret.testo);
+		contentMessageDiv.append(pre);
 		dateSenderDiv.append(dateSpan).append(senderSpan);		
 		li.append(hidden);
 		li.append(dateSenderDiv).append(contentMessageDiv);
@@ -117,7 +119,9 @@ function refresh_chat()
 				var dateSenderDiv = $("<div>").addClass("dateSenderDiv");
 				var dateSpan = $("<span>").addClass("dateSpan").html(stringDate);
 				var senderSpan = $("<span>").addClass("senderSpan").html(mappaIdUsername[item.ID_Membro_Mittente]);
-				var contentMessageDiv = $("<div>").addClass("contentMessageDiv").html(item.testo);
+				var contentMessageDiv = $("<div>").addClass("contentMessageDiv");
+				var pre = $("<pre>").addClass("innerText").text(item.testo);
+				contentMessageDiv.append(pre);
 				dateSenderDiv.append(dateSpan).append(senderSpan);		
 				li.append(hidden);
 				li.append(dateSenderDiv).append(contentMessageDiv);
@@ -203,10 +207,13 @@ ul#messageList li:not(:last-child)
 	line-height: 0;
 	height: 0;
 }
-.contentMessageDiv
+.contentMessageDiv .innerText
 {
 	font-style:italic;
-	font-size:14px;
+	font-size:12px;
+	font-family:"Verdana";
+	margin:0;
+	padding:0;
 }
 #sendMessageBtn
 {

@@ -20,7 +20,7 @@
 					<s:else>
 						<span class="userName"><s:property value="username"/></span>
 						<div class="textareaMessageDiv">
-							<textarea placeholder="Inserisci il testo del messaggio..." rows="3" cols="50"></textarea>
+							<textarea placeholder="Inserisci il testo del messaggio..." rows="3" cols="50"></textarea><br/>
 							<button class="inviaMessaggioBtn">Invia</button>
 							<input type="hidden" name="idDestinatario" value="<s:property value="ID_Membro"/>"/>
 						</div>

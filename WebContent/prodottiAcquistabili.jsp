@@ -1,15 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-
-<!-- <h3 class="pageTitle">Prodotti acquistabili</h3> -->
 <s:actionerror/>
 <s:form id="listaProdottiForm" action="confermaSchedaAcquisto" method="post">
 			<table id="listaProdotti">
 				<tbody>
 					<thead>
 						<tr>
-			<!-- 				<th>ID Prodotto</th> -->
 							<th>Nome</th>
 							<th>Categoria</th>
 							<th>Descrizione</th>
@@ -17,7 +14,6 @@
 							<th>Costo Trasporto</th>
 							<th>Qta' minima</th>
 							<th>Step</th>
-			<!-- 				<th>Inizio disponibilita'</th> -->
 							<th>Fine disponibilita'</th>
 							<th>Qta' da ordinare</th>
 							<th>Qta' disponibile</th>
@@ -25,14 +21,12 @@
 					</thead>
 					<tbody>
 					    <s:iterator value="listaProdotti" var="p">
-							<s:if test="%{disponibilitaProdotti.get(#p.ID_Prodotto)==0}">
+							<s:if test="%{disponibilitaProdotti.get(#p.ID_Prodotto) == 0}">
 								<tr style="color:red;">
 							</s:if>
 							<s:else>
 								<tr>
 							</s:else>
-			<%--				<tr id="ID_Prodotto">
-			 					<td><s:property value="ID_Prodotto"/></td> --%>
 									<td><s:property value="nome"/></td>
 									<td><s:property value="categoria"/></td>
 									<td><s:property value="descrizione"/></td>
@@ -40,17 +34,15 @@
 									<td><s:property value="costo_trasporto"/></td>
 									<td><s:property value="pezzatura_min_utente"/></td>
 									<td><s:property value="step"/></td>
-				<%-- 					<td><s:property value="inizio_disponibilita"/></td> --%>
 									<td><s:property value="fine_disponibilita"/></td>
-							<s:if test="%{disponibilitaProdotti.get(#p.ID_Prodotto)==0}">
-								<td><input type="text" name="<s:property value="ID_Prodotto"/>" disabled="disabled" size="3" value="<s:property value="0"/>"/></td>
-								<td>Terminato</td>
-							</s:if>
-							<s:else>
-								<td><input type="text" name="<s:property value="ID_Prodotto"/>" size="3" value="<s:property value="0"/>"/></td>
-								<td><s:property value="%{disponibilitaProdotti.get(#p.ID_Prodotto)}"/></td>
-							</s:else>
-									
+									<s:if test="%{disponibilitaProdotti.get(#p.ID_Prodotto) == 0}">
+										<td><input type="text" name="<s:property value="ID_Prodotto"/>" disabled="disabled" size="3" value="<s:property value="0"/>"/></td>
+										<td>Terminato</td>
+									</s:if>
+									<s:else>
+										<td><input type="text" name="<s:property value="ID_Prodotto"/>" size="3" value="<s:property value="0"/>"/></td>
+										<td><s:property value="%{disponibilitaProdotti.get(#p.ID_Prodotto)}"/></td>
+									</s:else>
 								</tr>
 						</s:iterator>
 					</tbody>
