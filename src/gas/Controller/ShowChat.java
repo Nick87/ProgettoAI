@@ -17,6 +17,8 @@ public class ShowChat extends ActionSupport
 	private int idDiscussione;
 	private int idMittente; // passato come parametro da sommarioDiscussioni.jsp
 	private int idDestinatario;
+	private String usernameMittente;
+	private String usernameDestinatario;
 	private Map<Integer, String> mapIdMembroUsername;
 	private List<Discussione> chat;
 	
@@ -32,6 +34,8 @@ public class ShowChat extends ActionSupport
 				idDestinatario = d.getID_Membro_Destinatario();
 			else
 				idDestinatario = d.getID_Membro_Mittente();
+			this.usernameMittente = Membro.getUsernameFromId(idMittente);
+			this.usernameDestinatario = Membro.getUsernameFromId(idDestinatario);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return Action.ERROR;
@@ -80,5 +84,21 @@ public class ShowChat extends ActionSupport
 
 	public void setIdDestinatario(int idDestinatario) {
 		this.idDestinatario = idDestinatario;
+	}
+
+	public String getUsernameMittente() {
+		return usernameMittente;
+	}
+
+	public void setUsernameMittente(String usernameMittente) {
+		this.usernameMittente = usernameMittente;
+	}
+
+	public String getUsernameDestinatario() {
+		return usernameDestinatario;
+	}
+
+	public void setUsernameDestinatario(String usernameDestinatario) {
+		this.usernameDestinatario = usernameDestinatario;
 	}
 }

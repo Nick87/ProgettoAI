@@ -4,6 +4,8 @@
 <s:hidden id="idDiscussione" value="%{idDiscussione}"/>
 <s:hidden id="idMittente" value="%{idMittente}"/>
 <s:hidden id="idDestinatario" value="%{idDestinatario}"/>
+<s:hidden id="usernameMittente" value="%{usernameMittente}"/>
+<s:hidden id="usernameDestinatario" value="%{usernameDestinatario}"/>
 <div id="chatWrapper">
 	<div id="messagesArea">
 		<ul id="messageList">
@@ -24,6 +26,9 @@
 	</div>
 
 <script>
+$("#breadcrumbs_container > article").html(
+	"<a href='#'>Home</a><div class='breadcrumb_divider'></div><a href='#'>Comunicazioni</a><div class='breadcrumb_divider'></div><a href='#'>Discussioni</a><div class='breadcrumb_divider'></div><a href='#' class='current'>" + $("#usernameDestinatario").val() + "</a>"
+);
 $("#messagesArea").animate({ scrollTop:$("#messagesArea")[0].scrollHeight-$('#messagesArea').height() }, 300);
 $("#sendMessageBtn").click(function(){
 	var messageContent = $("#textareaMessage").html();
@@ -33,9 +38,13 @@ $("#sendMessageBtn").click(function(){
 		idDestinatario:$("#idDestinatario").val(),
 		messageContent:messageContent.trim()
 	};
-	console.log(params.messageContent);
 	$.get("doInviaDiscussione", params, function(data){
 		var ret = JSON.parse(data);
+		
+		var lastIdMessaggioDiscussione = $("ul#messageList > li:last-child input[type=hidden].idMessaggioDiscussione").val();
+		if(ret.idMessaggioDiscussione <= lastIdMessaggioDiscussione)
+			return;
+
 		var li = $("<li>");
 		var hidden = $("<input>").attr("type", "hidden")
 								 .attr("class", "idMessaggioDiscussione")
@@ -55,9 +64,10 @@ $("#sendMessageBtn").click(function(){
 refresh_chat();
 function refresh_chat()
 {
+	var selector = "ul#messageList > li:last-child input[type=hidden].idMessaggioDiscussione";
 	var params = {
 		idDiscussione:$("#idDiscussione").val(),
-		lastIdMessaggioDiscussione:$("ul#messageList > li:last-child input[type=hidden].idMessaggioDiscussione").val()
+		lastIdMessaggioDiscussione:$(selector).val()
 	};
 	if(!params.idDiscussione || !params.lastIdMessaggioDiscussione) return;
 	$.get("getDeltaDiscussioni", params, function(data){
@@ -66,6 +76,29 @@ function refresh_chat()
 			var map = JSON.parse(data);
 			var mappaIdUsername = map.mappaIdUsername;
 			var deltaDiscussioni = map.deltaDiscussioni;
+			var itemsToDelete = 0;
+			/*
+			*	Dato che l'invio di un messaggio e la richiesta delle discussioni delta
+			*	sono asincrone, puo' capitare che io scriva un messaggio, es con ID 2,
+			*	e poco prima che venga inserito nel DOM della chat view parta refresh_chat
+			*	che vede come id dell'ultimo messaggio non 2, ma bensi' 1, visto che il messaggio
+			*	con id 2 non e' ancora stato inserito nel DOM.
+			*	Cio' fa si' che io veda spuntare il messaggio con ID 2 sulla chat 2 volte:
+			*	la prima quando viene inserito nel DOM, la seconda quando viene recuperato dalla
+			*	richiesta ajax a getDeltaDiscussioni ed inserita anche questa volta nel DOM.
+			*	Per risolvere il problema si eliminano quei messaggi con ID <= all'ultimo ID
+			*	prima di appenderli al DOM. Ricalcoliamo quindi l'ultimo ID perche' nel frattempo
+			*	potrebbe essere cambiato
+			*/
+			var lastIdMessaggioDiscussioneUpdated = $(selector).val();
+			$.each(deltaDiscussioni, function(index, item){				
+				if(item.ID_Messaggio_Discussione <= lastIdMessaggioDiscussioneUpdated)
+					itemsToDelete++;
+			});
+			if(itemsToDelete > 0){
+				//Cominciamo dall'indice 0 perche' le discussioni sono ordinate per ID_Messaggio_Discussione
+				deltaDiscussioni.splice(0, itemsToDelete);
+			}
 			$.each(deltaDiscussioni, function(index, item){
 				var date = new Date(item.timestamp);
 				var day = date.getDate();
@@ -93,7 +126,7 @@ function refresh_chat()
 			});
 		}
 	});	
-	setTimeout(refresh_chat, 1000);
+	setTimeout(refresh_chat, 2000);
 }
 </script>
 </div>

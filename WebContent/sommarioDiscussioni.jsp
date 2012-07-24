@@ -12,7 +12,7 @@
 			<tr><th>Utente</th></tr>
 		</thead>
 		<tbody>
-			<s:iterator value="sommarioDiscussioni" var="d">
+			<s:iterator value="sommarioDiscussioni">
 				<tr>
 					<td>
 						<a class="userName" href="showChat"><s:property value="value"/></a>

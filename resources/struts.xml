@@ -50,9 +50,9 @@
 		    <result name="input">dettaglioOrdine.jsp</result>
 		    <result name="error">dettaglioOrdine.jsp</result>
 		</action>
-		<action name="inviaDiscussione" class="gas.Controller.InviaDiscussione">
+		<action name="nuovaDiscussione" class="gas.Controller.NuovaDiscussione">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
-		    <result>inviaDiscussione.jsp</result>
+		    <result>nuovaDiscussione.jsp</result>
 		</action>
 		<action name="doInviaDiscussione" class="gas.Controller.DoInviaDiscussione">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>

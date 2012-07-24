@@ -131,7 +131,7 @@ $(window).load(function(){
 		 	  	<li><a href="listaMessaggi">Messaggi</a></li>
 		 	  	<li><a href="listaDiscussioni">Discussioni</a>
 		 	  		<ul id="listaDiscussioni">
-		 	  			<li><a href="inviaDiscussione">Nuova Discussione</a></li>
+		 	  			<li><a href="nuovaDiscussione">Nuova Discussione</a></li>
 		 	  			<li><a href="sommarioDiscussioni">Discussioni esistenti</a></li>
 		 	  		</ul>
 		 	  	</li>

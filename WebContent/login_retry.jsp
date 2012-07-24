@@ -29,7 +29,7 @@
 							<s:password id="passInput" name="password" key="label.password" size="20" />
 							<s:submit method="execute" key="label.login" align="right" />
 						</s:form>
-						<div id="back"><a href="index.jsp">Torna alla home page</a></div>
+						<div id="back">Torna alla <a href="index.jsp">home page</a> oppure <a href="<s:url action="registrazione"/>">registrati</a></div>
 					</div>
 				</div>
 			</div>

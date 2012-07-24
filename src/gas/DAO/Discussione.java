@@ -140,6 +140,44 @@ public class Discussione
 		return map;
 	}
 	
+	public static Map<Integer, Integer> getListaIdUtentiGiaInDiscussioneFromIdMembro(int idMembro) throws DBException, SQLException
+	{
+		Connection conn = null;
+		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+		String query_1, query_2;
+		PreparedStatement ps_1, ps_2;
+		ResultSet rs_1, rs_2;
+		try
+		{
+			conn = DBConnection.getDBConnection();
+			query_1 = "SELECT  DISTINCT ID_Discussione FROM discussione " +
+					  "WHERE ID_Membro_Mittente = ? OR ID_Membro_Destinatario = ?";
+			ps_1 = conn.prepareStatement(query_1);
+			ps_1.setInt(1, idMembro);
+			ps_1.setInt(2, idMembro);
+			rs_1 = ps_1.executeQuery();
+			
+			query_2 = "SELECT ID_Membro_Mittente as mitt, ID_Membro_Destinatario as dest " +
+					  "FROM discussione " +
+					  "WHERE ID_Discussione = ? " +
+					  "LIMIT 0, 1";
+			ps_2 = conn.prepareStatement(query_2);
+			while(rs_1.next())
+			{
+				ps_2.setInt(1, rs_1.getInt("ID_Discussione"));
+				rs_2 = ps_2.executeQuery();
+				rs_2.next();
+				if(rs_2.getInt("mitt") == idMembro)
+					map.put(rs_2.getInt("dest"), rs_1.getInt("ID_Discussione"));
+				else
+					map.put(rs_2.getInt("mitt"), rs_1.getInt("ID_Discussione"));
+			}
+		} finally {
+			DBConnection.closeConnection(conn);
+		}
+		return map;
+	}
+	
 	public static List<Discussione> getDiscussioneFromId(int idDiscussione) throws SQLException, DBException
 	{
 		Connection conn = null;

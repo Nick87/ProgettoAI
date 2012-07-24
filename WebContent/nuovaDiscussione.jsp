@@ -13,12 +13,18 @@
 		<s:iterator value="utenti" var="u">
 			<tr>
 				<td>
-					<span class="userName"><s:property value="username"/></span><br/>
-					<div class="textareaMessageDiv">
-						<textarea placeholder="Inserisci il testo del messaggio..." rows="3" cols="50"></textarea><br/>
-						<button class="inviaMessaggioBtn">Invia</button>
-						<input type="hidden" name="idDestinatario" value="<s:property value="ID_Membro"/>"/>
-					</div>
+					<s:if test="%{listaUtentiGiaInDiscussione.get(#u.ID_Membro) != null}">
+						<s:hidden id="idDiscussione" value="%{listaUtentiGiaInDiscussione.get(#u.ID_Membro)}"/>
+						<span class="userNameShowChat"><s:property value="username"/></span>
+					</s:if>
+					<s:else>
+						<span class="userName"><s:property value="username"/></span>
+						<div class="textareaMessageDiv">
+							<textarea placeholder="Inserisci il testo del messaggio..." rows="3" cols="50"></textarea>
+							<button class="inviaMessaggioBtn">Invia</button>
+							<input type="hidden" name="idDestinatario" value="<s:property value="ID_Membro"/>"/>
+						</div>
+					</s:else>
 				</td>
 			</tr>
 		</s:iterator>
@@ -37,6 +43,16 @@ $("#listaUtentiDestinatari").on("click", function(e){
 	var target = $(e.target);
 	if(target.is(".userName"))
 		target.closest("td").find(".textareaMessageDiv").slideToggle("medium");
+	else if(target.is(".userNameShowChat"))
+	{
+		var params = {
+			idDiscussione:target.closest("td").find("input[type=hidden]#idDiscussione").val(),
+			idMittente:$("#idMittente").val()
+		};
+		$.get("showChat", params, function(data){
+			$("#content").html(data);
+		});
+	}
 	else if(target.is(".inviaMessaggioBtn"))
 	{
 		var params = {
