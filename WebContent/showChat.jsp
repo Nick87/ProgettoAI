@@ -59,7 +59,7 @@ $("#sendMessageBtn").click(function(){
 		li.append(hidden);
 		li.append(dateSenderDiv).append(contentMessageDiv);
 		$("ul#messageList").append(li);
-		$("#textareaMessage").empty();
+		$("#textareaMessage").val("");
 		$("#messagesArea").animate({ scrollTop:$("#messagesArea")[0].scrollHeight-$('#messagesArea').height() }, 200);
 	});
 });
@@ -186,6 +186,7 @@ ul#messageList li:not(:last-child)
 	font-size:14px;
 	overflow-y:scroll;
 	float:left;
+	background-color:transparent;
 }
 
 .dateSenderDiv
