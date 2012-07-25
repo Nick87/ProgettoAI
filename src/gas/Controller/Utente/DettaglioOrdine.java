@@ -1,6 +1,6 @@
-package gas.Controller;
+package gas.Controller.Utente;
 
-import gas.DAO.Date_Ordine;
+import gas.DAO.Info_Ordine;
 import gas.DAO.Prodotto;
 import gas.Exception.DBException;
 
@@ -25,7 +25,7 @@ public class DettaglioOrdine extends ActionSupport
 	public String execute()
 	{
 		try {
-			if(Date_Ordine.isOrdineChiuso(idOrdine))
+			if(Info_Ordine.isOrdineChiuso(idOrdine))
 				this.editable = false;
 			else
 				this.editable = true;

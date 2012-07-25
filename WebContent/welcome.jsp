@@ -13,15 +13,6 @@
 <head>
 <title>Pannello di amministrazione</title>
 <link rel="stylesheet" href="css/admin/style.css" type="text/css"/>
-<style>
-.toggleLink
-{
-	font-size: 10px !important;
-	margin-right:10px !important;
-	float: right;
-}
-.toggleLink:hover { color: #77BACE !important; }
-</style>
 <script src="js/jquery-1.7.2.min.js"></script>
 <script>
 var windowLoaded = false;
@@ -156,14 +147,14 @@ $(window).load(function(){
 			<ul>
 				<li><a href="listino">Listino</a></li>
 		 	  	<li><a href="messaggi">Messaggi</a></li>
-		 	  	<li><a href="statoOrdine">Stato ordine</a></li>
-		 	  	<li><a href="statistiche">Statistiche</a></li>
+		 	  	<li><a href="statoOrdineFornitore">Stato ordine</a></li>
+		 	  	<li><a href="statisticheFornitore">Statistiche</a></li>
 	 	  	</ul>
 			<% } else if(tipoMembro.equals("R")) { %>
 			<ul>
 				<li><a href="listino">Listino</a></li>
-				<li><a href="statoOrdine">Stato ordine</a></li>
-		 	  	<li><a href="statistiche">Statistiche</a></li>
+				<li><a href="statoOrdineResponsabile">Stato ordine</a></li>
+		 	  	<li><a href="statisticheResponsabile">Statistiche</a></li>
 		 	  	<li><a href="inviaNotifica">Invia notifica</a></li>
 		 	  	<li><a href="messaggi">Messaggi</a></li>
 		 	  	<li><a href="riepilogoRitiro">Riepilogo ritiro</a></li>

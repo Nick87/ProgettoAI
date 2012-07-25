@@ -1,4 +1,4 @@
-package gas.Controller;
+package gas.Controller.Utente;
 
 import java.sql.SQLException;
 import java.util.List;

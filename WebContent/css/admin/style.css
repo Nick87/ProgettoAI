@@ -398,3 +398,11 @@ ul.actionMessage { list-style:none; }
 #listaUtentiDestinatari span.userName,
 #listaUtentiDestinatari span.userNameShowChat
 { cursor:pointer; }
+
+.toggleLink
+{
+	font-size: 10px !important;
+	margin-right:10px !important;
+	float: right;
+}
+.toggleLink:hover { color: #77BACE !important; }

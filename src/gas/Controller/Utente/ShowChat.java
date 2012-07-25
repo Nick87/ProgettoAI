@@ -1,4 +1,4 @@
-package gas.Controller;
+package gas.Controller.Utente;
 
 import gas.DAO.Discussione;
 import gas.DAO.Membro;

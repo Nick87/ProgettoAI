@@ -1,7 +1,7 @@
-package gas.Controller;
+package gas.Controller.Utente;
 
-import gas.DAO.Date_Ordine;
-import gas.DAO.Date_Ordine.TipoOrdine;
+import gas.DAO.Info_Ordine;
+import gas.DAO.Info_Ordine.TipoOrdine;
 import gas.Exception.DBException;
 
 import java.sql.SQLException;
@@ -15,12 +15,12 @@ public class ListaOrdiniAperti extends ActionSupport
 	private int idMembro;
 	private String tipoMembro;
 	private String username;
-	private List<Date_Ordine> ordiniAperti;
+	private List<Info_Ordine> ordiniAperti;
 	
 	public String execute()
 	{
 		try {
-			ordiniAperti = Date_Ordine.getOrdini(TipoOrdine.APERTO, idMembro, -1);
+			setOrdiniAperti(Info_Ordine.getOrdini(TipoOrdine.APERTO, idMembro, -1));
 		} catch (DBException e) {
 			System.out.println(e.getMessage());
 			return Action.ERROR;
@@ -31,30 +31,27 @@ public class ListaOrdiniAperti extends ActionSupport
 		return Action.SUCCESS;
 	}
 	
-	public List<Date_Ordine> getOrdiniAperti() {
+	public List<Info_Ordine> getOrdiniAperti() {
 		return ordiniAperti;
 	}
-
+	public void setOrdiniAperti(List<Info_Ordine> ordiniAperti) {
+		this.ordiniAperti = ordiniAperti;
+	}
 	public int getIdMembro() {
 		return idMembro;
 	}
-
 	public void setIdMembro(int idMembro) {
 		this.idMembro = idMembro;
 	}
-
 	public String getTipoMembro() {
 		return tipoMembro;
 	}
-
 	public void setTipoMembro(String tipoMembro) {
 		this.tipoMembro = tipoMembro;
 	}
-
 	public String getUsername() {
 		return username;
 	}
-
 	public void setUsername(String username) {
 		this.username = username;
 	}

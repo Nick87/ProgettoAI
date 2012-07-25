@@ -28,71 +28,75 @@
 		<action name="logout" class="gas.Controller.LogoutAction">		    
 			<result>index.jsp</result>			
 		</action>
-		<action name="listaOrdiniAperti" class="gas.Controller.ListaOrdiniAperti">
+		<action name="listaOrdiniAperti" class="gas.Controller.Utente.ListaOrdiniAperti">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result name="success">ordiniAperti.jsp</result>
 		</action>
-		<action name="listaProdottiAcquistabili" class="gas.Controller.ListaProdottiAcquistabili">
+		<action name="listaProdottiAcquistabili" class="gas.Controller.Utente.ListaProdottiAcquistabili">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result name="success">prodottiAcquistabili.jsp</result>
 		</action>
-		<action name="mieiOrdini" class="gas.Controller.MieiOrdini">
+		<action name="mieiOrdini" class="gas.Controller.Utente.MieiOrdini">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result name="success">mieiOrdini.jsp</result>
 		</action>
-		<action name="dettaglioOrdine" class="gas.Controller.DettaglioOrdine">
+		<action name="dettaglioOrdine" class="gas.Controller.Utente.DettaglioOrdine">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result name="success">dettaglioOrdine.jsp</result>
 		</action>
-		<action name="aggiornaQuantita" class="gas.Controller.AggiornaQuantita">
+		<action name="aggiornaQuantita" class="gas.Controller.Utente.AggiornaQuantita">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result name="success">dettaglioOrdine.jsp</result>
 		    <result name="input">dettaglioOrdine.jsp</result>
 		    <result name="error">dettaglioOrdine.jsp</result>
 		</action>
-		<action name="nuovaDiscussione" class="gas.Controller.NuovaDiscussione">
+		<action name="nuovaDiscussione" class="gas.Controller.Utente.NuovaDiscussione">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result>nuovaDiscussione.jsp</result>
 		</action>
-		<action name="doInviaDiscussione" class="gas.Controller.DoInviaDiscussione">
+		<action name="doInviaDiscussione" class="gas.Controller.Utente.DoInviaDiscussione">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		  	<result type="stream">
 		  	    <param name="contentType">plain/text</param>
 		  	    <param name="inputName">inputStream</param>
 		  	</result>
 		</action>
-		<action name="sommarioDiscussioni" class="gas.Controller.SommarioDiscussioni">
+		<action name="sommarioDiscussioni" class="gas.Controller.Utente.SommarioDiscussioni">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result>sommarioDiscussioni.jsp</result>
 		</action>
-		<action name="showChat" class="gas.Controller.ShowChat">
+		<action name="showChat" class="gas.Controller.Utente.ShowChat">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result>showChat.jsp</result>
 		</action>
-		<action name="getDeltaDiscussioni" class="gas.Controller.GetDeltaDiscussioni">
+		<action name="getDeltaDiscussioni" class="gas.Controller.Utente.GetDeltaDiscussioni">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		  	<result type="stream">
 		  	    <param name="contentType">plain/text</param>
 		  	    <param name="inputName">inputStream</param>
 		  	</result>
 		</action>
-		<action name="confermaSchedaAcquisto" class="gas.Controller.ConfermaSchedaAcquisto">
+		<action name="confermaSchedaAcquisto" class="gas.Controller.Utente.ConfermaSchedaAcquisto">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result name="success">confermaSchedaAcquisto.jsp</result>
 		    <result name="input">prodottiAcquistabili.jsp</result>
 		    <result name="error">prodottiAcquistabili.jsp</result>
 		</action>
-		<action name="delega" class="gas.Controller.Delega">
+		<action name="delega" class="gas.Controller.Utente.Delega">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result name="success">delega.jsp</result>
 		    <result name="input">delega.jsp</result>
 		    <result name="error">delega.jsp</result>
 		</action>
-		<action name="creaDelega" class="gas.Controller.CreaDelega">
+		<action name="creaDelega" class="gas.Controller.Utente.CreaDelega">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result name="success">confermaDelega.jsp</result>
 		    <result name="input">delega.jsp</result>
 		    <result name="error">delega.jsp</result>
+		</action>
+		<action name="statoOrdineResponsabile" class="gas.Controller.Responsabile.StatoOrdineResponsabile">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		    <result name="success">statoOrdineResponsabile.jsp</result>
 		</action>
 		<action name="*">
 		    <result>{1}.jsp</result>

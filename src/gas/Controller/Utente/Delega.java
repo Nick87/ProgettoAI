@@ -1,6 +1,6 @@
-package gas.Controller;
+package gas.Controller.Utente;
 
-import gas.DAO.Date_Ordine;
+import gas.DAO.Info_Ordine;
 import gas.DAO.Membro;
 import gas.Exception.DBException;
 import java.sql.SQLException;
@@ -17,7 +17,7 @@ public class Delega extends ActionSupport
 	private int idMembro;
 	private String tipoMembro;
 	private String username;
-	private List<Date_Ordine> listaOrdiniCompleta;
+	private List<Info_Ordine> listaOrdiniCompleta;
 	private List<Integer> listaOrdini = new ArrayList<Integer>();
 	private List<Membro> listaUtentiCompleta;
 	private Map<Integer, String> listaUtentiDelegabili = new HashMap<Integer, String>();
@@ -26,10 +26,10 @@ public class Delega extends ActionSupport
 	{
 		try
 		{
-			listaOrdiniCompleta = Date_Ordine.getOrdini(Date_Ordine.TipoOrdine.CHIUSO, idMembro, 1);
+			listaOrdiniCompleta = Info_Ordine.getOrdini(Info_Ordine.TipoOrdine.CHIUSO, idMembro, 1);
 			listaUtentiCompleta = Membro.getMembriDelegabili(idMembro);
-			for(Date_Ordine d : listaOrdiniCompleta)
-				listaOrdini.add(d.getID_Ordine());
+			for(Info_Ordine i : listaOrdiniCompleta)
+				listaOrdini.add(i.getID_Ordine());
 			for(Membro m: listaUtentiCompleta)
 					listaUtentiDelegabili.put(m.getID_Membro(), m.getNome()+" "+m.getCognome());
 		} catch (DBException e) {
@@ -60,10 +60,10 @@ public class Delega extends ActionSupport
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public List<Date_Ordine> getListaOrdiniCompleta() {
+	public List<Info_Ordine> getListaOrdiniCompleta() {
 		return listaOrdiniCompleta;
 	}
-	public void setListaOrdiniCompleta(List<Date_Ordine> listaOrdiniCompleta) {
+	public void setListaOrdiniCompleta(List<Info_Ordine> listaOrdiniCompleta) {
 		this.listaOrdiniCompleta = listaOrdiniCompleta;
 	}
 	public List<Integer> getListaOrdini() {

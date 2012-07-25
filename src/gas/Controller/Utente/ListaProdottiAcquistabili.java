@@ -1,4 +1,4 @@
-package gas.Controller;
+package gas.Controller.Utente;
 
 import gas.DAO.Prodotto;
 import gas.Exception.DBException;
