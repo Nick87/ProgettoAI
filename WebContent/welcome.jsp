@@ -41,7 +41,6 @@ $(function(){
 		if(target.attr("id") == "logout" || target.attr("href") == "#")
 			return true;
 		if(target.attr("href") == "listaMieiOrdini" ||
-		   target.attr("href") == "listaMessaggi" ||
 		   target.attr("href") == "listaDiscussioni")
 		{
 			$("ul#" + target.attr("href")).slideToggle();
@@ -136,9 +135,7 @@ $(window).load(function(){
 		 	  	<li>
 		 	  		<div id="notificheDiv" class="clearfix">
 		 	  			<a href="leggiNotifiche" class="left">Notifiche</a>
-		 	  			<!-- <s:if test="%{numeroNotificheNonLette > 0}"> -->
-		 	  				<span class="numberBubble"><s:property value="%{numeroNotificheNonLette}"/></span>
-		 	  			<!-- </s:if> -->
+	 	  				<span class="numberBubble"><s:property value="%{numeroNotificheNonLette}"/></span>
 	 	  			</div>
  	  			</li>
 		 	  	<li><a href="listaMessaggi">Messaggi</a></li>

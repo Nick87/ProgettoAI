@@ -59,4 +59,7 @@ $("#tabellaNotifiche").on("click", function(e){
 		});
 	}
 });
+$("#breadcrumbs_container > article").html(
+	"<a href='#'>Home</a><div class='breadcrumb_divider'></div><a href='#'>Comunicazioni</a><div class='breadcrumb_divider'></div><a href='#' class='current'>Notifiche</a>"
+);
 </script>

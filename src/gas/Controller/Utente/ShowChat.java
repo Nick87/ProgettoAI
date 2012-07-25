@@ -49,55 +49,42 @@ public class ShowChat extends ActionSupport
 	public int getIdDiscussione() {
 		return idDiscussione;
 	}
-
 	public void setIdDiscussione(int idDiscussione) {
 		this.idDiscussione = idDiscussione;
 	}
-
 	public List<Discussione> getChat() {
 		return chat;
 	}
-
 	public void setChat(List<Discussione> chat) {
 		this.chat = chat;
 	}
-
 	public Map<Integer, String> getMapIdMembroUsername() {
 		return mapIdMembroUsername;
 	}
-
 	public void setMapIdMembroUsername(Map<Integer, String> mapIdMembroUsername) {
 		this.mapIdMembroUsername = mapIdMembroUsername;
 	}
-
 	public int getIdMittente() {
 		return idMittente;
 	}
-
 	public void setIdMittente(int idMittente) {
 		this.idMittente = idMittente;
 	}
-
 	public int getIdDestinatario() {
 		return idDestinatario;
 	}
-
 	public void setIdDestinatario(int idDestinatario) {
 		this.idDestinatario = idDestinatario;
 	}
-
 	public String getUsernameMittente() {
 		return usernameMittente;
 	}
-
 	public void setUsernameMittente(String usernameMittente) {
 		this.usernameMittente = usernameMittente;
 	}
-
 	public String getUsernameDestinatario() {
 		return usernameDestinatario;
 	}
-
 	public void setUsernameDestinatario(String usernameDestinatario) {
 		this.usernameDestinatario = usernameDestinatario;
 	}

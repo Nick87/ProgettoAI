@@ -17,7 +17,7 @@ public class CreaDelega extends ActionSupport
 {
 	private int idMembro;
 	private String ordine_scelto;
-	private String  utente_scelto;
+	private String utente_scelto;
 	
 	public String execute()
 	{
@@ -25,9 +25,15 @@ public class CreaDelega extends ActionSupport
 		int idutentescelto = Integer.parseInt(utente_scelto);
 		try
 		{
-			SchedaAcquisto.Aggiungi_Delega(idMembro, idordinescelto,idutentescelto);
-			Log.addLog("Aggiunta delega del membro " + idutentescelto + " da parte del membro " + idMembro + " per l'ordine " + idordinescelto);
-			Messaggio.inserisciMessaggio(idutentescelto,idordinescelto, "L'utente " + Membro.getUsernameFromId(idMembro) + " ha delegato il membro " + Membro.getUsernameFromId(idutentescelto) + " al ritiro dell'ordine " + idordinescelto);
+			SchedaAcquisto.Aggiungi_Delega(idMembro,idordinescelto,idutentescelto);
+			Log.addLog("Aggiunta delega del membro "+idutentescelto+" da parte del membro "+idMembro+" per l'ordine "+idordinescelto);
+			//Dopo che l'utente crea una delega, viene inviato un messaggio al responsabile dell'ordine
+			int id_responsabile = 5;
+			Messaggio.inserisciMessaggio(id_responsabile, "L'utente " + Membro.getUsernameFromId(idMembro) + " ha delegato il membro " + Membro.getUsernameFromId(idutentescelto) + " al ritiro dell'ordine " + idordinescelto);
+			Log.addLog("Inviato messaggio al membro " + id_responsabile);
+			//Viene inviato un messaggio al delegato 
+			Messaggio.inserisciMessaggio(idutentescelto, "L'utente " + Membro.getUsernameFromId(idMembro) + " ti ha delegato al ritiro dell'ordine " + idordinescelto);
+			Log.addLog("Inviato messaggio al membro "+idutentescelto);
 		} catch (InvalidOperationException e) {
 			System.out.println(e.getMessage());
 			addActionError(e.getMessage());

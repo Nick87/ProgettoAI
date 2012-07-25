@@ -458,6 +458,7 @@ ul.actionMessage { list-style:none; }
 	color:white;
 	border:1px solid red;
 	border-radius:5px;
+	box-shadow:1px 1px 1px black;
 	padding:0px 5px;
 	background-color:red;
 	font-weight:bold;

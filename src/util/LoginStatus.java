@@ -10,7 +10,7 @@ public class LoginStatus
 	{
 		this.tipoMembro = tipoMembro;
 		this.username = username;
-		this.setID_Membro(idMembro);
+		this.ID_Membro = idMembro;
 	}
 
 	public String getTipoMembro() {

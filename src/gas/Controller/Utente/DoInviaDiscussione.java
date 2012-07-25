@@ -96,31 +96,24 @@ public class DoInviaDiscussione extends ActionSupport
 	public int getIdMittente() {
 		return idMittente;
 	}
-
 	public void setIdMittente(int idMittente) {
 		this.idMittente = idMittente;
 	}
-
 	public int getIdDestinatario() {
 		return idDestinatario;
 	}
-
 	public void setIdDestinatario(int idDestinatario) {
 		this.idDestinatario = idDestinatario;
 	}
-
 	public String getMessageContent() {
 		return messageContent;
 	}
-
 	public void setMessageContent(String messageContent) {
 		this.messageContent = messageContent;
 	}
-
 	public InputStream getInputStream() {
 		return inputStream;
 	}
-
 	public void setInputStream(InputStream inputStream) {
 		this.inputStream = inputStream;
 	}

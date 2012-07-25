@@ -58,23 +58,18 @@ public class GetDeltaDiscussioni extends ActionSupport
 	public int getIdDiscussione() {
 		return idDiscussione;
 	}
-
 	public void setIdDiscussione(int idDiscussione) {
 		this.idDiscussione = idDiscussione;
 	}
-	
 	public InputStream getInputStream() {
 		return inputStream;
 	}
-
 	public void setInputStream(InputStream inputStream) {
 		this.inputStream = inputStream;
 	}
-
 	public int getLastIdMessaggioDiscussione() {
 		return lastIdMessaggioDiscussione;
 	}
-
 	public void setLastIdMessaggioDiscussione(int lastIdMessaggioDiscussione) {
 		this.lastIdMessaggioDiscussione = lastIdMessaggioDiscussione;
 	}

@@ -18,7 +18,7 @@ public class Messaggio
 		
 	public Messaggio() {}
 	
-	public static void inserisciMessaggio(int id_destinatario, int idordinescelto, String testo) throws DBException, SQLException
+	public static void inserisciMessaggio(int id_MembroDest, String testo) throws DBException, SQLException
 	{
 		Connection conn = null;
 		String query = "";
@@ -31,13 +31,13 @@ public class Messaggio
 	    	java.sql.Date date = new java.sql.Date(now.getTime());
 			query = "INSERT INTO messaggio(ID_Membro, data, testo, letto, confermato) VALUES(?, ?, ?, ?, ?)";
 			ps = conn.prepareStatement(query);
-			ps.setInt(1, id_destinatario);
+			ps.setInt(1, id_MembroDest);
 			ps.setDate(2, date);
 			ps.setString(3, testo);
 			ps.setInt(4, 0);
 			ps.setInt(5, 0);
 			ps.executeUpdate();
-			// Adesso possiamo inserire la nuova scheda di acquisto
+			// Adesso possiamo inserire il nuovo messaggio
 			conn.commit();
 			conn.setAutoCommit(true);
 		} finally {

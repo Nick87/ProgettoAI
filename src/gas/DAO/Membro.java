@@ -77,6 +77,26 @@ public class Membro
 		return username;
 	}
 	
+	public static String getNomeCognomeFromId(int idMembro) throws DBException, SQLException
+	{
+		Connection conn = null;
+		String nome_cognome = null;
+		try
+		{
+			conn = DBConnection.getDBConnection();
+			String query = "SELECT nome,cognome FROM membro WHERE ID_Membro = ?";
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, idMembro);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			nome_cognome = rs.getString("nome");
+			nome_cognome = nome_cognome +" " + rs.getString("cognome");
+		} finally {
+			DBConnection.closeConnection(conn);
+		}
+		return nome_cognome;
+	}
+	
 	public static List<Integer> getIdMembriFromOrdine(int idOrdine) throws DBException, SQLException
 	{
 		Connection conn = null;
@@ -98,19 +118,22 @@ public class Membro
 		return list;
 	}
 	
-	public static List<Membro> getMembriDelegabili(int idMembroRichiedente) throws DBException, SQLException
+	public static List<Membro> getMembriDelegabili(int idMembroRichiedente, int id_ordine) throws DBException, SQLException
 	{
+		//Seleziona tutti i membri partecipanti allo specifico ordine, tranne naturalmente chi vuole delegare
 		ArrayList<Membro> lista = new ArrayList<Membro>();
 		Connection conn = null;
 		try
 		{
 			conn = DBConnection.getDBConnection();
-			String query = "SELECT * FROM membro WHERE";
-			query += " tipo_membro = ? AND ID_Membro != ? AND abilitato = ?";
+			String query = "SELECT * FROM membro M, scheda_di_acquisto S WHERE";
+			query += " M.tipo_membro = ? AND M.ID_Membro != ? AND M.abilitato = ? AND S.ID_Ordine = ? AND S.ID_membro_che_acquista != ? AND S.ID_membro_che_acquista=M.ID_Membro";
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setString(1, "U");
 			ps.setInt(2, idMembroRichiedente);
 			ps.setInt(3, 1);
+			ps.setInt(4, id_ordine);
+			ps.setInt(5, idMembroRichiedente);
 			ResultSet rs = ps.executeQuery();
 			Membro m;
 			while(rs.next())
@@ -126,6 +149,7 @@ public class Membro
 		}
 		return lista;
 	}
+	
 	public static List<Membro> getMembriFromType(memberType ... tipi) throws DBException, SQLException
 	{
 		ArrayList<Membro> lista = new ArrayList<Membro>();

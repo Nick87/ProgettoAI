@@ -7,24 +7,26 @@
 </s:if>
 <s:else>
 	<s:form id="listaDatiDelega" action="creaDelega" method="post">
-		<s:select label="Ordine" name="ordine_scelto" list="listaOrdini"/>
-		<s:select label="Delegato" name="utente_scelto" list="listaUtentiDelegabili"/>
-		<s:submit method="execute" value="Conferma Delega" align="left" />
-		<s:hidden id="idMembro" value="%{idMembro}"/>	
+		<s:select id="lista_ordini" label="Scegli un ordine chiuso" name="ordine_scelto" list="listaOrdini"/>
+<%--  				<s:select label="Delegato"  --%>
+<%--   					name="utente_scelto"  --%>
+<%--   			list="listaUtentiDelegabili"/> --%>
+<%--     			<s:submit method="execute" value="Conferma Delega" align="left" /> --%>
+		<s:hidden id="idMembro" value="%{idMembro}"></s:hidden>	
 	</s:form>	
 </s:else>
 <script>
-$("#listaDatiDelega").on("submit", function(e){
-	e.preventDefault();
+$("#lista_ordini option").on("click", function(e){
 	var params = {
 		idMembro:$("#idMembro").val(),
-		ordine_scelto:$("#listaDatiDelega_ordine_scelto").val(),
-		utente_scelto:$("#listaDatiDelega_utente_scelto").val()
-		//lista_utenti_delegabili:$(this).serializeJSON()
+		ordine_scelto:$("#lista_ordini").val()
 	};
 	console.log(params);
-	$.get("creaDelega", params,function(data){
+	$.get("getMembriDelegabili", params,function(data){
 		$("#content").html(data);
 	});
 });
+$("#breadcrumbs_container > article").html(
+	"<a href='#'>Home</a><div class='breadcrumb_divider'></div><a href='#'>Altro</a><div class='breadcrumb_divider'></div><a href='#' class='current'>Delega</a>"
+);
 </script>

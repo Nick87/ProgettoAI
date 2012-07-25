@@ -33,31 +33,24 @@ public class SommarioDiscussioni extends ActionSupport
 	public Map<Integer, String> getSommarioDiscussioni() {
 		return sommarioDiscussioni;
 	}
-
 	public void setSommarioDiscussioni(Map<Integer, String> sommarioDiscussioni) {
 		this.sommarioDiscussioni = sommarioDiscussioni;
 	}
-
 	public int getIdMembro() {
 		return idMembro;
 	}
-
 	public void setIdMembro(int idMembro) {
 		this.idMembro = idMembro;
 	}
-
 	public String getTipoMembro() {
 		return tipoMembro;
 	}
-
 	public void setTipoMembro(String tipoMembro) {
 		this.tipoMembro = tipoMembro;
 	}
-
 	public String getUsername() {
 		return username;
 	}
-
 	public void setUsername(String username) {
 		this.username = username;
 	}

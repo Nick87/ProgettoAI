@@ -24,7 +24,8 @@ public class DettaglioOrdine extends ActionSupport
 	
 	public String execute()
 	{
-		try {
+		try
+		{
 			if(Info_Ordine.isOrdineChiuso(idOrdine))
 				this.editable = false;
 			else
@@ -49,39 +50,30 @@ public class DettaglioOrdine extends ActionSupport
 	public int getIdOrdine() {
 		return idOrdine;
 	}
-
 	public void setIdOrdine(int idOrdine) {
 		this.idOrdine = idOrdine;
 	}
-
 	public int getIdMembro() {
 		return idMembro;
 	}
-
 	public void setIdMembro(int idMembro) {
 		this.idMembro = idMembro;
 	}
-
 	public List<Prodotto> getListaProdotti() {
 		return listaProdotti;
 	}
-
 	public void setListaProdotti(List<Prodotto> listaProdotti) {
 		this.listaProdotti = listaProdotti;
 	}
-
 	public boolean isEditable() {
 		return editable;
 	}
-
 	public void setEditable(boolean editable) {
 		this.editable = editable;
 	}
-
 	public Map<Integer, Integer> getDisponibilitaProdotti() {
 		return disponibilitaProdotti;
 	}
-
 	public void setDisponibilitaProdotti(Map<Integer, Integer> disponibilitaProdotti) {
 		this.disponibilitaProdotti = disponibilitaProdotti;
 	}

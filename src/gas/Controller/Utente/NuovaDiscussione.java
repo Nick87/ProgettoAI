@@ -22,7 +22,8 @@ public class NuovaDiscussione extends ActionSupport
 	
 	public String execute()
 	{
-		try {
+		try
+		{
 			this.utenti = Membro.getMembriFromType(memberType.UTENTE);
 			this.listaUtentiGiaInDiscussione = Discussione.getListaIdUtentiGiaInDiscussioneFromIdMembro(this.idMembro);
 			int index = 0;

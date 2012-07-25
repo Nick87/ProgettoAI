@@ -30,18 +30,18 @@
 			</s:iterator>
 		</tbody>
 	</table>
-	<script>
-	$("#tableOrdiniAperti").on("click", "a", function(e){
-		e.preventDefault();
-		e.stopPropagation();
-		var target = $(e.target);
-		history.pushState(null, null, target.attr("href"));
-		$.get(target.attr("href"), /*params,*/ function(data){
-			$("#content").html(data);
-		});
-	});
-	$("#breadcrumbs_container > article").html(
-		"<a href='#'>Home</a><div class='breadcrumb_divider'></div><a href='#'>Ordini</a><div class='breadcrumb_divider'></div><a href='#' class='current'>Ordini aperti</a>"
-	);
-	</script>
 </s:else>
+<script>
+$("#tableOrdiniAperti").on("click", "a", function(e){
+	e.preventDefault();
+	e.stopPropagation();
+	var target = $(e.target);
+	history.pushState(null, null, target.attr("href"));
+	$.get(target.attr("href"), /*params,*/ function(data){
+		$("#content").html(data);
+	});
+});
+$("#breadcrumbs_container > article").html(
+	"<a href='#'>Home</a><div class='breadcrumb_divider'></div><a href='#'>Ordini</a><div class='breadcrumb_divider'></div><a href='#' class='current'>Ordini aperti</a>"
+);
+</script>

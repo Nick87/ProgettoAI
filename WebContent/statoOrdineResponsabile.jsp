@@ -39,4 +39,7 @@ $("#inviaNotificaChiusuraOrdine").click(function(e){
 		$("#content").html(data);
 	});
 });
+$("#breadcrumbs_container > article").html(
+	"<a href='#'>Home</a><div class='breadcrumb_divider'></div><a href='#' class='current'>Stato ordine</a>"
+);
 </script>

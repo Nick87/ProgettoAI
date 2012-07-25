@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class SchedaAcquisto
@@ -31,7 +33,32 @@ public class SchedaAcquisto
 		this.quantita = quantita;
 		this.ritirato = ritirato;
 	}
-	public static void Aggiungi_Delega(int idMembroCompratore, int idordinescelto,int idutentescelto) throws InvalidOperationException, DBException, SQLException, ItemNotFoundException
+	
+	public static void RimuoviDelega(int iD_membro_che_acquista, int idOrdine) throws DBException, SQLException
+	{
+		Connection conn = null;
+		String query = "";
+		PreparedStatement ps;
+		try
+		{
+			conn = DBConnection.getDBConnection();
+			conn.setAutoCommit(false);
+			query = "UPDATE scheda_di_acquisto " +
+				"SET ID_membro_che_ritira = ? " +
+				"WHERE ID_Ordine = ? AND ID_membro_che_acquista = ?";
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, -1);
+			ps.setInt(2, idOrdine);
+			ps.setInt(3, iD_membro_che_acquista);
+			ps.executeUpdate();
+			// Adesso possiamo inserire la nuova scheda di acquisto
+			conn.commit();
+			conn.setAutoCommit(true);
+		} finally {
+			DBConnection.closeConnection(conn);
+		}
+	}
+	public static void Aggiungi_Delega(int idMembroCompratore,int idordinescelto,int idutentescelto) throws InvalidOperationException, DBException, SQLException, ItemNotFoundException
 	{
 		Connection conn = null;
 		String query = "";
@@ -51,8 +78,7 @@ public class SchedaAcquisto
 			// Adesso possiamo inserire la nuova scheda di acquisto
 			conn.commit();
 			conn.setAutoCommit(true);
-		}
-		finally {
+		} finally {
 			DBConnection.closeConnection(conn);
 		}
 	}
@@ -177,6 +203,29 @@ public class SchedaAcquisto
 		}
 		return id;
 	}
+	
+	public static List<SchedaAcquisto> DeleghePerUtente(int id_membro) throws DBException, SQLException
+	{
+		ArrayList<SchedaAcquisto> list = new ArrayList<SchedaAcquisto>();		
+		//Cerco il prossimo id_scheda prendendo il massimo dalla tabella scheda_acquisto
+		Connection conn = DBConnection.getDBConnection();
+		String query="SELECT * FROM scheda_di_acquisto WHERE ID_membro_che_acquista = ? AND ID_membro_che_ritira != ? GROUP BY ID_Ordine";
+		PreparedStatement ps;
+		try {
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, id_membro);
+			ps.setInt(2, -1);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				list.add(new SchedaAcquisto(rs.getInt("ID_Scheda"), rs.getInt("ID_Ordine"), rs.getInt("ID_Prodotto"),rs.getInt("ID_Membro_che_acquista"),rs.getInt("ID_Membro_che_ritira"),rs.getInt("quantita"),rs.getBoolean("ritirato")));
+			}
+		} finally {
+			DBConnection.closeConnection(conn);
+		}
+		return list;
+	}
+	
+	
 
 	public int getID_Scheda() {
 		return ID_Scheda;

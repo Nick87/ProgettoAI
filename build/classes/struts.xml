@@ -110,6 +110,22 @@
 		    <result name="input">delega.jsp</result>
 		    <result name="error">delega.jsp</result>
 		</action>
+		<action name="listaDelega" class="gas.Controller.Utente.ListaDelega">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		    <result name="success">listaDelega.jsp</result>
+		    <result name="input">delega.jsp</result>
+		    <result name="error">delega.jsp</result>
+		</action>
+		<action name="rimuoviDelega" class="gas.Controller.Utente.RimuoviDelega">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		    <result name="success">listaDelega.jsp</result>
+		    <result name="input">delega.jsp</result>
+		    <result name="error">delega.jsp</result>
+		</action>
+		<action name="getMembriDelegabili" class="gas.Controller.Utente.GetMembriDelegabili">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		    <result name="success">membri_delegabili.jsp</result>
+		</action>
 		
 		<!-- Azioni Responsabile -->
 		

@@ -20,9 +20,9 @@ public class ListaProdottiAcquistabili extends ActionSupport
 	
 	public String execute()
 	{
-		try {
+		try 
+		{
 			listaProdotti = Prodotto.getListaProdottiFromOrdine(idOrdine);
-			
 			if(disponibilitaProdotti == null)
 				disponibilitaProdotti = new HashMap<Integer, Integer>();
 			disponibilitaProdotti.clear();
@@ -38,22 +38,19 @@ public class ListaProdottiAcquistabili extends ActionSupport
 		}
 		return Action.SUCCESS;
 	}
+	
 	public Map<Integer, Integer> getDisponibilitaProdotti() {
 		return disponibilitaProdotti;
 	}
-
 	public void setDisponibilitaProdotti(Map<Integer, Integer> disponibilitaProdotti) {
 		this.disponibilitaProdotti = disponibilitaProdotti;
 	}
-
 	public void setListaProdotti(List<Prodotto> listaProdotti) {
 		this.listaProdotti = listaProdotti;
 	}
-	
 	public List<Prodotto> getListaProdotti() {
 		return listaProdotti;
 	}
-
 	public int getIdMembro() {
 		return idMembro;
 	}
@@ -63,7 +60,6 @@ public class ListaProdottiAcquistabili extends ActionSupport
 	public int getIdOrdine() {
 		return idOrdine;
 	}
-
 	public void setIdOrdine(int idOrdine) {
 		this.idOrdine = idOrdine;
 	}
