@@ -18,7 +18,7 @@
 			<result name="loggato">welcome.jsp</result>
 		</global-results>
 		
-	    <!-- Login & Logout -->
+	    <!-- Azioni Comuni -->
 	    
 		<action name="login" class="gas.Controller.Common.LoginAction">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
@@ -29,6 +29,10 @@
 		</action>
 		<action name="logout" class="gas.Controller.Common.LogoutAction">		    
 			<result>index.jsp</result>			
+		</action>
+		<action name="leggiNotifiche" class="gas.Controller.Common.LeggiNotifiche">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		    <result name="success">leggiNotifiche.jsp</result>
 		</action>
 		
 		<!-- Azioni utente -->
@@ -106,7 +110,6 @@
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result name="success">statoOrdineResponsabile.jsp</result>
 		</action>
-		
 		<action name="inviaNotificaChiusuraOrdine" class="gas.Controller.Responsabile.InviaNotificaChiusuraOrdine">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result name="success">statoOrdineResponsabile.jsp</result>

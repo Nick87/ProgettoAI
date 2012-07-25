@@ -82,58 +82,46 @@ public class ConfermaSchedaAcquisto extends ActionSupport
 			System.out.println(e.getMessage());
 		}
 	}
+	
 	public int getIdOrdine() {
 		return idOrdine;
 	}
-
 	public void setIdOrdine(int idOrdine) {
 		this.idOrdine = idOrdine;
 	}
-
 	public int getIdMembro() {
 		return idMembro;
 	}
-
 	public void setIdMembro(int idMembro) {
 		this.idMembro = idMembro;
 	}
-
 	public Map<String, String> getQuantita() {
 		return quantita;
 	}
-
 	public void setQuantita(Map<String, String> quantita) {
 		this.quantita = quantita;
 	}
-
 	public Map<Integer, Integer> getNewQuantita() {
 		return newQuantita;
 	}
-
 	public void setNewQuantita(Map<Integer, Integer> newQuantita) {
 		this.newQuantita = newQuantita;
 	}
-
 	public boolean isInput() {
 		return input;
 	}
-
 	public void setInput(boolean input) {
 		this.input = input;
 	}
-
 	public List<Prodotto> getListaProdotti() {
 		return listaProdotti;
 	}
-
 	public void setListaProdotti(List<Prodotto> listaProdotti) {
 		this.listaProdotti = listaProdotti;
 	}
-
 	public Map<Integer, Integer> getDisponibilitaProdotti() {
 		return disponibilitaProdotti;
 	}
-
 	public void setDisponibilitaProdotti(Map<Integer, Integer> disponibilitaProdotti) {
 		this.disponibilitaProdotti = disponibilitaProdotti;
 	}

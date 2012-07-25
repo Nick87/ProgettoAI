@@ -6,7 +6,6 @@
 	<div class="alert_info">Non ci sono nuovi ordini aperti</div>
 </s:if>
 <s:else>
-	<!-- <h3 class="pageTitle">Ordini aperti</h3> -->
 	<table id="tableOrdiniAperti">
 		<thead>
 			<tr>

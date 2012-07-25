@@ -21,7 +21,7 @@ public class LoginInterceptor implements Interceptor
 		//System.out.println("Intercettore: " + context.containsKey("user") + ", " + context.containsKey("status"));
 		//System.out.println(invocation.getAction().getClass().getName());
 		
-		if(invocation.getAction().getClass().getName().equals("gas.Controller.LoginAction")){
+		if(invocation.getAction().getClass().getName().equals("gas.Controller.Common.LoginAction")){
 			//System.out.println("1");
 			if(context.containsKey("user")){
 				//System.out.println("2");

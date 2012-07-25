@@ -34,7 +34,7 @@ $(function(){
 			$(this).remove();
 		});
 	});
-	$("#allCommands").on("click", "li > a", function(e){
+	$("#allCommands").on("click", "a", function(e){
 		e.stopPropagation();
 		e.preventDefault();
 		var target = $(e.target);

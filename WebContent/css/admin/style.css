@@ -24,6 +24,9 @@ html, body
 
 .left { float:left; }
 .right { float:right; }
+.handPointer {  cursor:pointer; }
+.hide { display:none; }
+
 /* Header */
 
 header#header
@@ -426,6 +429,30 @@ ul.actionMessage { list-style:none; }
 	height:18px;
 	margin:0 auto;
 }
+.markAsReadUnreadDiv
+{
+	width:50px;
+	margin:0 auto;
+}
+.markAsRead
+{
+	background-image:url("../../images/admin/icn_alert_success.png");
+	display:block;
+	width:18px;
+	height:18px;
+	margin:0 auto;
+	float:left;
+}
+.markAsUnread
+{
+	background-image:url("../../images/admin/icn_alert_error.png");
+	display:block;
+	width:18px;
+	height:18px;
+	margin:0 auto;
+	margin-left:10px;
+	float:left;
+}
 .numberBubble
 {
 	color:white;
@@ -437,5 +464,12 @@ ul.actionMessage { list-style:none; }
 	margin-left:5px;
 	display:block;
 	float:left;
-	margin-top:1px;
+	margin-top:2px;
+	font-size:12px;
+}
+.testoNotifica
+{
+	font-family:"Courier New";
+	font-style: italic;
+	font-size:16px;
 }

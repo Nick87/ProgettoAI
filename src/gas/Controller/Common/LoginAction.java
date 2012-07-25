@@ -3,6 +3,7 @@ package gas.Controller.Common;
 import gas.DAO.Log;
 import gas.DAO.Membro;
 import gas.DAO.Notifica;
+import gas.DAO.Notifica.TipoNotifica;
 import gas.Exception.DBException;
 import gas.Exception.LoginException;
 
@@ -32,11 +33,12 @@ public class LoginAction extends ActionSupport
 			return Action.SUCCESS;
 
 		LoginStatus status;
-		try {
+		try
+		{
 			status = Membro.checkPassword(username, password);
 			sessionMap.put("user", status.getUsername());
 			sessionMap.put("status", status);
-			numeroNotificheNonLette = Notifica.getNumeroNotificheFromIdMembro(status.getID_Membro());
+			numeroNotificheNonLette = Notifica.getNumeroNotificheFromIdMembro(TipoNotifica.NON_LETTA, status.getID_Membro());
 			Log.addLog("Utente " + username + " fa login");
 		} catch (LoginException e) {
 			addActionError(getText("error.login"));

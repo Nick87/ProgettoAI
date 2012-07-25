@@ -111,55 +111,42 @@ public class AggiornaQuantita extends ActionSupport
 	public Map<String, String> getQuantita() {
 		return quantita;
 	}
-
 	public void setQuantita(Map<String, String> quantita) {
 		this.quantita = quantita;
 	}
-
 	public boolean isInput() {
 		return input;
 	}
-
 	public void setInput(boolean input) {
 		this.input = input;
 	}
-
 	public int getIdOrdine() {
 		return idOrdine;
 	}
-
 	public void setIdOrdine(int idOrdine) {
 		this.idOrdine = idOrdine;
 	}
-
 	public int getIdMembro() {
 		return idMembro;
 	}
-
 	public void setIdMembro(int idMembro) {
 		this.idMembro = idMembro;
 	}
-
 	public boolean isEditable() {
 		return editable;
 	}
-
 	public void setEditable(boolean editable) {
 		this.editable = editable;
 	}
-
 	public List<Prodotto> getListaProdotti() {
 		return listaProdotti;
 	}
-
 	public void setListaProdotti(List<Prodotto> listaProdotti) {
 		this.listaProdotti = listaProdotti;
 	}
-
 	public Map<Integer, Integer> getDisponibilitaProdotti() {
 		return disponibilitaProdotti;
 	}
-
 	public void setDisponibilitaProdotti(Map<Integer, Integer> disponibilitaProdotti) {
 		this.disponibilitaProdotti = disponibilitaProdotti;
 	}

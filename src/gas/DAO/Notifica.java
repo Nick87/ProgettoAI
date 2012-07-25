@@ -17,6 +17,7 @@ public class Notifica
 	private Date data;
 	private String testo;
 	private boolean letto;
+	public enum TipoNotifica { ANY, LETTA, NON_LETTA }; 
 	
 	public static void addNotifica(String content, int idMembroDestinatario) throws DBException, SQLException
 	{
@@ -38,27 +39,34 @@ public class Notifica
 		}
 	}
 	
-	public static int getNumeroNotificheFromIdMembro(int idMembro) throws DBException, SQLException
+	public static int getNumeroNotificheFromIdMembro(TipoNotifica tipoNotifica, int idMembro) throws DBException, SQLException
 	{
 		Connection conn = null;
 		int n;
 		try 
 		{
 			conn = DBConnection.getDBConnection();
-			String query = "SELECT COUNT(*) as N FROM notifica WHERE ID_Membro = ? AND letta = ?";
+			String query = "SELECT COUNT(*) as totale FROM notifica WHERE ID_Membro = ?";
+			
+			if(tipoNotifica == TipoNotifica.LETTA || tipoNotifica == TipoNotifica.NON_LETTA)
+				query += " AND letta = ?";
+			
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setInt(1, idMembro);
-			ps.setInt(2, 0);
+			if(tipoNotifica == TipoNotifica.LETTA)
+				ps.setInt(2, 1);
+			else if(tipoNotifica == TipoNotifica.NON_LETTA)
+				ps.setInt(2, 0);
 			ResultSet rs = ps.executeQuery();			
 			rs.next();
-			n = rs.getInt("N");
+			n = rs.getInt("totale");
 		} finally {
 			DBConnection.closeConnection(conn);
 		}
 		return n;
 	}
 
-	public static List<Notifica> getListaNotificheFromIdMembro(int idMembro) throws SQLException, DBException
+	public static List<Notifica> getListaNotificheFromIdMembro(TipoNotifica tipoNotifica, int idMembro) throws SQLException, DBException
 	{
 		Connection conn = null;
 		List<Notifica> list = new ArrayList<Notifica>();
@@ -66,8 +74,16 @@ public class Notifica
 		{
 			conn = DBConnection.getDBConnection();
 			String query = "SELECT * FROM notifica WHERE ID_Membro = ?";
+			
+			if(tipoNotifica == TipoNotifica.LETTA || tipoNotifica == TipoNotifica.NON_LETTA)
+				query += " AND letta = ?";
+			
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setInt(1, idMembro);
+			if(tipoNotifica == TipoNotifica.LETTA)
+				ps.setInt(2, 1);
+			else if(tipoNotifica == TipoNotifica.NON_LETTA)
+				ps.setInt(2, 0);
 			ResultSet rs = ps.executeQuery();
 			Notifica n;
 			while(rs.next())
@@ -77,7 +93,7 @@ public class Notifica
 				n.setID_Membro(rs.getInt("ID_Membro"));
 				n.setData(rs.getDate("data"));
 				n.setTesto(rs.getString("testo"));
-				boolean letto = (rs.getInt("letto") == 1) ? true : false;
+				boolean letto = (rs.getInt("letta") == 1) ? true : false;
 				n.setLetto(letto);
 				list.add(n);
 			}
