@@ -78,6 +78,9 @@ $(function(){
 			$("#content").html(data);
 		});
 	});
+	
+	if($(".numberBubble").html() <= 0)
+		$(".numberBubble").hide();
 });
 $(window).load(function(){
 	/***** 
@@ -133,9 +136,9 @@ $(window).load(function(){
 		 	  	<li>
 		 	  		<div id="notificheDiv" class="clearfix">
 		 	  			<a href="leggiNotifiche" class="left">Notifiche</a>
-		 	  			<s:if test="%{numeroNotificheNonLette > 0}">
+		 	  			<!-- <s:if test="%{numeroNotificheNonLette > 0}"> -->
 		 	  				<span class="numberBubble"><s:property value="%{numeroNotificheNonLette}"/></span>
-		 	  			</s:if>
+		 	  			<!-- </s:if> -->
 	 	  			</div>
  	  			</li>
 		 	  	<li><a href="listaMessaggi">Messaggi</a></li>

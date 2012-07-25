@@ -1,6 +1,7 @@
 package gas.DAO;
 
 import gas.Exception.DBException;
+import gas.Exception.ItemNotFoundException;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -101,6 +102,26 @@ public class Notifica
 			DBConnection.closeConnection(conn);
 		}
 		return list;
+	}
+	
+	public static void setLettaNonLetta(TipoNotifica tipoNotifica, int idNotifica) throws DBException, SQLException, ItemNotFoundException
+	{
+		Connection conn = null;
+		try
+		{
+			conn = DBConnection.getDBConnection();
+			String query = "UPDATE notifica SET letta = ? WHERE ID_Notifica = ?";
+			PreparedStatement ps = conn.prepareStatement(query);
+			if(tipoNotifica == TipoNotifica.LETTA)
+				ps.setInt(1, 1);
+			else
+				ps.setInt(1, 0);
+			ps.setInt(2, idNotifica);
+			if(ps.executeUpdate() != 1)
+				throw new ItemNotFoundException("Notifica con id " + idNotifica + " non trovata");
+		} finally {
+			DBConnection.closeConnection(conn);
+		}
 	}
 	
 	public int getID_Notifica() {
