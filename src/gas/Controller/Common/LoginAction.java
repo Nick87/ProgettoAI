@@ -1,7 +1,8 @@
-package gas.Controller;
+package gas.Controller.Common;
 
 import gas.DAO.Log;
 import gas.DAO.Membro;
+import gas.DAO.Notifica;
 import gas.Exception.DBException;
 import gas.Exception.LoginException;
 
@@ -19,6 +20,7 @@ public class LoginAction extends ActionSupport
 	private String username;
 	private String password;
 	private String erroreDBMessage;
+	private int numeroNotificheNonLette;
 	private boolean erroreDB;
 	
 	public String execute()
@@ -32,6 +34,10 @@ public class LoginAction extends ActionSupport
 		LoginStatus status;
 		try {
 			status = Membro.checkPassword(username, password);
+			sessionMap.put("user", status.getUsername());
+			sessionMap.put("status", status);
+			numeroNotificheNonLette = Notifica.getNumeroNotificheFromIdMembro(status.getID_Membro());
+			Log.addLog("Utente " + username + " fa login");
 		} catch (LoginException e) {
 			addActionError(getText("error.login"));
 			Log.addLog("Login errato. Username: " + username + ". Password: " + password);
@@ -47,42 +53,37 @@ public class LoginAction extends ActionSupport
 			addActionError("Errore query SQL");
 			return "ErroreDB";
 		}
-		
-		sessionMap.put("user", status.getUsername());
-		sessionMap.put("status", status);
-		Log.addLog("Utente " + username + " fa login");
 		return Action.SUCCESS;
 	}
 
 	public String getUsername() {
 		return username;
 	}
-
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
 	public String getPassword() {
 		return password;
 	}
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 	public String getErroreDBMessage() {
 		return erroreDBMessage;
 	}
-
 	public void setErroreDBMessage(String erroreDBMessage) {
 		this.erroreDBMessage = erroreDBMessage;
 	}
-
 	public boolean isErroreDB() {
 		return erroreDB;
 	}
-
 	public void setErroreDB(boolean erroreDB) {
 		this.erroreDB = erroreDB;
+	}
+	public int getNumeroNotificheNonLette() {
+		return numeroNotificheNonLette;
+	}
+	public void setNumeroNotificheNonLette(int numeroNotificheNonLette) {
+		this.numeroNotificheNonLette = numeroNotificheNonLette;
 	}
 }

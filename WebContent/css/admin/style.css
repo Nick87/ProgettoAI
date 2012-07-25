@@ -12,6 +12,18 @@ html, body
 	font-size: 12px;
 }
 
+.clearfix:after
+{
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+
+.left { float:left; }
+.right { float:right; }
 /* Header */
 
 header#header
@@ -406,3 +418,24 @@ ul.actionMessage { list-style:none; }
 	float: right;
 }
 .toggleLink:hover { color: #77BACE !important; }
+#inviaNotificaChiusuraOrdine
+{
+	background-image:url("../../images/admin/icn_alert_success.png");
+	display:block;
+	width:18px;
+	height:18px;
+	margin:0 auto;
+}
+.numberBubble
+{
+	color:white;
+	border:1px solid red;
+	border-radius:5px;
+	padding:0px 5px;
+	background-color:red;
+	font-weight:bold;
+	margin-left:5px;
+	display:block;
+	float:left;
+	margin-top:1px;
+}

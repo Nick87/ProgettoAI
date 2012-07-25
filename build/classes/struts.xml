@@ -20,14 +20,14 @@
 		
 	    <!-- Login & Logout -->
 	    
-		<action name="login" class="gas.Controller.LoginAction">
+		<action name="login" class="gas.Controller.Common.LoginAction">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 			<result name="success">welcome.jsp</result>
 			<result name="error">login_retry.jsp</result>
 			<result name="input">login_retry.jsp</result>
 			<result name="ErroreDB">index.jsp</result>
 		</action>
-		<action name="logout" class="gas.Controller.LogoutAction">		    
+		<action name="logout" class="gas.Controller.Common.LogoutAction">		    
 			<result>index.jsp</result>			
 		</action>
 		
@@ -106,6 +106,7 @@
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result name="success">statoOrdineResponsabile.jsp</result>
 		</action>
+		
 		<action name="inviaNotificaChiusuraOrdine" class="gas.Controller.Responsabile.InviaNotificaChiusuraOrdine">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result name="success">statoOrdineResponsabile.jsp</result>

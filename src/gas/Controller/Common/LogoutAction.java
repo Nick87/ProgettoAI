@@ -1,4 +1,4 @@
-package gas.Controller;
+package gas.Controller.Common;
 
 import gas.DAO.Log;
 

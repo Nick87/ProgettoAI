@@ -36,7 +36,8 @@ public class Membro
 		String tipo_membro;
 		String query = "SELECT ID_Membro, tipo_membro, password FROM membro WHERE username = ?;";
 		
-	    try {
+	    try
+	    {
 	    	PreparedStatement ps = conn.prepareStatement(query);
 	    	ps.setString(1, username);
 			ResultSet rs = ps.executeQuery();
@@ -75,6 +76,28 @@ public class Membro
 		}
 		return username;
 	}
+	
+	public static List<Integer> getIdMembriFromOrdine(int idOrdine) throws DBException, SQLException
+	{
+		Connection conn = null;
+		List<Integer> list = new ArrayList<Integer>();
+		try
+		{
+			conn = DBConnection.getDBConnection();
+			String query = "SELECT DISTINCT ID_Membro_che_acquista as id " +
+						   "FROM scheda_di_acquisto " +
+						   "WHERE ID_Ordine = ?";
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, idOrdine);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next())
+				list.add(rs.getInt("id"));
+		} finally {
+			DBConnection.closeConnection(conn);
+		}
+		return list;
+	}
+	
 	public static List<Membro> getMembriDelegabili(int idMembroRichiedente) throws DBException, SQLException
 	{
 		ArrayList<Membro> lista = new ArrayList<Membro>();
@@ -178,111 +201,84 @@ public class Membro
 	public int getID_Membro() {
 		return ID_Membro;
 	}
-
 	public void setID_Membro(int iD_Membro) {
 		ID_Membro = iD_Membro;
 	}
-
 	public String getNome() {
 		return nome;
 	}
-
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
 	public String getCognome() {
 		return cognome;
 	}
-
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
 	}
-
 	public int getEta() {
 		return eta;
 	}
-
 	public void setEta(int eta) {
 		this.eta = eta;
 	}
-
 	public String getSesso() {
 		return sesso;
 	}
-
 	public void setSesso(String sesso) {
 		this.sesso = sesso;
 	}
-
 	public Date getData_nascita() {
 		return data_nascita;
 	}
-
 	public void setData_nascita(Date data_nascita) {
 		this.data_nascita = data_nascita;
 	}
-
 	public String getLuogo_nascita() {
 		return luogo_nascita;
 	}
-
 	public void setLuogo_nascita(String luogo_nascita) {
 		this.luogo_nascita = luogo_nascita;
 	}
-
 	public String getIndirizzo() {
 		return indirizzo;
 	}
-
 	public void setIndirizzo(String indirizzo) {
 		this.indirizzo = indirizzo;
 	}
-
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 	public String getTelefono() {
 		return telefono;
 	}
-
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
-
 	public memberType getTipo_membro() {
 		return tipo_membro;
 	}
-
 	public void setTipo_membro(memberType tipo_membro) {
 		this.tipo_membro = tipo_membro;
 	}
-
 	public String getUsername() {
 		return username;
 	}
-
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
 	public String getPassword() {
 		return password;
 	}
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 	public boolean isAbilitato() {
 		return abilitato;
 	}
-
 	public void setAbilitato(boolean abilitato) {
 		this.abilitato = abilitato;
 	}

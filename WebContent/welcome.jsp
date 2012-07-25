@@ -5,7 +5,7 @@
 	LoginStatus status = (LoginStatus) session.getAttribute("status");
 	String tipoMembro = status.getTipoMembro();
 	String username = status.getUsername();
-	int idMembro = status.getID();
+	int idMembro = status.getID_Membro();
 %>
 
 <!doctype html>
@@ -130,7 +130,14 @@ $(window).load(function(){
 	 	  	</ul>
 	 	  	<h3>Comunicazioni</h3>
 	 	  	<ul>
-		 	  	<li><a href="notifiche">Notifiche</a></li>
+		 	  	<li>
+		 	  		<div id="notificheDiv" class="clearfix">
+		 	  			<a href="leggiNotifiche" class="left">Notifiche</a>
+		 	  			<s:if test="%{numeroNotificheNonLette > 0}">
+		 	  				<span class="numberBubble"><s:property value="%{numeroNotificheNonLette}"/></span>
+		 	  			</s:if>
+	 	  			</div>
+ 	  			</li>
 		 	  	<li><a href="listaMessaggi">Messaggi</a></li>
 		 	  	<li><a href="#">Discussioni</a><a class="toggleLink" href="listaDiscussioni">HIDE</a>
 		 	  		<ul id="listaDiscussioni">
