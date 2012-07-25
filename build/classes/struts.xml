@@ -17,6 +17,8 @@
 			<result name="login">index.jsp</result>
 			<result name="loggato">welcome.jsp</result>
 		</global-results>
+		
+	    <!-- Login & Logout -->
 	    
 		<action name="login" class="gas.Controller.LoginAction">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
@@ -28,6 +30,9 @@
 		<action name="logout" class="gas.Controller.LogoutAction">		    
 			<result>index.jsp</result>			
 		</action>
+		
+		<!-- Azioni utente -->
+		
 		<action name="listaOrdiniAperti" class="gas.Controller.Utente.ListaOrdiniAperti">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result name="success">ordiniAperti.jsp</result>
@@ -94,10 +99,20 @@
 		    <result name="input">delega.jsp</result>
 		    <result name="error">delega.jsp</result>
 		</action>
+		
+		<!-- Azioni Responsabile -->
+		
 		<action name="statoOrdineResponsabile" class="gas.Controller.Responsabile.StatoOrdineResponsabile">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result name="success">statoOrdineResponsabile.jsp</result>
 		</action>
+		<action name="inviaNotificaChiusuraOrdine" class="gas.Controller.Responsabile.InviaNotificaChiusuraOrdine">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		    <result name="success">statoOrdineResponsabile.jsp</result>
+		</action>
+		
+		<!-- Altro -->
+		
 		<action name="*">
 		    <result>{1}.jsp</result>
 		</action>

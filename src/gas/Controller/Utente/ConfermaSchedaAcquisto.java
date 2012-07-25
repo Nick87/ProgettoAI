@@ -15,9 +15,8 @@ import java.util.Map;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class ConfermaSchedaAcquisto extends ActionSupport{
-
-	private static final long serialVersionUID = 1L;
+public class ConfermaSchedaAcquisto extends ActionSupport
+{
 	private int idOrdine;
 	private int idMembro;
 	private Map<String, String> quantita;

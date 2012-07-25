@@ -58,6 +58,44 @@ public class Info_Ordine
 		return infoOrdine;
 	}
 	
+	public static Info_Ordine getInfoOrdineFromIdResponsabile(TipoOrdine tipoOrdine, int idResponsabile) throws DBException, SQLException, ItemNotFoundException
+	{
+		Connection conn = null;
+		Info_Ordine infoOrdine = null;
+		try
+		{
+			conn = DBConnection.getDBConnection();
+			String query = "SELECT * FROM info_ordine WHERE ID_Responsabile = ?";
+			
+			if(tipoOrdine == TipoOrdine.APERTO)
+				query += " AND data_chiusura > ?";
+			else if(tipoOrdine == TipoOrdine.CHIUSO)
+				query += " AND data_chiusura <= ?";
+			
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, idResponsabile);
+			if(tipoOrdine != TipoOrdine.ANY){
+				java.util.Date now = new java.util.Date();
+		    	java.sql.Date date = new java.sql.Date(now.getTime());
+		    	ps.setDate(2, date);
+			}
+			ResultSet rs = ps.executeQuery();
+			if(!rs.next())
+				throw new ItemNotFoundException("Ordine con id Responsabile " + idResponsabile + " inesistente");
+			infoOrdine = new Info_Ordine();
+			infoOrdine.setID_Ordine(rs.getInt("ID_Ordine"));
+			infoOrdine.setID_Responsabile(rs.getInt("ID_Responsabile"));
+			infoOrdine.setID_Fornitore(rs.getInt("ID_Fornitore"));
+			infoOrdine.setData_apertura(rs.getDate("data_apertura"));
+			infoOrdine.setData_chiusura(rs.getDate("data_chiusura"));
+			boolean concluso = (rs.getInt("concluso") == 1) ? true : false;
+			infoOrdine.setConcluso(concluso);
+		} finally {
+			DBConnection.closeConnection(conn);
+		}
+		return infoOrdine;
+	}
+	
 	public static List<Info_Ordine> getOrdini(TipoOrdine tipoOrdine, int idMembro, int flag) throws DBException, SQLException
 	{
 		Connection conn = DBConnection.getDBConnection();
@@ -76,7 +114,7 @@ public class Info_Ordine
 		if(idMembro > 0 && flag == 1)
 			query += " AND I.ID_Ordine = S.ID_Ordine AND S.ID_membro_che_acquista = ?";
 		if(flag == -1)
-			query+="AND I.ID_Ordine NOT IN(SELECT DISTINCT ID_Ordine from scheda_di_acquisto where ID_membro_che_acquista = ?)";
+			query+="AND I.ID_Ordine NOT IN(SELECT DISTINCT ID_Ordine from scheda_di_acquisto WHERE ID_membro_che_acquista = ?)";
 		try
 		{
 			PreparedStatement ps = conn.prepareStatement(query);
@@ -98,12 +136,12 @@ public class Info_Ordine
 	    	while(rs.next()){
 	    		i = new Info_Ordine();
 	    		i.setID_Ordine(rs.getInt("ID_Ordine"));
-	    		i.setID_Responsabile(rs.getInt("ID_Responsabile"));
-	    		i.setID_Fornitore(rs.getInt("ID_Fornitore"));
+	    		//i.setID_Responsabile(rs.getInt("ID_Responsabile"));
+	    		//i.setID_Fornitore(rs.getInt("ID_Fornitore"));
 	    		i.setData_apertura(rs.getDate("data_apertura"));
 	    		i.setData_chiusura( rs.getDate("data_chiusura"));
-	    		boolean concluso = (rs.getInt("consluso") == 1) ? true : false;
-	    		i.setConcluso(concluso);
+	    		//boolean concluso = (rs.getInt("concluso") == 1) ? true : false;
+	    		//i.setConcluso(concluso);
 	    		list.add(i);
 	    	}
 		} finally {
