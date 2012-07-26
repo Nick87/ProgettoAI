@@ -12,11 +12,13 @@ public class LeggiNotifiche extends ActionSupport
 {
 	private int idMembro;
 	private List<Notifica> listaNotifiche;
+	private int numeroNotificheNonLette;
 	
 	public String execute()
 	{
 		try {
 			listaNotifiche = Notifica.getListaNotificheFromIdMembro(TipoNotifica.ANY, idMembro);
+			numeroNotificheNonLette = Notifica.getNumeroNotificheFromIdMembro(TipoNotifica.NON_LETTA, idMembro);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return Action.ERROR;
@@ -38,5 +40,11 @@ public class LeggiNotifiche extends ActionSupport
 	}
 	public void setListaNotifiche(List<Notifica> listaNotifiche) {
 		this.listaNotifiche = listaNotifiche;
+	}
+	public int getNumeroNotificheNonLette() {
+		return numeroNotificheNonLette;
+	}
+	public void setNumeroNotificheNonLette(int numeroNotificheNonLette) {
+		this.numeroNotificheNonLette = numeroNotificheNonLette;
 	}
 }

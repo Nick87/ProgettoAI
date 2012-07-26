@@ -40,6 +40,23 @@ public class Notifica
 		}
 	}
 	
+	public static void eliminaNotifica(int idNotifica) throws SQLException, DBException
+	{
+		Connection conn = null;
+		try
+		{
+			conn = DBConnection.getDBConnection();
+			String query = "UPDATE notifica SET eliminata = ? WHERE ID_Notifica = ?";
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, 1);
+			ps.setInt(2, idNotifica);
+			if(ps.executeUpdate() != 1)
+				System.out.println("Errore eliminazione notifica");
+		} finally {
+			DBConnection.closeConnection(conn);
+		}
+	}
+	
 	public static int getNumeroNotificheFromIdMembro(TipoNotifica tipoNotifica, int idMembro) throws DBException, SQLException
 	{
 		Connection conn = null;
@@ -47,17 +64,18 @@ public class Notifica
 		try 
 		{
 			conn = DBConnection.getDBConnection();
-			String query = "SELECT COUNT(*) as totale FROM notifica WHERE ID_Membro = ?";
+			String query = "SELECT COUNT(*) as totale FROM notifica WHERE ID_Membro = ? AND eliminata = ?";
 			
 			if(tipoNotifica == TipoNotifica.LETTA || tipoNotifica == TipoNotifica.NON_LETTA)
 				query += " AND letta = ?";
 			
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setInt(1, idMembro);
+			ps.setInt(2, 0);
 			if(tipoNotifica == TipoNotifica.LETTA)
-				ps.setInt(2, 1);
+				ps.setInt(3, 1);
 			else if(tipoNotifica == TipoNotifica.NON_LETTA)
-				ps.setInt(2, 0);
+				ps.setInt(3, 0);
 			ResultSet rs = ps.executeQuery();			
 			rs.next();
 			n = rs.getInt("totale");
@@ -74,17 +92,18 @@ public class Notifica
 		try 
 		{
 			conn = DBConnection.getDBConnection();
-			String query = "SELECT * FROM notifica WHERE ID_Membro = ?";
+			String query = "SELECT * FROM notifica WHERE ID_Membro = ? AND eliminata = ?";
 			
 			if(tipoNotifica == TipoNotifica.LETTA || tipoNotifica == TipoNotifica.NON_LETTA)
 				query += " AND letta = ?";
 			
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setInt(1, idMembro);
+			ps.setInt(2, 0);
 			if(tipoNotifica == TipoNotifica.LETTA)
-				ps.setInt(2, 1);
+				ps.setInt(3, 1);
 			else if(tipoNotifica == TipoNotifica.NON_LETTA)
-				ps.setInt(2, 0);
+				ps.setInt(3, 0);
 			ResultSet rs = ps.executeQuery();
 			Notifica n;
 			while(rs.next())

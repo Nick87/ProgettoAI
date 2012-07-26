@@ -453,6 +453,18 @@ ul.actionMessage { list-style:none; }
 	margin-left:10px;
 	float:left;
 }
+.eliminaNotifica
+{
+	background-image:url("../../images/admin/trash.png");
+	display:block;
+	width:17px;
+	height:23px;
+}
+.eliminaNotificaDiv
+{
+	width:17px;
+	margin:0 auto;
+}
 .numberBubble
 {
 	color:white;
