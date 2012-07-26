@@ -20,7 +20,7 @@
 		</thead>
 		<tbody>
 		<s:iterator value="listaNotifiche" status="n">
-			<tr style="background-color:#BFFFC0">
+			<tr class="unreadNotification">
 				<td><span class="handPointer indexNotifica"><s:property value="#n.index + 1"/></span></td>
 				<td><s:date name="data" format="dd/MM/YYYY"/></td>
 				<td>
@@ -44,6 +44,9 @@
 		</tbody>
 	</table>
 </s:else>
+<style>
+.unreadNotification { background-color:#BFFFC0; }
+</style>
 <script>
 function updateNumberBubble(numeroNotificheNonLette)
 {
