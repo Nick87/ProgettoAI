@@ -45,7 +45,7 @@ $("#sendMessageBtn").click(function(){
 		if(ret.idMessaggioDiscussione <= lastIdMessaggioDiscussione)
 			return;
 
-		var li = $("<li>");
+		var li = $("<li>").hide();
 		var hidden = $("<input>").attr("type", "hidden")
 								 .attr("class", "idMessaggioDiscussione")
 								 .attr("value", ret.idMessaggioDiscussione);
@@ -59,6 +59,7 @@ $("#sendMessageBtn").click(function(){
 		li.append(hidden);
 		li.append(dateSenderDiv).append(contentMessageDiv);
 		$("ul#messageList").append(li);
+		li.slideDown(200);
 		$("#textareaMessage").val("");
 		$("#messagesArea").animate({ scrollTop:$("#messagesArea")[0].scrollHeight-$('#messagesArea').height() }, 200);
 	});
@@ -112,7 +113,7 @@ function refresh_chat()
 				var seconds = date.getSeconds();
 				var stringDate = day + "/" + month + "/" + year + " - " + hour + ":" + minutes + ":" + seconds;
 				
-				var li = $("<li>");
+				var li = $("<li>").hide();
 				var hidden = $("<input>").attr("type", "hidden")
 										 .attr("class", "idMessaggioDiscussione")
 										 .attr("value", item.ID_Messaggio_Discussione);
@@ -126,6 +127,7 @@ function refresh_chat()
 				li.append(hidden);
 				li.append(dateSenderDiv).append(contentMessageDiv);
 				$("ul#messageList").append(li);
+				li.slideDown(200);
 				$("#messagesArea").animate({ scrollTop:$("#messagesArea")[0].scrollHeight-$('#messagesArea').height() }, 200);
 			});
 		}

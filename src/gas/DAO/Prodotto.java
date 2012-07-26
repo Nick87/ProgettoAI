@@ -230,8 +230,8 @@ public class Prodotto
 			rs.next();
 			totale = rs.getInt("totale");
 			query = "SELECT SUM(S.quantita) as prenotati " +
-					"FROM scheda_di_acquisto S, date_ordine D " +
-					"WHERE S.ID_Ordine = D.ID_Ordine AND S.ID_Prodotto = ? AND D.data_chiusura > ? " +
+					"FROM scheda_di_acquisto S, info_ordine I " +
+					"WHERE S.ID_Ordine = I.ID_Ordine AND S.ID_Prodotto = ? AND I.data_chiusura > ? " +
 					"GROUP BY S.ID_Prodotto";
 			ps = conn.prepareStatement(query);
 			java.util.Date now = new java.util.Date();
@@ -257,10 +257,10 @@ public class Prodotto
 		
 		try
 		{
-			query = "SELECT S.quantita as old_quantita FROM scheda_di_acquisto S, date_ordine D " +
-	    			"WHERE D.ID_Ordine = S.ID_Ordine AND " +
+			query = "SELECT S.quantita as old_quantita FROM scheda_di_acquisto S, info_ordine I " +
+	    			"WHERE I.ID_Ordine = S.ID_Ordine AND " +
 	    			"S.ID_Ordine = ? AND S.ID_Prodotto = ? AND S.ID_Membro_che_acquista = ? AND " +
-	    			"D.data_chiusura > ?";
+	    			"I.data_chiusura > ?";
 	    	ps = conn.prepareStatement(query);
 	    	java.util.Date now = new java.util.Date();
 	    	java.sql.Date date = new java.sql.Date(now.getTime());

@@ -25,7 +25,7 @@
 				<input type="hidden" value="<s:property value="ID_Notifica"/>"/>
 			</td>
 		</tr>
-		<tr class="hide">
+		<tr class="hide trTestoNotifica">
 			<td colspan="3"><span class="testoNotifica"><s:property value="testo"/></span></td>
 		</tr>
 	</s:iterator>
@@ -35,6 +35,7 @@
 $("#tabellaNotifiche").on("click", function(e){
 	var target = $(e.target);
 	if(target.is(".indexNotifica")) {
+		$(".trTestoNotifica:visible").fadeOut("fast");
 		var notifica = $(e.target).closest("tr").next();
 		if(notifica.is(":visible"))
 			notifica.fadeOut("fast");

@@ -41,10 +41,10 @@ $("#sendDiscussioneResultBox").on("click", "div", function(e){
 });
 $("#listaUtentiDestinatari").on("click", function(e){
 	var target = $(e.target);
-	if(target.is(".userName"))
+	if(target.is(".userName")){
+		$(".textareaMessageDiv").slideUp("fast");
 		target.closest("td").find(".textareaMessageDiv").slideToggle("medium");
-	else if(target.is(".userNameShowChat"))
-	{
+	} else if(target.is(".userNameShowChat")) {
 		var params = {
 			idDiscussione:target.closest("td").find("input[type=hidden]#idDiscussione").val(),
 			idMittente:$("#idMittente").val()

@@ -33,7 +33,7 @@
 						<td><s:property value="categoria"/></td>
 						<td><s:property value="costo_unitario"/></td>
 						<td><s:property value="costo_trasporto"/></td>
-						<td><s:property value="fine_disponibilita"/></td>
+						<td><s:date name="fine_disponibilita" format="dd/MM/yyyy"/></td>
 						<td><s:property value="pezzatura_min_utente"/></td>
 						<s:if test="%{editable == true}">
 							<td><input type="text" name="<s:property value="ID_Prodotto"/>" size="3" value="<s:property value="quantita"/>"/></td>
