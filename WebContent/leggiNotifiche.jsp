@@ -4,41 +4,46 @@
 
 <s:hidden id="idMembro" value="%{idMembro}"/>
 <s:hidden id="numeroNotificheNonLette" value="%{numeroNotificheNonLette}"/>
-<h3 class="pageTitle">Clicca su una notifica per visualizzarla</h3>
-<table id="tabellaNotifiche">
-	<thead>
-		<tr>
-			<th>Notifica</th>
-			<th>Data</th>
-			<th>Letta/Non letta</th>
-			<th>Elimina</th>
-		</tr>
-	</thead>
-	<tbody>
-	<s:iterator value="listaNotifiche" status="n">
-		<tr>
-			<td><span class="handPointer indexNotifica"><s:property value="#n.index + 1"/></span></td>
-			<td><s:date name="data" format="dd/MM/YYYY"/></td>
-			<td>
-				<div class="markAsReadUnreadDiv clearfix">
-					<a class="markAsRead" href="markAsReadUnread"></a>
-					<a class="markAsUnread" href="markAsReadUnread"></a>
-				</div>
-				<input type="hidden" value="<s:property value="ID_Notifica"/>"/>
-			</td>
-			<td>
-				<div class="eliminaNotificaDiv">
-					<a class="eliminaNotifica" href="eliminaNotifica"></a>
+<s:if test="%{listaNotifiche.size() == 0}">
+	<h3 class="pageTitle">Non ci sono notifiche da visualizzare</h3>
+</s:if>
+<s:else>
+	<h3 class="pageTitle">Clicca su una notifica per visualizzarla</h3>
+	<table id="tabellaNotifiche">
+		<thead>
+			<tr>
+				<th>Notifica</th>
+				<th>Data</th>
+				<th>Letta/Non letta</th>
+				<th>Elimina</th>
+			</tr>
+		</thead>
+		<tbody>
+		<s:iterator value="listaNotifiche" status="n">
+			<tr>
+				<td><span class="handPointer indexNotifica"><s:property value="#n.index + 1"/></span></td>
+				<td><s:date name="data" format="dd/MM/YYYY"/></td>
+				<td>
+					<div class="markAsReadUnreadDiv clearfix">
+						<a class="markAsRead" href="markAsReadUnread"></a>
+						<a class="markAsUnread" href="markAsReadUnread"></a>
+					</div>
 					<input type="hidden" value="<s:property value="ID_Notifica"/>"/>
-				</div>
-			</td>
-		</tr>
-		<tr class="hide trTestoNotifica">
-			<td colspan="4"><span class="testoNotifica"><s:property value="testo"/></span></td>
-		</tr>
-	</s:iterator>
-	</tbody>
-</table>
+				</td>
+				<td>
+					<div class="eliminaNotificaDiv">
+						<a class="eliminaNotifica" href="eliminaNotifica"></a>
+						<input type="hidden" value="<s:property value="ID_Notifica"/>"/>
+					</div>
+				</td>
+			</tr>
+			<tr class="hide trTestoNotifica">
+				<td colspan="4"><span class="testoNotifica"><s:property value="testo"/></span></td>
+			</tr>
+		</s:iterator>
+		</tbody>
+	</table>
+</s:else>
 <script>
 function updateNumberBubble(numeroNotificheNonLette)
 {
@@ -81,7 +86,11 @@ $("#tabellaNotifiche").on("click", function(e){
 				updateNumberBubble(obj.numeroNotificheNonLette);
 				var trTarget = target.closest("tr");
 				trTarget.next().remove();
-				trTarget.remove();
+				trTarget.remove();				
+				if($("#tabellaNotifiche tbody tr").length == 0){
+					$("#tabellaNotifiche tr").remove();
+					$("h3.pageTitle").html("Non ci sono notifiche da visualizzare");
+				}
 			}
 		});
 	}
