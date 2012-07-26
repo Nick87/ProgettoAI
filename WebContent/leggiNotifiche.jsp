@@ -20,7 +20,7 @@
 		</thead>
 		<tbody>
 		<s:iterator value="listaNotifiche" status="n">
-			<tr>
+			<tr style="background-color:#BFFFC0">
 				<td><span class="handPointer indexNotifica"><s:property value="#n.index + 1"/></span></td>
 				<td><s:date name="data" format="dd/MM/YYYY"/></td>
 				<td>
