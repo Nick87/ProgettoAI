@@ -19,8 +19,12 @@
 			</tr>
 		</thead>
 		<tbody>
-		<s:iterator value="listaNotifiche" status="n">
-			<tr class="unreadNotification">
+		<s:iterator value="listaNotifiche" status="n" var="l">
+			<tr
+				<s:if test="%{idNotificheNonLette.get(#l.ID_Notifica)}">
+				class="unreadNotification"
+				</s:if>
+			>
 				<td><span class="handPointer indexNotifica"><s:property value="#n.index + 1"/></span></td>
 				<td><s:date name="data" format="dd/MM/YYYY"/></td>
 				<td>
@@ -69,6 +73,10 @@ $("#tabellaNotifiche").on("click", function(e){
 		else
 			notifica.fadeIn("fast");
 	} else if(target.is(".markAsRead") || target.is(".markAsUnread")) {
+		if(target.is(".markAsRead"))
+			target.closest("tr").removeClass("unreadNotification");
+		else
+			target.closest("tr").addClass("unreadNotification");
 		var params = {
 			idNotifica:target.closest("td").children("input").eq(0).val(),
 			idMembro:$("#idMembro").val(),

@@ -4,7 +4,10 @@ import gas.DAO.Notifica;
 import gas.DAO.Notifica.TipoNotifica;
 import gas.Exception.DBException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -12,12 +15,18 @@ public class LeggiNotifiche extends ActionSupport
 {
 	private int idMembro;
 	private List<Notifica> listaNotifiche;
+	private Map<Integer, Integer> idNotificheNonLette;
 	private int numeroNotificheNonLette;
 	
 	public String execute()
 	{
-		try {
+		try
+		{
 			listaNotifiche = Notifica.getListaNotificheFromIdMembro(TipoNotifica.ANY, idMembro);
+			idNotificheNonLette = new HashMap<Integer, Integer>();
+			for(Notifica n : listaNotifiche)
+				if(!n.isLetto())
+					idNotificheNonLette.put(n.getID_Notifica(), n.getID_Notifica());
 			numeroNotificheNonLette = Notifica.getNumeroNotificheFromIdMembro(TipoNotifica.NON_LETTA, idMembro);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -46,5 +55,11 @@ public class LeggiNotifiche extends ActionSupport
 	}
 	public void setNumeroNotificheNonLette(int numeroNotificheNonLette) {
 		this.numeroNotificheNonLette = numeroNotificheNonLette;
+	}
+	public Map<Integer, Integer> getIdNotificheNonLette() {
+		return idNotificheNonLette;
+	}
+	public void setIdNotificheNonLette(HashMap<Integer, Integer> idNotificheNonLette) {
+		this.idNotificheNonLette = idNotificheNonLette;
 	}
 }
