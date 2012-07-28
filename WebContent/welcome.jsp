@@ -64,7 +64,10 @@ $(function(){
 		}
 	});
 	$("#breadcrumbs_container a").click(function(){ return false; });
-	
+	$(window).scroll(function() {
+        if ($(this).scrollTop() > 54) { $('#secondary_bar').addClass('secondary_bar_fixed'); /*$("header#header").addClass("header_fixed");*/ }
+        if ($(this).scrollTop() < 54) { $('#secondary_bar').removeClass('secondary_bar_fixed'); /*$("header#header").removeClass("header_fixed");*/ }
+    });
 	window.addEventListener("popstate", function(e){
 		if(windowLoaded){
 			windowLoaded = false;
@@ -99,9 +102,6 @@ $(window).load(function(){
 		<div>
 			<h1 class="site_title">Amministrazione</h1>
 			<h2 class="section_title">GAS - Gruppo D'Acquisto Solidale</h2>
-			<div class="btn_logout">
-				<a href="<s:url action="logout"/>">Logout</a>
-			</div>
 		</div>
 	</header>
 	<section id="secondary_bar">
@@ -112,90 +112,97 @@ $(window).load(function(){
 			<!-- <article class="breadcrumbs"><a href="index.html">Website Admin</a><div class="breadcrumb_divider"></div><a class="current">Dashboard</a></article> -->
 			<article class="breadcrumbs"><a href="#" class="current">Home</a></article>
 		</div>
-	</section>
-	
-	<aside id="sidebar" class="column">
-		<div id="allCommands">
-			<% if(tipoMembro.equals("U")) { %>
-			<h3>Ordini</h3>
-			<ul>
-		 	  	<li><a href="listaOrdiniAperti">Ordini Aperti</a></li>
-		 	  	<li><a href="#">I miei ordini</a><a class="toggleLink" href="listaMieiOrdini">HIDE</a>
-		 	  		<ul id="listaMieiOrdini">
-		 	  			<s:url action="mieiOrdini" var="ordiniAperti">
-						  	<s:param name="tipoOrdini">aperti</s:param>
-						</s:url>
-						<s:url action="mieiOrdini" var="ordiniChiusi">
-						  	<s:param name="tipoOrdini">chiusi</s:param>
-						</s:url>
-		 	  			<li><a href="${ordiniAperti}">Ordini aperti</a></li>
-		 	  			<li><a href="${ordiniChiusi}">Ordini chiusi</a></li>
-		 	  		</ul>
-		 	  	</li>
-	 	  	</ul>
-	 	  	<h3>Comunicazioni</h3>
-	 	  	<ul>
-		 	  	<li>
-		 	  		<div id="notificheDiv" class="clearfix">
-		 	  			<a href="leggiNotifiche" class="left">Notifiche</a>
-	 	  				<span class="numberBubble"><s:property value="%{numeroNotificheNonLette}"/></span>
-	 	  			</div>
- 	  			</li>
-		 	  	<li>
-					<div id="messaggiDiv" class="clearfix">
-		 	  			<a href="leggiMessaggi" class="left">Messaggi</a>
-	 	  				<span class="numberBubble"><s:property value="%{numeroMessaggiNonLetti}"/></span>
-	 	  			</div>
-		 	  	</li>
-		 	  	<li><a href="#">Discussioni</a><a class="toggleLink" href="listaDiscussioni">HIDE</a>
-		 	  		<ul id="listaDiscussioni">
-		 	  			<li><a href="nuovaDiscussione">Nuova Discussione</a></li>
-		 	  			<li><a href="sommarioDiscussioni">Discussioni esistenti</a></li>
-		 	  		</ul>
-		 	  	</li>
-	 	  	</ul>
-	 	  	<h3>Altro</h3>
-	 	  	<ul>
-		 	  	<li><a href="#delega">Gestione Deleghe</a><a class="toggleLink" href="delega">HIDE</a>
-				<ul id="delega">
-			 	  			<s:url action="delega" var="delega">
-	<%-- 						  	<s:param name="operazione_delega">nuova</s:param> --%>
-							</s:url>
-							<s:url action="listaDelega" var="listaDelega">
-	<%-- 						  	<s:param name="operazione_delega">rimuovi</s:param> --%>
-							</s:url>
-			 	  			<li><a href="${delega}">Crea/Modifica Delega</a></li>
-			 	  			<li><a href="${listaDelega}">Rimuovi delega</a></li>
-			 	  		</ul>
-			 	 </li>
-		 	 </ul>
-			<% } else if(tipoMembro.equals("F")) { %>
-			<ul>
-				<li><a href="listino">Listino</a></li>
-		 	  	<li><a href="messaggi">Messaggi</a></li>
-		 	  	<li><a href="statoOrdineFornitore">Stato ordine</a></li>
-		 	  	<li><a href="statisticheFornitore">Statistiche</a></li>
-	 	  	</ul>
-			<% } else if(tipoMembro.equals("R")) { %>
-			<ul>
-				<li><a href="listino">Listino</a></li>
-				<li><a href="statoOrdineResponsabile">Stato ordine</a></li>
-		 	  	<li><a href="statisticheResponsabile">Statistiche</a></li>
-		 	  	<li><a href="inviaNotifica">Invia notifica</a></li>
-		 	  	<li><a href="messaggi">Messaggi</a></li>
-		 	  	<li><a href="riepilogoRitiro">Riepilogo ritiro</a></li>
-	 	  	</ul>
-			<% } else if(tipoMembro.equals("A")) { %>
-			<ul>
-				<li><a href="listaUtenti">Lista utenti</a></li>
-				<li><a href="scaricaLog">Scarica log</a></li>
-			</ul>
-			<% } %>
+		<div class="btn_logout">
+			<a href="<s:url action="logout"/>">Logout</a>
 		</div>
-	</aside>
-	
-	<section id="contentWrapper">
-		<div id="content"></div>
 	</section>
+	
+	<div id="main2" class="clearfix">
+		<div id="main1"class="clearfix">
+			<aside id="sidebar" class="column">
+				<div id="allCommands">
+					<% if(tipoMembro.equals("U")) { %>
+					<h3>Ordini</h3>
+					<ul>
+				 	  	<li><a href="listaOrdiniAperti">Ordini Aperti</a></li>
+				 	  	<li><a href="#">I miei ordini</a><a class="toggleLink" href="listaMieiOrdini">HIDE</a>
+				 	  		<ul id="listaMieiOrdini">
+				 	  			<s:url action="mieiOrdini" var="ordiniAperti">
+								  	<s:param name="tipoOrdini">aperti</s:param>
+								</s:url>
+								<s:url action="mieiOrdini" var="ordiniChiusi">
+								  	<s:param name="tipoOrdini">chiusi</s:param>
+								</s:url>
+				 	  			<li><a href="${ordiniAperti}">Ordini aperti</a></li>
+				 	  			<li><a href="${ordiniChiusi}">Ordini chiusi</a></li>
+				 	  		</ul>
+				 	  	</li>
+			 	  	</ul>
+			 	  	<h3>Comunicazioni</h3>
+			 	  	<ul>
+				 	  	<li>
+				 	  		<div id="notificheDiv" class="clearfix">
+				 	  			<a href="leggiNotifiche" class="left">Notifiche</a>
+			 	  				<span class="numberBubble"><s:property value="%{numeroNotificheNonLette}"/></span>
+			 	  			</div>
+		 	  			</li>
+				 	  	<li>
+							<div id="messaggiDiv" class="clearfix">
+				 	  			<a href="leggiMessaggi" class="left">Messaggi</a>
+			 	  				<span class="numberBubble"><s:property value="%{numeroMessaggiNonLetti}"/></span>
+			 	  			</div>
+				 	  	</li>
+				 	  	<li><a href="#">Discussioni</a><a class="toggleLink" href="listaDiscussioni">HIDE</a>
+				 	  		<ul id="listaDiscussioni">
+				 	  			<li><a href="nuovaDiscussione">Nuova Discussione</a></li>
+				 	  			<li><a href="sommarioDiscussioni">Discussioni esistenti</a></li>
+				 	  		</ul>
+				 	  	</li>
+			 	  	</ul>
+			 	  	<h3>Altro</h3>
+			 	  	<ul>
+				 	  	<li><a href="#delega">Gestione Deleghe</a><a class="toggleLink" href="delega">HIDE</a>
+						<ul id="delega">
+					 	  			<s:url action="delega" var="delega">
+			<%-- 						  	<s:param name="operazione_delega">nuova</s:param> --%>
+									</s:url>
+									<s:url action="listaDelega" var="listaDelega">
+			<%-- 						  	<s:param name="operazione_delega">rimuovi</s:param> --%>
+									</s:url>
+					 	  			<li><a href="${delega}">Crea/Modifica Delega</a></li>
+					 	  			<li><a href="${listaDelega}">Rimuovi delega</a></li>
+					 	  		</ul>
+					 	 </li>
+				 	 </ul>
+					<% } else if(tipoMembro.equals("F")) { %>
+					<ul>
+						<li><a href="listino">Listino</a></li>
+				 	  	<li><a href="messaggi">Messaggi</a></li>
+				 	  	<li><a href="statoOrdineFornitore">Stato ordine</a></li>
+				 	  	<li><a href="statisticheFornitore">Statistiche</a></li>
+			 	  	</ul>
+					<% } else if(tipoMembro.equals("R")) { %>
+					<ul>
+						<li><a href="listino">Listino</a></li>
+						<li><a href="statoOrdineResponsabile">Stato ordine</a></li>
+				 	  	<li><a href="statisticheResponsabile">Statistiche</a></li>
+				 	  	<li><a href="inviaNotifica">Invia notifica</a></li>
+				 	  	<li><a href="messaggi">Messaggi</a></li>
+				 	  	<li><a href="riepilogoRitiro">Riepilogo ritiro</a></li>
+			 	  	</ul>
+					<% } else if(tipoMembro.equals("A")) { %>
+					<ul>
+						<li><a href="listaUtenti">Lista utenti</a></li>
+						<li><a href="scaricaLog">Scarica log</a></li>
+					</ul>
+					<% } %>
+				</div>
+			</aside>
+			
+			<section id="contentWrapper">
+				<div id="content"></div>
+			</section>
+		</div>
+	</div>
 </body>
 </html>

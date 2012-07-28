@@ -22,6 +22,22 @@ html, body
 	height: 0;
 }
 
+#main1 { background-color:#EEEEEE; width:100%; position:relative; right:82%; /* height:100%; */ }
+#main2
+{ 
+	background: #eeeeee;
+	background: -moz-linear-gradient(top,  #eeeeee 0%, #cccccc 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#cccccc));
+	background: -webkit-linear-gradient(top,  #eeeeee 0%,#cccccc 100%);
+	background: -o-linear-gradient(top,  #eeeeee 0%,#cccccc 100%);
+	background: -ms-linear-gradient(top,  #eeeeee 0%,#cccccc 100%);
+	background: linear-gradient(to bottom,  #eeeeee 0%,#cccccc 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 );
+	width:100%;
+	position:relative;
+	top:-4px;
+	/* height:100%; */
+}
 .left { float:left; }
 .right { float:right; }
 .handPointer {  cursor:pointer; }
@@ -34,6 +50,13 @@ header#header
 	height: 55px;
 	width: 100%;
 	background: #222222 url(../../images/admin/header_bg.png) repeat-x;
+}
+
+.header_fixed
+{
+	position:fixed;
+	top:0px;
+	z-index:99999;
 }
 
 header#header h1.site_title, header#header h2.section_title
@@ -66,25 +89,22 @@ header#header h2.section_title
 	background: url(../../images/admin/header_shadow.png) no-repeat left top;
 }
 
-.btn_logout { float: right; margin-top: 14px; margin-right:15px; }
+.btn_logout { float: right; margin-top: 3px; margin-right:3px; }
 
 .btn_logout a
 {
 	display: block;
-	
-	width: 91px;
-	height: 27px;
-	background: url(../../images/admin/btn_view_site.png) no-repeat;
+	/* background: url(../../images/admin/btn_view_site.png) no-repeat; */
+	border-radius:5px;
+	border:1px solid #cccccc;
+	box-shadow:0px 1px 0px #FFFFFF;
+	padding:4px 10px;
 	text-align: center;
-	line-height: 29px;
 	color: #fff;
 	text-decoration: none;
-	text-shadow: 0 -1px 0 #000;
-}
-
-.btn_logout a:hover
-{
-	background-position: 0 -27px;
+	text-shadow: 0 1px 0 #FFFFFF;
+	color:#5DC462;
+	font-weight:bold;
 }
 
 /* Secondary Header Bar */
@@ -94,6 +114,14 @@ section#secondary_bar
 	height: 38px;
 	width: 100%;
 	background: #F1F1F4 url(../../images/admin/secondary_bar.png) repeat-x;
+}
+
+.secondary_bar_fixed
+{
+	position:fixed;
+	/* top:54px; */
+	top:0px;
+	z-index:99999;
 }
 
 section#secondary_bar .user
@@ -122,13 +150,14 @@ section#secondary_bar .user
 
 .user a { text-decoration: none; color: #666666 }
 .user a:hover { color: #77BACE; }
-.user a.logout_user {
-float: left;
-display: block;
-width: 16px;
-height: 35px;
-text-indent: -5000px;
-background: url(../images/icn_logout.png) center no-repeat;
+.user a.logout_user
+{
+	float: left;
+	display: block;
+	width: 16px;
+	height: 35px;
+	text-indent: -5000px;
+	background: url(../images/icn_logout.png) center no-repeat;
 }
 
 /* Breadcrumbs */
@@ -136,7 +165,7 @@ background: url(../images/icn_logout.png) center no-repeat;
 section#secondary_bar #breadcrumbs_container
 {
 	float: left;
-	width: 77%;
+	/* width: 77%; */
 	background: url(../../images/admin/secondary_bar_shadow.png) no-repeat left top;
 	height: 38px;
 }
@@ -189,12 +218,12 @@ article.breadcrumbs
 
 aside#sidebar
 {
-	width: 18%;
-	background: #E0E0E3 url(../../images/admin/sidebar.png) repeat-y;
+	width:18%;
+	left:82%;
+	position:relative;
 	float: left;
-	min-height: 500px;
+	min-height: 1000px;
 	margin-top: -4px;
-	height:100%;
 }
 
 /* Sidebar Menu */
@@ -253,9 +282,11 @@ aside#sidebar
 
 section#contentWrapper
 { 
-	width: 77%;
-	min-height: 500px;
-	height:100%;
+	width:82%;
+	/* height:100%; */
+	left:82%;
+	min-height: 1000px;
+	position:relative;
 	background: url(../../images/admin/sidebar_shadow.png) repeat-y left top;
 	float: left;
 	margin-top: -2px;

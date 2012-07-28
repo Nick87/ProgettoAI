@@ -24,8 +24,8 @@
 						</s:url>
 						<a href="${orderId}"><s:property value="ID_Ordine"/></a>
 					</td>
-					<td><s:property value="data_apertura"/></td>
-					<td><s:property value="data_chiusura"/></td>
+					<td><s:date name="data_apertura" format="dd/MM/yyyy"/></td>
+					<td><s:date name="data_chiusura" format="dd/MM/yyyy"/></td>
 				</tr>
 			</s:iterator>
 		</tbody>
