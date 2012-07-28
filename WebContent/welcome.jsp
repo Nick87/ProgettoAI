@@ -41,7 +41,8 @@ $(function(){
 		if(target.attr("id") == "logout" || target.attr("href") == "#")
 			return true;
 		if(target.attr("href") == "listaMieiOrdini" ||
-		   target.attr("href") == "listaDiscussioni")
+		   target.attr("href") == "listaDiscussioni"||
+		   target.attr("href") == "delega")
 		{
 			$("ul#" + target.attr("href")).slideToggle();
 			if(target.html() == "HIDE")
@@ -148,8 +149,19 @@ $(window).load(function(){
 	 	  	</ul>
 	 	  	<h3>Altro</h3>
 	 	  	<ul>
-	 	  		<li><a href="delega">Delega</a></li>
-	 	  	</ul>
+		 	  	<li><a href="#delega">Gestione Deleghe</a><a class="toggleLink" href="delega">HIDE</a>
+				<ul id="delega">
+			 	  			<s:url action="delega" var="delega">
+	<%-- 						  	<s:param name="operazione_delega">nuova</s:param> --%>
+							</s:url>
+							<s:url action="listaDelega" var="listaDelega">
+	<%-- 						  	<s:param name="operazione_delega">rimuovi</s:param> --%>
+							</s:url>
+			 	  			<li><a href="${delega}">Crea/Modifica Delega</a></li>
+			 	  			<li><a href="${listaDelega}">Rimuovi delega</a></li>
+			 	  		</ul>
+			 	 </li>
+		 	 </ul>
 			<% } else if(tipoMembro.equals("F")) { %>
 			<ul>
 				<li><a href="listino">Listino</a></li>

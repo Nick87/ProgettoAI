@@ -1,5 +1,6 @@
 package gas.Controller.Utente;
 
+import gas.DAO.Info_Ordine;
 import gas.DAO.Log;
 import gas.DAO.Membro;
 import gas.DAO.Messaggio;
@@ -27,8 +28,8 @@ public class CreaDelega extends ActionSupport
 		{
 			SchedaAcquisto.Aggiungi_Delega(idMembro,idordinescelto,idutentescelto);
 			Log.addLog("Aggiunta delega del membro "+idutentescelto+" da parte del membro "+idMembro+" per l'ordine "+idordinescelto);
+			int id_responsabile = Info_Ordine.getIdResponsabilefromIdOrdine(idordinescelto);
 			//Dopo che l'utente crea una delega, viene inviato un messaggio al responsabile dell'ordine
-			int id_responsabile = 5;
 			Messaggio.inserisciMessaggio(id_responsabile, "L'utente " + Membro.getUsernameFromId(idMembro) + " ha delegato il membro " + Membro.getUsernameFromId(idutentescelto) + " al ritiro dell'ordine " + idordinescelto);
 			Log.addLog("Inviato messaggio al membro " + id_responsabile);
 			//Viene inviato un messaggio al delegato 

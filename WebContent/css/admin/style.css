@@ -488,3 +488,4 @@ ul.actionMessage { list-style:none; }
 	font-style: italic;
 	font-size:16px;
 }
+.unreadNotification { background-color:#BFFFC0; }

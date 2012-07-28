@@ -48,9 +48,6 @@
 		</tbody>
 	</table>
 </s:else>
-<style>
-.unreadNotification { background-color:#BFFFC0; }
-</style>
 <script>
 function updateNumberBubble(numeroNotificheNonLette)
 {

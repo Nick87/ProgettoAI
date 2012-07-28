@@ -170,6 +170,25 @@ public class Info_Ordine
 		}
 		return chiuso;
 	}
+	
+	public static int getIdResponsabilefromIdOrdine(int idOrdine) throws DBException, SQLException
+	{
+		Connection conn = DBConnection.getDBConnection();
+		String query = "SELECT ID_Responsabile FROM info_ordine " +
+				       "WHERE ID_Ordine = ?";
+		int id_responsabile = 0;
+		try
+		{
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, idOrdine);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next())
+				id_responsabile=rs.getInt("ID_Responsabile");
+		} finally {
+			DBConnection.closeConnection(conn);
+		}
+		return id_responsabile;
+	}
 
 	public int getID_Ordine() {
 		return ID_Ordine;

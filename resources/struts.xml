@@ -145,6 +145,21 @@
 		    <result name="success">statoOrdineResponsabile.jsp</result>
 		</action>
 		
+		<!-- Azioni Amministratore -->
+
+		<action name="listaUtenti" class="gas.Controller.Amministratore.ListaUtenti">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		    <result name="success">listaUtenti.jsp</result>
+		    <result name="input">welcome.jsp</result>
+		    <result name="error">welcome.jsp</result>
+		</action>
+		<action name="abilita_disabilita_utente" class="gas.Controller.Amministratore.Abilita_Disabilita_Utente">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		    <result name="success">listaUtenti.jsp</result>
+		    <result name="input">listaUtenti.jsp</result>
+		    <result name="error">listaUtenti.jsp</result>
+		</action>
+		
 		<!-- Altro -->
 		
 		<action name="*">

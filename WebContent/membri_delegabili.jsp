@@ -8,7 +8,8 @@
 	<s:form id="listaDatiDelega" action="creaDelega" method="post">
 		<s:select id="lista_ordini" label="Scegli un ordine chiuso" name="ordine_scelto"  list="listaOrdini"/>
 		<s:select label="Scegli un Delegato" name="utente_scelto" list="listaUtentiDelegabili"/>
-		<s:submit method="execute" value="Conferma Delega" align="right" />
+<!-- 		<input type="image" src="images/remove.jpeg" alt="Rimuovi Delega" title="Rimuovi Delega"/> -->
+- 		<s:submit type="image" method="execute" value="Conferma Delega" src="images/conferma.png" title="Conferma Delega" label="Conferma Delega"  align="right" />
 		<s:hidden id="idMembro" value="%{idMembro}"></s:hidden>	
 	</s:form>		
 </s:else>

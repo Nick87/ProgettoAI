@@ -150,6 +150,42 @@ public class Membro
 		return lista;
 	}
 	
+	public static List<Membro> getListaUtenti(String tipo_membro) throws DBException, SQLException
+	{	
+		//Controllo per sicurezza se e' un utente amministratore a richiedere la lista degli utenti
+		if(tipo_membro.equals(memberTypeToString(memberType.ADMIN)))
+		{
+			ArrayList<Membro> lista = new ArrayList<Membro>();
+			//Seleziona tutti i membri partecipanti allo specifico ordine, tranne naturalmente chi vuole delegare
+			Connection conn = null;
+			try
+			{
+				conn = DBConnection.getDBConnection();
+				String query = "SELECT * FROM membro M";
+				PreparedStatement ps = conn.prepareStatement(query);
+				ResultSet rs = ps.executeQuery();
+				Membro m;
+				while(rs.next())
+				{
+					m = new Membro();
+					m.setID_Membro(rs.getInt("ID_membro"));
+					m.setNome(rs.getString("nome"));
+					m.setCognome(rs.getString("cognome"));
+					m.setTipo_membro(stringToMemberType(rs.getString("tipo_membro")));
+					m.setUsername(rs.getString("username"));
+					boolean abilitato = rs.getInt("abilitato") == 1 ? true : false;
+					m.setAbilitato(abilitato);
+					lista.add(m);
+				}
+			} finally {
+				DBConnection.closeConnection(conn);
+			}
+			return lista;
+		}
+		else
+			return null;
+	}
+	
 	public static List<Membro> getMembriFromType(memberType ... tipi) throws DBException, SQLException
 	{
 		ArrayList<Membro> lista = new ArrayList<Membro>();
@@ -183,7 +219,7 @@ public class Membro
 				m.setTipo_membro(stringToMemberType(rs.getString("tipo_membro")));
 				m.setUsername(rs.getString("username"));
 				m.setPassword(rs.getString("password"));
-				boolean abilitato = rs.getString("abilitato") == "1" ? true : false;
+				boolean abilitato = rs.getInt("abilitato") == 1 ? true : false;
 				m.setAbilitato(abilitato);
 				lista.add(m);
 			}
@@ -305,5 +341,40 @@ public class Membro
 	}
 	public void setAbilitato(boolean abilitato) {
 		this.abilitato = abilitato;
+	}
+
+	public static boolean modificaAbilitazioneUtente(int id_membro_selezionato, String tipoMembro, String operazione) throws DBException, SQLException
+	{
+		//Controllo per sicurezza se e' un utente amministratore a richiedere l'abilitazione/disabilitazione
+		if(tipoMembro.equals(memberTypeToString(memberType.ADMIN)))
+		{
+			//Seleziona tutti i membri partecipanti allo specifico ordine, tranne naturalmente chi vuole delegare
+			Connection conn = null;
+			String query = "";
+			PreparedStatement ps;
+			try
+			{
+				conn = DBConnection.getDBConnection();
+				conn.setAutoCommit(false);
+				query = "UPDATE membro " +
+					"SET abilitato = ? " +
+					"WHERE ID_Membro = ?";
+				ps = conn.prepareStatement(query);
+				if(operazione.equals("abilita"))
+					ps.setInt(1, 1);
+				else
+					ps.setInt(1, 0);
+				ps.setInt(2, id_membro_selezionato);
+				ps.executeUpdate();
+				conn.commit();
+				conn.setAutoCommit(true);
+			} finally {
+				DBConnection.closeConnection(conn);
+			}
+			return true;
+		}
+		else
+			return false;
+		
 	}
 }

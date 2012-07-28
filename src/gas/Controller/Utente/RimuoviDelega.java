@@ -1,6 +1,9 @@
 package gas.Controller.Utente;
 
+import gas.DAO.Info_Ordine;
+import gas.DAO.Log;
 import gas.DAO.Membro;
+import gas.DAO.Messaggio;
 import gas.DAO.SchedaAcquisto;
 import gas.Exception.DBException;
 
@@ -13,19 +16,27 @@ import java.util.Map;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class RimuoviDelega extends ActionSupport{
-	
-	private int ID_membro_che_acquista;
+public class RimuoviDelega extends ActionSupport
+{	
 	private int idOrdine;
+	private int ID_Membro_che_ritira;
+	private int idMembro;
 	private List<SchedaAcquisto> lista_dati_deleghe = new ArrayList<SchedaAcquisto>();
 	private Map<Integer, String> dettagliDelegato;
 	
 	public String execute()
 	{
 		try
-		{
-			SchedaAcquisto.RimuoviDelega(ID_membro_che_acquista,idOrdine);
-			lista_dati_deleghe = SchedaAcquisto.DeleghePerUtente(ID_membro_che_acquista);
+		{			
+			SchedaAcquisto.RimuoviDelega(idMembro,idOrdine);
+			int id_responsabile = Info_Ordine.getIdResponsabilefromIdOrdine(idOrdine);
+			//Dopo che l'utente rimuove una delega, viene inviato un messaggio al responsabile dell'ordine
+			Messaggio.inserisciMessaggio(id_responsabile, "L'utente " + Membro.getUsernameFromId(idMembro) + " ha rimosso la delega per il membro " + Membro.getUsernameFromId(ID_Membro_che_ritira) + " per il ritiro dell'ordine " + idOrdine);
+			Log.addLog("Inviato messaggio al membro " + id_responsabile);
+			//Viene inviato un messaggio al delegato 
+			Messaggio.inserisciMessaggio(ID_Membro_che_ritira, "L'utente " + Membro.getUsernameFromId(idMembro) + " ha rimosso la tua delega per il ritiro dell'ordine " + idOrdine);
+			Log.addLog("Inviato messaggio al membro " + ID_Membro_che_ritira);
+			lista_dati_deleghe = SchedaAcquisto.DeleghePerUtente(idMembro);
 			if(dettagliDelegato == null)
 				dettagliDelegato = new HashMap<Integer, String>();
 			dettagliDelegato.clear();
@@ -43,12 +54,6 @@ public class RimuoviDelega extends ActionSupport{
 		return Action.SUCCESS; 
 	}
 	
-	public int getID_membro_che_acquista() {
-		return ID_membro_che_acquista;
-	}
-	public void setID_membro_che_acquista(int iD_membro_che_acquista) {
-		ID_membro_che_acquista = iD_membro_che_acquista;
-	}
 	public List<SchedaAcquisto> getLista_dati_deleghe() {
 		return lista_dati_deleghe;
 	}
@@ -67,5 +72,22 @@ public class RimuoviDelega extends ActionSupport{
 	public void setDettagliDelegato(Map<Integer, String> dettagliDelegato) {
 		this.dettagliDelegato = dettagliDelegato;
 	}
+
+	public int getID_Membro_che_ritira() {
+		return ID_Membro_che_ritira;
+	}
+
+	public void setID_Membro_che_ritira(int iD_Membro_che_ritira) {
+		ID_Membro_che_ritira = iD_Membro_che_ritira;
+	}
+
+	public int getIdMembro() {
+		return idMembro;
+	}
+
+	public void setIdMembro(int idMembro) {
+		this.idMembro = idMembro;
+	}
+	
 }
 
