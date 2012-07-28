@@ -34,7 +34,7 @@
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result name="success">leggiNotifiche.jsp</result>
 		</action>
-		<action name="markAsReadUnread" class="gas.Controller.Common.MarkAsReadUnread">
+		<action name="markNotificaAsReadUnread" class="gas.Controller.Common.MarkNotificaAsReadUnread">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		  	<result type="stream">
 		  	    <param name="contentType">plain/text</param>
@@ -42,6 +42,31 @@
 		  	</result>
 		</action>
 		<action name="eliminaNotifica" class="gas.Controller.Common.EliminaNotifica">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		  	<result type="stream">
+		  	    <param name="contentType">plain/text</param>
+		  	    <param name="inputName">inputStream</param>
+		  	</result>
+		</action>
+		<action name="leggiMessaggi" class="gas.Controller.Common.LeggiMessaggi">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		    <result name="success">leggiMessaggi.jsp</result>
+		</action>
+		<action name="markMessaggioAsReadUnread" class="gas.Controller.Common.MarkMessaggioAsReadUnread">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		  	<result type="stream">
+		  	    <param name="contentType">plain/text</param>
+		  	    <param name="inputName">inputStream</param>
+		  	</result>
+		</action>
+		<action name="eliminaMessaggio" class="gas.Controller.Common.EliminaMessaggio">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		  	<result type="stream">
+		  	    <param name="contentType">plain/text</param>
+		  	    <param name="inputName">inputStream</param>
+		  	</result>
+		</action>
+		<action name="confermaMessaggio" class="gas.Controller.Common.ConfermaMessaggio">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		  	<result type="stream">
 		  	    <param name="contentType">plain/text</param>

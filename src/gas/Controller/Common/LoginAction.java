@@ -2,6 +2,8 @@ package gas.Controller.Common;
 
 import gas.DAO.Log;
 import gas.DAO.Membro;
+import gas.DAO.Messaggio;
+import gas.DAO.Messaggio.TipoMessaggio;
 import gas.DAO.Notifica;
 import gas.DAO.Notifica.TipoNotifica;
 import gas.Exception.DBException;
@@ -22,6 +24,7 @@ public class LoginAction extends ActionSupport
 	private String password;
 	private String erroreDBMessage;
 	private int numeroNotificheNonLette;
+	private int numeroMessaggiNonLetti;
 	private boolean erroreDB;
 	
 	public String execute()
@@ -35,10 +38,11 @@ public class LoginAction extends ActionSupport
 		LoginStatus status;
 		try
 		{
-			status = Membro.checkPassword(username, password);
+			status = Membro.checkPassword(username, password);			
 			sessionMap.put("user", status.getUsername());
 			sessionMap.put("status", status);
 			numeroNotificheNonLette = Notifica.getNumeroNotificheFromIdMembro(TipoNotifica.NON_LETTA, status.getID_Membro());
+			numeroMessaggiNonLetti = Messaggio.getNumeroMessaggiFromIdMembro(TipoMessaggio.NON_LETTO, status.getID_Membro());
 			Log.addLog("Utente " + username + " fa login");
 		} catch (LoginException e) {
 			addActionError(getText("error.login"));
@@ -87,5 +91,11 @@ public class LoginAction extends ActionSupport
 	}
 	public void setNumeroNotificheNonLette(int numeroNotificheNonLette) {
 		this.numeroNotificheNonLette = numeroNotificheNonLette;
+	}
+	public int getNumeroMessaggiNonLetti() {
+		return numeroMessaggiNonLetti;
+	}
+	public void setNumeroMessaggiNonLetti(int numeroMessaggiNonLetti) {
+		this.numeroMessaggiNonLetti = numeroMessaggiNonLetti;
 	}
 }

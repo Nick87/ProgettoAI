@@ -8,7 +8,7 @@
 	<h3 class="pageTitle">Non ci sono notifiche da visualizzare</h3>
 </s:if>
 <s:else>
-	<h3 class="pageTitle">Clicca su una notifica per visualizzarla</h3>
+	<h3 class="pageTitle">Clicca sull'ID di una notifica per visualizzarla</h3>
 	<table id="tabellaNotifiche">
 		<thead>
 			<tr>
@@ -28,9 +28,9 @@
 				<td><span class="handPointer indexNotifica"><s:property value="#n.index + 1"/></span></td>
 				<td><s:date name="data" format="dd/MM/YYYY"/></td>
 				<td>
-					<div class="markAsReadUnreadDiv clearfix">
-						<a class="markAsRead" href="markAsReadUnread"></a>
-						<a class="markAsUnread" href="markAsReadUnread"></a>
+					<div class="markNotificaAsReadUnreadDiv clearfix">
+						<a class="markNotificaAsRead" href="markNotificaAsReadUnread"></a>
+						<a class="markNotificaAsUnread" href="markNotificaAsReadUnread"></a>
 					</div>
 					<input type="hidden" value="<s:property value="ID_Notifica"/>"/>
 				</td>
@@ -51,7 +51,7 @@
 <script>
 function updateNumberBubble(numeroNotificheNonLette)
 {
-	var numberBubble = $("#allCommands span.numberBubble");
+	var numberBubble = $("#allCommands #notificheDiv span.numberBubble");
 	numberBubble.html(numeroNotificheNonLette);
 	if(numeroNotificheNonLette <= 0)
 		numberBubble.hide();
@@ -69,15 +69,15 @@ $("#tabellaNotifiche").on("click", function(e){
 			notifica.fadeOut("fast");
 		else
 			notifica.fadeIn("fast");
-	} else if(target.is(".markAsRead") || target.is(".markAsUnread")) {
-		if(target.is(".markAsRead"))
+	} else if(target.is(".markNotificaAsRead") || target.is(".markNotificaAsUnread")) {
+		if(target.is(".markNotificaAsRead"))
 			target.closest("tr").removeClass("unreadNotification");
 		else
 			target.closest("tr").addClass("unreadNotification");
 		var params = {
 			idNotifica:target.closest("td").children("input").eq(0).val(),
 			idMembro:$("#idMembro").val(),
-			readUnread:target.is(".markAsRead") ? "READ" : "UNREAD"
+			readUnread:target.is(".markNotificaAsRead") ? "READ" : "UNREAD"
 		};
 		$.get(target.attr("href"), params, function(data){			
 			var obj = JSON.parse(data);

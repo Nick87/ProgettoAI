@@ -20,7 +20,7 @@ public class Abilita_Disabilita_Utente extends ActionSupport
 	{
 		try
 		{
-			if(!Membro.modificaAbilitazioneUtente(id_membro_selezionato,tipoMembro,operazione))
+			if(!Membro.modificaAbilitazioneUtente(id_membro_selezionato, tipoMembro, operazione))
 				return Action.ERROR;
 			if(Membro.getListaUtenti(tipoMembro) == null)
 				return Action.ERROR;

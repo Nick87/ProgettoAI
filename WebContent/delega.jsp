@@ -27,6 +27,6 @@ $("#lista_ordini option").on("click", function(e){
 	});
 });
 $("#breadcrumbs_container > article").html(
-	"<a href='#'>Home</a><div class='breadcrumb_divider'></div><a href='#'>Altro</a><div class='breadcrumb_divider'></div><a href='#' class='current'>Delega</a>"
+	"<a href='#'>Home</a><div class='breadcrumb_divider'></div><a href='#'>Altro</a><div class='breadcrumb_divider'></div><a href='#'>Gestione deleghe</a><div class='breadcrumb_divider'></div><a href='#' class='current'>Crea/Modifica delega</a>"
 );
 </script>

@@ -79,8 +79,10 @@ $(function(){
 		});
 	});
 	
-	if($(".numberBubble").html() <= 0)
-		$(".numberBubble").hide();
+	$(".numberBubble").each(function(){
+		if($(this).html() <= 0)
+			$(this).hide();
+	});
 });
 $(window).load(function(){
 	/***** 
@@ -139,7 +141,12 @@ $(window).load(function(){
 	 	  				<span class="numberBubble"><s:property value="%{numeroNotificheNonLette}"/></span>
 	 	  			</div>
  	  			</li>
-		 	  	<li><a href="listaMessaggi">Messaggi</a></li>
+		 	  	<li>
+					<div id="messaggiDiv" class="clearfix">
+		 	  			<a href="leggiMessaggi" class="left">Messaggi</a>
+	 	  				<span class="numberBubble"><s:property value="%{numeroMessaggiNonLetti}"/></span>
+	 	  			</div>
+		 	  	</li>
 		 	  	<li><a href="#">Discussioni</a><a class="toggleLink" href="listaDiscussioni">HIDE</a>
 		 	  		<ul id="listaDiscussioni">
 		 	  			<li><a href="nuovaDiscussione">Nuova Discussione</a></li>

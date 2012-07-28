@@ -23,7 +23,7 @@ public class LoginInterceptor implements Interceptor
 		
 		if(invocation.getAction().getClass().getName().equals("gas.Controller.Common.LoginAction")){
 			//System.out.println("1");
-			if(context.containsKey("user")){
+			if(context.containsKey("user") && context.containsKey("status")){
 				//System.out.println("2");
 				return "loggato";
 			} else {
@@ -31,7 +31,7 @@ public class LoginInterceptor implements Interceptor
 				return invocation.invoke();
 			}
 		} else {
-			if(context.containsKey("user")){
+			if(context.containsKey("user") && context.containsKey("status")){
 				//System.out.println("4");
 				return invocation.invoke();
 			} else {

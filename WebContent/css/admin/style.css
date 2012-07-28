@@ -429,13 +429,13 @@ ul.actionMessage { list-style:none; }
 	height:18px;
 	margin:0 auto;
 }
-.markAsReadUnreadDiv
+.markNotificaAsReadUnreadDiv, .markMessaggioAsReadUnreadDiv
 {
 	width:50px;
 	margin:0 auto;
 	padding-left:15px;
 }
-.markAsRead
+.markNotificaAsRead, .markMessaggioAsRead
 {
 	background-image:url("../../images/admin/icn_alert_success.png");
 	display:block;
@@ -444,7 +444,7 @@ ul.actionMessage { list-style:none; }
 	margin:0 auto;
 	float:left;
 }
-.markAsUnread
+.markNotificaAsUnread, .markMessaggioAsUnread
 {
 	background-image:url("../../images/admin/icn_alert_error.png");
 	display:block;
@@ -454,14 +454,14 @@ ul.actionMessage { list-style:none; }
 	margin-left:10px;
 	float:left;
 }
-.eliminaNotifica
+.eliminaNotifica, .eliminaMessaggio
 {
 	background-image:url("../../images/admin/trash.png");
 	display:block;
 	width:17px;
 	height:23px;
 }
-.eliminaNotificaDiv
+.eliminaNotificaDiv, .eliminaMessaggioDiv
 {
 	width:17px;
 	margin:0 auto;
@@ -482,10 +482,19 @@ ul.actionMessage { list-style:none; }
 	margin-top:2px;
 	font-size:12px;
 }
-.testoNotifica
+.testoNotifica, .testoMessaggio
 {
 	font-family:"Courier New";
 	font-style: italic;
 	font-size:16px;
 }
-.unreadNotification { background-color:#BFFFC0; }
+.unreadNotification, .unreadMessaggio { background-color:#BFFFC0; }
+
+.confermaMessaggio
+{
+	background-image:url("../../images/admin/icn_alert_warning.png");
+	display:block;
+	width:18px;
+	height:18px;
+	margin:0 auto;
+}

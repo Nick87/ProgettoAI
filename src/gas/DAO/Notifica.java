@@ -66,16 +66,15 @@ public class Notifica
 			conn = DBConnection.getDBConnection();
 			String query = "SELECT COUNT(*) as totale FROM notifica WHERE ID_Membro = ? AND eliminata = ?";
 			
-			if(tipoNotifica == TipoNotifica.LETTA || tipoNotifica == TipoNotifica.NON_LETTA)
-				query += " AND letta = ?";
+			if(tipoNotifica == TipoNotifica.LETTA)
+				query += " AND letta = 1";
+			else if(tipoNotifica == TipoNotifica.NON_LETTA)
+				query += " AND letta = 0";
 			
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setInt(1, idMembro);
 			ps.setInt(2, 0);
-			if(tipoNotifica == TipoNotifica.LETTA)
-				ps.setInt(3, 1);
-			else if(tipoNotifica == TipoNotifica.NON_LETTA)
-				ps.setInt(3, 0);
+			
 			ResultSet rs = ps.executeQuery();			
 			rs.next();
 			n = rs.getInt("totale");

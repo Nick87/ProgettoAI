@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class MarkAsReadUnread extends ActionSupport
+public class MarkNotificaAsReadUnread extends ActionSupport
 {
 	private InputStream inputStream;
 	private int idNotifica;

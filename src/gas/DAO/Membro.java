@@ -26,7 +26,7 @@ public class Membro
 	private boolean abilitato;
 	
 	public Membro() {}
-	public enum memberType { ADMIN, UTENTE, FORNITORE, RESPONSABILE };
+	public enum memberType { ANY, ADMIN, UTENTE, FORNITORE, RESPONSABILE };
 	
 	public static LoginStatus checkPassword(String username, String password) throws DBException, LoginException, SQLException
 	{
