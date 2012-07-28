@@ -2,13 +2,17 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <s:hidden id="idMembro" value="%{idMembro}"/>
-<s:hidden id="numeroNotificheNonLette" value="%{numeroMessaggiNonLetti}"/>
+<s:hidden id="numeroMessaggiNonLetti" value="%{numeroMessaggiNonLetti}"/>
 <s:if test="%{listaMessaggi.size() == 0}">
 	<h3 class="pageTitle">Non ci sono messaggi da visualizzare</h3>
 </s:if>
 <s:else>
+	<div id="resultNotificationArea">
+		<s:actionerror/>
+		<s:actionmessage/>
+	</div>
 	<h3 class="pageTitle">Clicca sull'ID di un messaggio per visualizzarlo</h3>
-	<table id="tabellaMessaggio">
+	<table id="tabellaMessaggi">
 		<thead>
 			<tr>
 				<th>Messaggio</th>
@@ -64,7 +68,7 @@ function updateNumberBubble(numeroNotificheNonLette)
 	else
 		numberBubble.show();
 }
-$("#tabellaMessaggio").on("click", function(e){
+$("#tabellaMessaggi").on("click", function(e){
 	e.preventDefault();
 	e.stopPropagation();
 	var target = $(e.target);
@@ -94,7 +98,12 @@ $("#tabellaMessaggio").on("click", function(e){
 			idMessaggio:target.next().val(),
 			idMembro:$("#idMembro").val()
 		};
-		$.get(target.attr("href"), params, function(data){			
+		$.get(target.attr("href"), params, function(data){
+			var obj = JSON.parse(data);
+			if(obj.result == "ok") {
+				var div = $("<div>").addClass("alert_success").html("Messaggio confermato con successo");
+				$("#resultNotificationArea").empty().append(div);
+			}
 		});
 	} else if(target.is(".eliminaMessaggio")) {
 		var params = {

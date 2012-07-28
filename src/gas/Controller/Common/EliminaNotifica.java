@@ -15,7 +15,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class EliminaNotifica extends ActionSupport
 {
 	private InputStream inputStream;
-	int numeroNotificheNonLette;
+	private int numeroNotificheNonLette;
 	private int idNotifica;
 	private int idMembro;
 	

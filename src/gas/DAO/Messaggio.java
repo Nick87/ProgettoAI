@@ -1,6 +1,7 @@
 package gas.DAO;
 
 import gas.Exception.DBException;
+import gas.Exception.ItemNotFoundException;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -19,7 +20,7 @@ public class Messaggio
 	private boolean letto;
 	private boolean confermato;
 	private boolean eliminato;
-	public enum TipoMessaggio { ANY, NON_LETTO, LETTO_NON_CONFERMATO, LETTO_CONFERMATO };
+	public enum TipoMessaggio { ANY, LETTO, NON_LETTO, LETTO_NON_CONFERMATO, LETTO_CONFERMATO };
 	
 	public Messaggio() {}
 	
@@ -57,7 +58,7 @@ public class Messaggio
 		try
 		{
 			conn = DBConnection.getDBConnection();
-			String query = "SELECT * FROM messaggio WHERE ID_Membro = ?";
+			String query = "SELECT * FROM messaggio WHERE ID_Membro = ? AND eliminato = ?";
 			
 			if(tipoMessaggio == TipoMessaggio.NON_LETTO)
 				query += " AND letto = 0";
@@ -68,6 +69,7 @@ public class Messaggio
 			
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setInt(1, idMembro);
+			ps.setInt(2, 0);
 			ResultSet rs = ps.executeQuery();
 			Messaggio m;
 			while(rs.next())
@@ -117,6 +119,61 @@ public class Messaggio
 			DBConnection.closeConnection(conn);
 		}
 		return n;
+	}
+	
+	public static void setLettoNonLetto(TipoMessaggio tipoMessaggio, int idMessaggio) throws DBException, SQLException, ItemNotFoundException
+	{
+		Connection conn = null;
+		try
+		{
+			conn = DBConnection.getDBConnection();
+			String query = "UPDATE messaggio SET letto = ? WHERE ID_Messaggio = ?";
+			PreparedStatement ps = conn.prepareStatement(query);
+			if(tipoMessaggio == TipoMessaggio.LETTO)
+				ps.setInt(1, 1);
+			else
+				ps.setInt(1, 0);
+			ps.setInt(2, idMessaggio);
+			if(ps.executeUpdate() != 1)
+				throw new ItemNotFoundException("Messaggio con id " + idMessaggio + " non trovato");
+		} finally {
+			DBConnection.closeConnection(conn);
+		}
+	}
+	
+	public static void eliminaMessaggio(int idMessaggio) throws SQLException, DBException
+	{
+		Connection conn = null;
+		try
+		{
+			conn = DBConnection.getDBConnection();
+			String query = "UPDATE messaggio SET eliminato = ? WHERE ID_Messaggio = ?";
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, 1);
+			ps.setInt(2, idMessaggio);
+			if(ps.executeUpdate() != 1)
+				System.out.println("Errore eliminazione messaggio");
+		} finally {
+			DBConnection.closeConnection(conn);
+		}
+	}
+	
+	public static void confermaMessaggio(int idMessaggio) throws DBException, SQLException
+	{
+
+		Connection conn = null;
+		try
+		{
+			conn = DBConnection.getDBConnection();
+			String query = "UPDATE messaggio SET confermato = ? WHERE ID_Messaggio = ?";
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, 1);
+			ps.setInt(2, idMessaggio);
+			if(ps.executeUpdate() != 1)
+				System.out.println("Errore conferma messaggio");
+		} finally {
+			DBConnection.closeConnection(conn);
+		}
 	}
 	
 	public int getID_Messaggio() {

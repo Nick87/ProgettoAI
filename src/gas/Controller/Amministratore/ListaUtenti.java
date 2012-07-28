@@ -2,6 +2,8 @@ package gas.Controller.Amministratore;
 
 import gas.DAO.Membro;
 import gas.Exception.DBException;
+import gas.Exception.InvalidOperationException;
+
 import java.sql.SQLException;
 import java.util.List;
 import com.opensymphony.xwork2.Action;
@@ -17,13 +19,16 @@ public class ListaUtenti extends ActionSupport
 	{
 		try
 		{			
-			if(Membro.getListaUtenti(tipoMembro) == null)
-				return Action.ERROR;
-			lista_utenti = Membro.getListaUtenti(tipoMembro);
+			/*if(Membro.getListaUtentiFromTipoMembro(tipoMembro) == null)
+				return Action.ERROR;*/
+			lista_utenti = Membro.getListaUtentiFromTipoMembro(tipoMembro);
 		} catch (DBException e) {
 			System.out.println(e.getMessage());
 			return Action.ERROR;
 		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return Action.ERROR;
+		} catch (InvalidOperationException e) {
 			System.out.println(e.getMessage());
 			return Action.ERROR;
 		}
