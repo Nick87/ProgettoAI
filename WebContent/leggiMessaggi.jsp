@@ -29,7 +29,10 @@
 				class="unreadMessaggio"
 				</s:if>
 			>
-				<td><span class="handPointer indexMessaggio"><s:property value="#n.index + 1"/></span></td>
+				<td>
+					<span class="handPointer indexMessaggio"><s:property value="#n.index + 1"/></span>
+					<input type="hidden" value="<s:property value="ID_Messaggio"/>"/>
+				</td>
 				<td><s:date name="data" format="dd/MM/YYYY"/></td>
 				<td>
 					<div class="markMessaggioAsReadUnreadDiv clearfix">
@@ -74,11 +77,21 @@ $("#tabellaMessaggi").on("click", function(e){
 	var target = $(e.target);
 	if(target.is(".indexMessaggio")) {
 		$(".trTestoMessaggio:visible").fadeOut("fast");
+		target.closest("tr").removeClass("unreadMessaggio");
 		var messaggio = $(e.target).closest("tr").next();
 		if(messaggio.is(":visible"))
 			messaggio.fadeOut("fast");
 		else
 			messaggio.fadeIn("fast");
+		var params = {
+			idMessaggio:target.closest("td").children("input").eq(0).val(),
+			idMembro:$("#idMembro").val(),
+			readUnread:"READ"
+		};
+		$.get("markMessaggioAsReadUnread", params, function(data){			
+			var obj = JSON.parse(data);
+			updateNumberBubble(obj.numeroMessaggiNonLetti);
+		});
 	} else if(target.is(".markMessaggioAsRead") || target.is(".markMessaggioAsUnread")) {
 		if(target.is(".markMessaggioAsRead"))
 			target.closest("tr").removeClass("unreadMessaggio");

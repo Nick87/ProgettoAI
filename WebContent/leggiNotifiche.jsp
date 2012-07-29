@@ -25,7 +25,10 @@
 				class="unreadNotification"
 				</s:if>
 			>
-				<td><span class="handPointer indexNotifica"><s:property value="#n.index + 1"/></span></td>
+				<td>
+					<span class="handPointer indexNotifica"><s:property value="#n.index + 1"/></span>
+					<input type="hidden" value="<s:property value="ID_Notifica"/>"/>
+				</td>
 				<td><s:date name="data" format="dd/MM/YYYY"/></td>
 				<td>
 					<div class="markNotificaAsReadUnreadDiv clearfix">
@@ -64,11 +67,21 @@ $("#tabellaNotifiche").on("click", function(e){
 	var target = $(e.target);
 	if(target.is(".indexNotifica")) {
 		$(".trTestoNotifica:visible").fadeOut("fast");
+		target.closest("tr").removeClass("unreadNotification");
 		var notifica = $(e.target).closest("tr").next();
 		if(notifica.is(":visible"))
 			notifica.fadeOut("fast");
 		else
 			notifica.fadeIn("fast");
+		var params = {
+			idNotifica:target.closest("td").children("input").eq(0).val(),
+			idMembro:$("#idMembro").val(),
+			readUnread:"READ"
+		};
+		$.get("markNotificaAsReadUnread", params, function(data){			
+			var obj = JSON.parse(data);
+			updateNumberBubble(obj.numeroNotificheNonLette);
+		});
 	} else if(target.is(".markNotificaAsRead") || target.is(".markNotificaAsUnread")) {
 		if(target.is(".markNotificaAsRead"))
 			target.closest("tr").removeClass("unreadNotification");
