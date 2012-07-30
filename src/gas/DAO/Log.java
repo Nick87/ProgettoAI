@@ -1,11 +1,8 @@
 package gas.DAO;
 
-import gas.DAO.Membro.memberType;
 import gas.Exception.DBException;
 import gas.Exception.InvalidOperationException;
-
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,7 +18,8 @@ public class Log
 	
 	public Log() {}
 	
-	public static List<Log> getLogContent(String tipoMembro) throws SQLException, DBException, InvalidOperationException{
+	public static List<Log> getLogContent(String tipoMembro) throws SQLException, DBException, InvalidOperationException
+	{
 		//Controllo per sicurezza se e' un utente amministratore a richiedere la lista degli utenti
 		/*if(!tipoMembro.equals(memberTypeToString(memberType.ADMIN)))
 			throw new InvalidOperationException("Solo l'amministratore puo' richiedere il download del file di log");
@@ -36,8 +34,7 @@ public class Log
 			PreparedStatement ps = conn.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
 			Log l;
-			while(rs.next())
-			{
+			while(rs.next()) {
 				l = new Log();
 				l.setID_Operazione(rs.getInt("ID_Operazione"));
 				l.setContent(rs.getString("content"));
@@ -69,47 +66,22 @@ public class Log
 		}
 	}
 
-
 	public int getID_Operazione() {
 		return ID_Operazione;
 	}
-
-
 	public void setID_Operazione(int iD_Operazione) {
 		ID_Operazione = iD_Operazione;
 	}
-
-
 	public String getContent() {
 		return content;
 	}
-
-
 	public void setContent(String content) {
 		this.content = content;
 	}
-
-
-	
 	public Timestamp getTimestamp() {
 		return timestamp;
 	}
-
 	public void setTimestamp(Timestamp timestamp) {
 		this.timestamp = timestamp;
 	}
-
-	private static String memberTypeToString(memberType type)
-	{
-		if(type == memberType.ADMIN)
-			return "A";
-		if(type == memberType.FORNITORE)
-			return "F";
-		if(type == memberType.UTENTE)
-			return "U";
-		if(type == memberType.RESPONSABILE)
-			return "R";
-		return "";
-	}
-	
 }

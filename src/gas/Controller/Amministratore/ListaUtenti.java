@@ -3,7 +3,6 @@ package gas.Controller.Amministratore;
 import gas.DAO.Membro;
 import gas.Exception.DBException;
 import gas.Exception.InvalidOperationException;
-
 import java.sql.SQLException;
 import java.util.List;
 import com.opensymphony.xwork2.Action;
@@ -32,6 +31,7 @@ public class ListaUtenti extends ActionSupport
 		}
 		return Action.SUCCESS;
 	}
+	
 	public int getIdMembro() {
 		return idMembro;
 	}
@@ -56,7 +56,4 @@ public class ListaUtenti extends ActionSupport
 	public void setLista_utenti(List<Membro> lista_utenti) {
 		this.lista_utenti = lista_utenti;
 	}
-	
-	
-	
 }

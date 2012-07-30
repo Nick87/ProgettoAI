@@ -16,10 +16,9 @@
 <script>
 $("#lista_ordini option").on("click", function(e){
 	var params = {
-			idMembro:$("#idMembro").val(),
-			ordine_scelto:$("#lista_ordini").val()
-		};
-	console.log(params);
+		idMembro:$("#idMembro").val(),
+		ordine_scelto:$("#lista_ordini").val()
+	};
 	$.get("getMembriDelegabili", params,function(data){
 		$("#content").html(data);
 	});

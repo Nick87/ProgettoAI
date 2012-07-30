@@ -225,8 +225,6 @@ public class SchedaAcquisto
 		return list;
 	}
 	
-	
-
 	public int getID_Scheda() {
 		return ID_Scheda;
 	}

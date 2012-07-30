@@ -66,30 +66,30 @@ $(document).ready(function() {
 		var id_membro = $(this).attr("value");  
 		e.preventDefault();
 		var index = $( this ).index( $("a") );
-				var params = {
-					idMembro:$("#idMembro").val(),
-					tipoMembro:$("#tipoMembro").val(),
-					operazione:$("#operazione_"+id_membro).val(),
-					id_membro_selezionato:$("#id_membro_selezionato_"+id_membro).val()
-				};
-			$.get("abilita_disabilita_utente", params, function(data){
-				$("#content").html(data);
-			});            		           
-		});
+		var params = {
+			idMembro:$("#idMembro").val(),
+			tipoMembro:$("#tipoMembro").val(),
+			operazione:$("#operazione_"+id_membro).val(),
+			id_membro_selezionato:$("#id_membro_selezionato_"+id_membro).val()
+		};
+		$.get("abilita_disabilita_utente", params, function(data){
+			$("#content").html(data);
+		});            		           
+	});
 	$('.dettaglio_image').click(function(e){
 		var id_membro = $(this).attr("value");  
 		e.preventDefault();
 		var index = $( this ).index( $("a") );
-				var params = {
-					idMembro:$("#idMembro").val(),
-					tipoMembro:$("#tipoMembro").val(),
-					id_membro_dettaglio:$("#id_membro_dettaglio_"+id_membro).val()
-				};
-			$.get("dettagliUtente", params, function(data){
-				$("#content").html(data);
-			});            		           
+		var params = {
+			idMembro:$("#idMembro").val(),
+			tipoMembro:$("#tipoMembro").val(),
+			id_membro_dettaglio:$("#id_membro_dettaglio_"+id_membro).val()
+		};
+		$.get("dettagliUtente", params, function(data){
+			$("#content").html(data);
 		});
 	});
+});
 $("#breadcrumbs_container > article").html(
 	"<a href='#'>Home</a><div class='breadcrumb_divider'></div><a href='#'>Lista Utenti</a>"
 );

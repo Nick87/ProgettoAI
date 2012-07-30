@@ -309,7 +309,6 @@ public class Discussione
 	public void setTimestamp(Timestamp timestamp) {
 		this.timestamp = timestamp;
 	}
-
 	public String getTesto() {
 		return testo;
 	}

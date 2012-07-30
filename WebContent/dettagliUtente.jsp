@@ -113,7 +113,6 @@ $(document).ready(function() {
 			});            		           
 		});
 });
-
 $("#breadcrumbs_container > article").html(
 	"<a href='#'>Home</a><div class='breadcrumb_divider'></div><a href='#'>Lista Utenti</a><div class='breadcrumb_divider'></div><a href='#'>Dettaglio Membro</a>"
 );
