@@ -21,18 +21,18 @@
 					</div>
 				</div>
 				<div class="loginWrapper">
-				<div id="message">Nome utente e/o password errati.</div>
-				<div id="loginbox">
-					<div id="login-inner">
-						<s:form id="loginFormRetry" action="login" method="post">
-							<s:textfield id="userInput" name="username" key="label.username" size="20" />
-							<s:password id="passInput" name="password" key="label.password" size="20" />
-							<s:submit method="execute" key="label.login" align="right" />
-						</s:form>
-						<div id="back">Torna alla <a href="index.jsp">home page</a> oppure <a href="<s:url action="registrazione"/>">registrati</a></div>
+					<div id="message">Nome utente e/o password errati.</div>
+					<div id="loginbox">
+						<div id="login-inner">
+							<s:form id="loginFormRetry" action="login" method="post">
+								<s:textfield id="userInput" name="username" key="label.username" size="20" />
+								<s:password id="passInput" name="password" key="label.password" size="20" />
+								<s:submit method="execute" key="label.login" align="right" />
+							</s:form>
+							<div id="back">Torna alla <a href="index.jsp">home page</a> oppure <a href="<s:url action="registrazione"/>">registrati</a></div>
+						</div>
 					</div>
 				</div>
-			</div>
 			</header>
 		</div>
 	</div>
