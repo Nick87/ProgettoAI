@@ -65,12 +65,4 @@ public class Delega extends ActionSupport
 	public void setListaOrdini(List<Integer> listaOrdini) {
 		this.listaOrdini = listaOrdini;
 	}
-	
-	/*public Map<Integer, String> getListaUtentiDelegabili() {
-		return listaUtentiDelegabili;
-	}
-
-	public void setListaUtentiDelegabili(Map<Integer, String> listaUtentiDelegabili) {
-		this.listaUtentiDelegabili = listaUtentiDelegabili;
-	}*/
 }

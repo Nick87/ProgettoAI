@@ -164,7 +164,7 @@ public class Membro
 	public static List<Membro> getListaUtentiFromTipoMembro(String tipo_membro) throws DBException, SQLException, InvalidOperationException
 	{	
 		//Controllo per sicurezza se e' un utente amministratore a richiedere la lista degli utenti
-		if(tipo_membro.equals(memberTypeToString(memberType.ADMIN)))
+		if(!tipo_membro.equals(memberTypeToString(memberType.ADMIN)))
 			throw new InvalidOperationException("Solo l'amministratore puo' richiedere la lista di tutti gli utenti");
 		
 		ArrayList<Membro> lista = new ArrayList<Membro>();
@@ -198,7 +198,7 @@ public class Membro
 	public static void modificaAbilitazioneUtente(int id_membro_selezionato, String tipoMembro, String operazione) throws DBException, SQLException, InvalidOperationException
 	{
 		//Controllo per sicurezza se e' un utente amministratore a richiedere la lista degli utenti
-		if(tipoMembro.equals(memberTypeToString(memberType.ADMIN)))
+		if(!tipoMembro.equals(memberTypeToString(memberType.ADMIN)))
 			throw new InvalidOperationException("Solo l'amministratore puo' richiedere la lista di tutti gli utenti");
 		
 		//Seleziona tutti i membri partecipanti allo specifico ordine, tranne naturalmente chi vuole delegare
@@ -224,6 +224,46 @@ public class Membro
 		} finally {
 			DBConnection.closeConnection(conn);
 		}
+	}
+	
+	public static Membro getDettaglioUtente(int id_membro, String tipoMembro) throws DBException, SQLException, InvalidOperationException{
+		//Controllo per sicurezza se e' un utente amministratore a richiedere la lista degli utenti
+		if(!tipoMembro.equals(memberTypeToString(memberType.ADMIN)))
+			throw new InvalidOperationException("Solo l'amministratore puo' richiedere il dettaglio degli utenti");
+		
+		Membro m=new Membro();
+		Connection conn = null;
+		try
+		{
+			conn = DBConnection.getDBConnection();
+			String query = "SELECT * FROM membro WHERE";
+			query += " ID_Membro = ?";
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, id_membro);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next())
+			{
+				//m = new Membro();
+				m.setID_Membro(rs.getInt("ID_membro"));
+				m.setNome(rs.getString("nome"));
+				m.setCognome(rs.getString("cognome"));
+				m.setEta(rs.getInt("eta"));
+				m.setSesso(rs.getString("sesso"));
+				m.setData_nascita(rs.getDate("data_nascita"));
+				m.setLuogo_nascita(rs.getString("luogo_nascita"));
+				m.setIndirizzo(rs.getString("indirizzo"));
+				m.setEmail(rs.getString("email"));
+				m.setTelefono(rs.getString("telefono"));
+				m.setTipo_membro(stringToMemberType(rs.getString("tipo_membro")));
+				m.setUsername(rs.getString("username"));
+				m.setPassword(rs.getString("password"));
+				boolean abilitato = rs.getInt("abilitato") == 1 ? true : false;
+				m.setAbilitato(abilitato);
+			}
+		} finally {
+			DBConnection.closeConnection(conn);
+		}
+		return m;
 	}
 	
 	public static List<Membro> getMembriFromType(memberType ... tipi) throws DBException, SQLException

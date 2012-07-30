@@ -17,6 +17,7 @@
 				<th>Nome</th>
 				<th>Tipo</th>
 				<th>Abilita/Disabilita</th>
+				<th>Dettagli Utente</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -34,10 +35,12 @@
 						<s:hidden id="id_membro_selezionato_%{#u.ID_Membro}" value="%{#u.ID_Membro}"/>
 					</s:if>
 					<s:else>
-						<td><input value="<s:property value="ID_Membro"/>" class="input_image" type="image" src="images/add_user.png" alt="Aggiungi Utente" title="Aggiungi Utente"/></td>
+						<td><input value="<s:property value="ID_Membro"/>" class="input_image" type="image" src="images/add_user.png" alt="Abilita Utente" title="Abilita Utente"/></td>
 						<s:hidden id="operazione_%{#u.ID_Membro}" value="abilita"/>
 						<s:hidden id="id_membro_selezionato_%{#u.ID_Membro}" value="%{#u.ID_Membro}"/>
 					</s:else>
+					<td><input value="<s:property value="ID_Membro"/>" class="dettaglio_image" type="image" src="images/dettaglio.gif" alt="Dettagli Utente" title="Dettagli Utente"/></td>
+ 						<s:hidden id="id_membro_dettaglio_%{#u.ID_Membro}" value="%{#u.ID_Membro}"/>
 				</tr>
 			</s:iterator>
 		</tbody>
@@ -66,10 +69,23 @@ $(document).ready(function() {
 				var params = {
 					idMembro:$("#idMembro").val(),
 					tipoMembro:$("#tipoMembro").val(),
-					operazione:$("#operazione_"+id_membro).val(),					
+					operazione:$("#operazione_"+id_membro).val(),
 					id_membro_selezionato:$("#id_membro_selezionato_"+id_membro).val()
 				};
 			$.get("abilita_disabilita_utente", params, function(data){
+				$("#content").html(data);
+			});            		           
+		});
+	$('.dettaglio_image').click(function(e){
+		var id_membro = $(this).attr("value");  
+		e.preventDefault();
+		var index = $( this ).index( $("a") );
+				var params = {
+					idMembro:$("#idMembro").val(),
+					tipoMembro:$("#tipoMembro").val(),
+					id_membro_dettaglio:$("#id_membro_dettaglio_"+id_membro).val()
+				};
+			$.get("dettagliUtente", params, function(data){
 				$("#content").html(data);
 			});            		           
 		});
