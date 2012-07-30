@@ -17,15 +17,11 @@ public class Abilita_Disabilita_Utente extends ActionSupport
 	private int id_membro_selezionato;
 	private String tipoMembro;
 	private String operazione;
+	
 	public String execute()
 	{
-		try
-		{
-			/*if(!Membro.modificaAbilitazioneUtente(id_membro_selezionato, tipoMembro, operazione))
-				return Action.ERROR;*/
+		try {
 			Membro.modificaAbilitazioneUtente(id_membro_selezionato, tipoMembro, operazione);
-			/*if(Membro.getListaUtentiFromTipoMembro(tipoMembro) == null)
-				return Action.ERROR;*/
 			lista_utenti = Membro.getListaUtentiFromTipoMembro(tipoMembro);
 		} catch (DBException e) {
 			System.out.println(e.getMessage());

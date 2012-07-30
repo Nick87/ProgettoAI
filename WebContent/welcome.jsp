@@ -40,11 +40,9 @@ $(function(){
 		var target = $(e.target);
 		if(target.attr("id") == "logout" || target.attr("href") == "#")
 			return true;
-		if(target.attr("href") == "listaMieiOrdini" ||
-		   target.attr("href") == "listaDiscussioni"||
-		   target.attr("href") == "delega")
+		if(target.attr("href") == "toggle")
 		{
-			$("ul#" + target.attr("href")).slideToggle();
+			target.next().slideToggle();
 			if(target.html() == "HIDE")
 				target.html("SHOW");
 			else
@@ -81,7 +79,6 @@ $(function(){
 			$("#content").html(data);
 		});
 	});
-	
 	$(".numberBubble").each(function(){
 		if($(this).html() <= 0)
 			$(this).hide();
@@ -100,7 +97,7 @@ $(window).load(function(){
 <body>
 	<header id="header">
 		<div>
-			<h1 class="site_title">Amministrazione</h1>
+			<h1 class="site_title">HOME</h1>
 			<h2 class="section_title">GAS - Gruppo D'Acquisto Solidale</h2>
 		</div>
 	</header>
@@ -125,7 +122,7 @@ $(window).load(function(){
 					<h3>Ordini</h3>
 					<ul>
 				 	  	<li><a href="listaOrdiniAperti">Ordini Aperti</a></li>
-				 	  	<li><a href="#">I miei ordini</a><a class="toggleLink" href="listaMieiOrdini">HIDE</a>
+				 	  	<li><a href="#">I miei ordini</a><a class="toggleLink" href="toggle">HIDE</a>
 				 	  		<ul id="listaMieiOrdini">
 				 	  			<s:url action="mieiOrdini" var="ordiniAperti">
 								  	<s:param name="tipoOrdini">aperti</s:param>
@@ -152,7 +149,7 @@ $(window).load(function(){
 			 	  				<span class="numberBubble"><s:property value="%{numeroMessaggiNonLetti}"/></span>
 			 	  			</div>
 				 	  	</li>
-				 	  	<li><a href="#">Discussioni</a><a class="toggleLink" href="listaDiscussioni">HIDE</a>
+				 	  	<li><a href="#">Discussioni</a><a class="toggleLink" href="toggle">HIDE</a>
 				 	  		<ul id="listaDiscussioni">
 				 	  			<li><a href="nuovaDiscussione">Nuova Discussione</a></li>
 				 	  			<li><a href="sommarioDiscussioni">Discussioni esistenti</a></li>
@@ -161,17 +158,13 @@ $(window).load(function(){
 			 	  	</ul>
 			 	  	<h3>Altro</h3>
 			 	  	<ul>
-				 	  	<li><a href="#delega">Gestione Deleghe</a><a class="toggleLink" href="delega">HIDE</a>
-						<ul id="delega">
-					 	  			<s:url action="delega" var="delega">
-			<%-- 						  	<s:param name="operazione_delega">nuova</s:param> --%>
-									</s:url>
-									<s:url action="listaDelega" var="listaDelega">
-			<%-- 						  	<s:param name="operazione_delega">rimuovi</s:param> --%>
-									</s:url>
-					 	  			<li><a href="${delega}">Crea/Modifica Delega</a></li>
-					 	  			<li><a href="${listaDelega}">Rimuovi delega</a></li>
-					 	  		</ul>
+				 	  	<li><a href="#">Gestione Deleghe</a><a class="toggleLink" href="toggle">HIDE</a>
+							<ul id="delega">
+				 	  			<s:url action="delega" var="delega"/>
+								<s:url action="listaDelega" var="listaDelega"/>
+				 	  			<li><a href="${delega}">Crea/Modifica Delega</a></li>
+				 	  			<li><a href="${listaDelega}">Rimuovi delega</a></li>
+				 	  		</ul>
 					 	 </li>
 				 	 </ul>
 					<% } else if(tipoMembro.equals("F")) { %>
@@ -182,12 +175,34 @@ $(window).load(function(){
 				 	  	<li><a href="statisticheFornitore">Statistiche</a></li>
 			 	  	</ul>
 					<% } else if(tipoMembro.equals("R")) { %>
+					<h3>Ordini</h3>
 					<ul>
 						<li><a href="listino">Listino</a></li>
-						<li><a href="statoOrdineResponsabile">Stato ordine</a></li>
+						<li><a href="statoOrdiniResponsabile">Stato ordini</a></li>
+			 	  	</ul>
+			 	  	<h3>Comunicazioni</h3>
+					<ul>
+						<li>
+				 	  		<div id="messaggiDiv" class="clearfix">
+				 	  			<a href="leggiMessaggi" class="left">Messaggi</a>
+			 	  				<span class="numberBubble"><s:property value="%{numeroMessaggiNonLetti}"/></span>
+			 	  			</div>
+			 	  		</li>
+						<li><a href="#">Gestione Notifiche</a><a class="toggleLink" href="toggle">HIDE</a>
+							<ul>
+								<li><a href="inviaNotificaOrdine">Invia notifica</a></li>
+								<li>
+									<div id="notificheDiv" class="clearfix">
+						 	  			<a href="leggiNotifiche" class="left">Leggi notifiche</a>
+					 	  				<span class="numberBubble"><s:property value="%{numeroNotificheNonLette}"/></span>
+					 	  			</div>
+				 	  			</li>
+							</ul>
+						</li>
+					</ul>
+					<h3>Altro</h3>
+					<ul>
 				 	  	<li><a href="statisticheResponsabile">Statistiche</a></li>
-				 	  	<li><a href="inviaNotifica">Invia notifica</a></li>
-				 	  	<li><a href="messaggi">Messaggi</a></li>
 				 	  	<li><a href="riepilogoRitiro">Riepilogo ritiro</a></li>
 			 	  	</ul>
 					<% } else if(tipoMembro.equals("A")) { %>

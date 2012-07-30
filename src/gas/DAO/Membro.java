@@ -97,8 +97,11 @@ public class Membro
 		return nome_cognome;
 	}
 	
+	/*
+	 * I membri da notificare sono gli utenti di quell'ordine ed il fornitore corrispondente
+	 */
 	public static List<Integer> getIdMembriFromOrdine(int idOrdine) throws DBException, SQLException
-	{
+	{		
 		Connection conn = null;
 		List<Integer> list = new ArrayList<Integer>();
 		try
@@ -112,6 +115,14 @@ public class Membro
 			ResultSet rs = ps.executeQuery();
 			while(rs.next())
 				list.add(rs.getInt("id"));
+			query = "SELECT ID_Fornitore as id " +
+					"FROM Info_Ordine " +
+					"WHERE ID_Ordine = ?";
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, idOrdine);
+			rs = ps.executeQuery();
+			rs.next();
+			list.add(rs.getInt("id"));
 		} finally {
 			DBConnection.closeConnection(conn);
 		}

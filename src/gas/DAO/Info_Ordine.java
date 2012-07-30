@@ -18,19 +18,22 @@ public class Info_Ordine
 	private int ID_Fornitore;
 	private Date data_apertura;
 	private Date data_chiusura;
-	public enum TipoOrdine { APERTO, CHIUSO, ANY };
-	private boolean concluso;
+	private boolean notificato;
+	private boolean successo;
+	
+	public enum TipoOrdine { ANY, APERTO, CHIUSO, NOTIFICATO, NON_NOTIFICATO, CHIUSO_NOTIFICATO, CHIUSO_NON_NOTIFICATO, SUCCESSO, NON_SUCCESSO };
 	
 	public Info_Ordine() {}
 	
 	public Info_Ordine(int iD_Ordine, int iD_Responsabile, int iD_Fornitore,
-			Date data_apertura, Date data_chiusura, boolean concluso) {
+			Date data_apertura, Date data_chiusura, boolean notificato, boolean successo) {
 		this.ID_Ordine = iD_Ordine;
 		this.ID_Responsabile = iD_Responsabile;
 		this.ID_Fornitore = iD_Fornitore;
 		this.data_apertura = data_apertura;
 		this.data_chiusura = data_chiusura;
-		this.concluso = concluso;
+		this.notificato = notificato;
+		this.successo = successo;
 	}
 	
 	public static Info_Ordine getInfoOrdineFromIdOrdine(int idOrdine) throws SQLException, DBException, ItemNotFoundException
@@ -50,18 +53,23 @@ public class Info_Ordine
 			infoOrdine.setID_Ordine(rs.getInt("ID_Ordine"));
 			infoOrdine.setID_Responsabile(rs.getInt("ID_Responsabile"));
 			infoOrdine.setID_Fornitore(rs.getInt("ID_Fornitore"));
-			boolean concluso = (rs.getInt("concluso") == 1) ? true : false;
-			infoOrdine.setConcluso(concluso);
+			infoOrdine.setData_apertura(rs.getDate("data_apertura"));
+			infoOrdine.setData_chiusura(rs.getDate("data_chiusura"));
+			boolean val = (rs.getInt("notificato") == 1) ? true : false;
+			infoOrdine.setNotificato(val);
+			val = (rs.getInt("successo") == 1) ? true : false;
+			infoOrdine.setSuccesso(val);
 		} finally {
 			DBConnection.closeConnection(conn);
 		}
 		return infoOrdine;
 	}
 	
-	public static Info_Ordine getInfoOrdineFromIdResponsabile(TipoOrdine tipoOrdine, int idResponsabile) throws DBException, SQLException, ItemNotFoundException
+	public static List<Info_Ordine> getListaInfoOrdineFromIdResponsabile(TipoOrdine tipoOrdine, int idResponsabile) throws DBException, SQLException
 	{
 		Connection conn = null;
-		Info_Ordine infoOrdine = null;
+		List<Info_Ordine> list = new ArrayList<Info_Ordine>();
+		Info_Ordine infoOrdine;
 		try
 		{
 			conn = DBConnection.getDBConnection();
@@ -71,6 +79,18 @@ public class Info_Ordine
 				query += " AND data_chiusura > ?";
 			else if(tipoOrdine == TipoOrdine.CHIUSO)
 				query += " AND data_chiusura <= ?";
+			else if(tipoOrdine == TipoOrdine.NOTIFICATO)
+				query += " AND notificato = 1";
+			else if(tipoOrdine == TipoOrdine.NON_NOTIFICATO)
+				query += " AND notificato = 0";
+			else if(tipoOrdine == TipoOrdine.CHIUSO_NOTIFICATO)
+				query += " AND data_chiusura <= ? AND notificato = 1";
+			else if(tipoOrdine == TipoOrdine.CHIUSO_NON_NOTIFICATO)
+				query += " AND data_chiusura <= ? AND notificato = 0";
+			else if(tipoOrdine == TipoOrdine.SUCCESSO)
+				query += " AND successo = 1";
+			else if(tipoOrdine == TipoOrdine.NON_SUCCESSO)
+				query += " AND successo = 0";
 			
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setInt(1, idResponsabile);
@@ -80,36 +100,53 @@ public class Info_Ordine
 		    	ps.setDate(2, date);
 			}
 			ResultSet rs = ps.executeQuery();
-			if(!rs.next())
-				throw new ItemNotFoundException("Ordine con id Responsabile " + idResponsabile + " inesistente");
-			infoOrdine = new Info_Ordine();
-			infoOrdine.setID_Ordine(rs.getInt("ID_Ordine"));
-			infoOrdine.setID_Responsabile(rs.getInt("ID_Responsabile"));
-			infoOrdine.setID_Fornitore(rs.getInt("ID_Fornitore"));
-			infoOrdine.setData_apertura(rs.getDate("data_apertura"));
-			infoOrdine.setData_chiusura(rs.getDate("data_chiusura"));
-			boolean concluso = (rs.getInt("concluso") == 1) ? true : false;
-			infoOrdine.setConcluso(concluso);
+			boolean val;
+			while(rs.next())
+			{
+				infoOrdine = new Info_Ordine();
+				infoOrdine.setID_Ordine(rs.getInt("ID_Ordine"));
+				infoOrdine.setID_Responsabile(rs.getInt("ID_Responsabile"));
+				infoOrdine.setID_Fornitore(rs.getInt("ID_Fornitore"));
+				infoOrdine.setData_apertura(rs.getDate("data_apertura"));
+				infoOrdine.setData_chiusura(rs.getDate("data_chiusura"));
+				val = (rs.getInt("notificato") == 1) ? true : false;
+				infoOrdine.setNotificato(val);
+				val = (rs.getInt("successo") == 1) ? true : false;
+				infoOrdine.setSuccesso(val);
+				list.add(infoOrdine);
+			}
 		} finally {
 			DBConnection.closeConnection(conn);
 		}
-		return infoOrdine;
+		return list;
 	}
 	
-	public static List<Info_Ordine> getOrdini(TipoOrdine tipoOrdine, int idMembro, int flag) throws DBException, SQLException
+	public static List<Info_Ordine> getListaOrdiniFromIdMembroCheAcquista(TipoOrdine tipoOrdine, int idMembro, int flag) throws DBException, SQLException
 	{
 		Connection conn = DBConnection.getDBConnection();
 		ArrayList<Info_Ordine> list = new ArrayList<Info_Ordine>();
-		String query = "SELECT DISTINCT I.ID_Ordine, I.data_apertura, I.data_chiusura " +
+		String query = "SELECT DISTINCT I.ID_Ordine, I.ID_Responsabile, I.ID_Fornitore, I.data_apertura, I.data_chiusura, I.concluso, I.notificato, I.successo " +
 				       "FROM info_ordine I";
 		
 		if(idMembro > 0 && flag == 1)
 			query += ", scheda_di_acquisto S";
 		
 		if(tipoOrdine == TipoOrdine.APERTO)
-			query += " WHERE I.data_chiusura > ?";
+			query += " AND data_chiusura > ?";
 		else if(tipoOrdine == TipoOrdine.CHIUSO)
-			query += " WHERE I.data_chiusura <= ?";
+			query += " AND data_chiusura <= ?";
+		else if(tipoOrdine == TipoOrdine.NOTIFICATO)
+			query += " AND notificato = 1";
+		else if(tipoOrdine == TipoOrdine.NON_NOTIFICATO)
+			query += " AND notificato = 0";
+		else if(tipoOrdine == TipoOrdine.CHIUSO_NOTIFICATO)
+			query += " AND data_chiusura <= ? AND notificato = 1";
+		else if(tipoOrdine == TipoOrdine.CHIUSO_NON_NOTIFICATO)
+			query += " AND data_chiusura <= ? AND notificato = 0";
+		else if(tipoOrdine == TipoOrdine.SUCCESSO)
+			query += " AND successo = 1";
+		else if(tipoOrdine == TipoOrdine.NON_SUCCESSO)
+			query += " AND successo = 0";
 		
 		if(idMembro > 0 && flag == 1)
 			query += " AND I.ID_Ordine = S.ID_Ordine AND S.ID_membro_che_acquista = ?";
@@ -132,17 +169,20 @@ public class Info_Ordine
 			if(flag == -1)
 				ps.setInt(2, idMembro);
 			ResultSet rs = ps.executeQuery();
-			Info_Ordine i;
-	    	while(rs.next()){
-	    		i = new Info_Ordine();
-	    		i.setID_Ordine(rs.getInt("ID_Ordine"));
-	    		//i.setID_Responsabile(rs.getInt("ID_Responsabile"));
-	    		//i.setID_Fornitore(rs.getInt("ID_Fornitore"));
-	    		i.setData_apertura(rs.getDate("data_apertura"));
-	    		i.setData_chiusura( rs.getDate("data_chiusura"));
-	    		//boolean concluso = (rs.getInt("concluso") == 1) ? true : false;
-	    		//i.setConcluso(concluso);
-	    		list.add(i);
+			Info_Ordine infoOrdine;
+	    	while(rs.next())
+	    	{
+	    		infoOrdine = new Info_Ordine();
+	    		infoOrdine.setID_Ordine(rs.getInt("ID_Ordine"));
+	    		infoOrdine.setID_Responsabile(rs.getInt("ID_Responsabile"));
+	    		infoOrdine.setID_Fornitore(rs.getInt("ID_Fornitore"));
+	    		infoOrdine.setData_apertura(rs.getDate("data_apertura"));
+	    		infoOrdine.setData_chiusura( rs.getDate("data_chiusura"));
+				boolean val = (rs.getInt("notificato") == 1) ? true : false;
+				infoOrdine.setNotificato(val);
+				val = (rs.getInt("successo") == 1) ? true : false;
+				infoOrdine.setSuccesso(val);
+	    		list.add(infoOrdine);
 	    	}
 		} finally {
 			DBConnection.closeConnection(conn);
@@ -189,6 +229,22 @@ public class Info_Ordine
 		}
 		return id_responsabile;
 	}
+	
+	public static void setNotificato(int idOrdine) throws DBException, SQLException, ItemNotFoundException
+	{
+		Connection conn = null;
+		try
+		{
+			conn = DBConnection.getDBConnection();
+			String query = "UPDATE info_ordine SET notificato = 1 WHERE ID_Ordine = ?";
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, idOrdine);
+			if(ps.executeUpdate() != 1)
+				throw new ItemNotFoundException("Notifica con id " + idOrdine + " non trovata");
+		} finally {
+			DBConnection.closeConnection(conn);
+		}
+	}
 
 	public int getID_Ordine() {
 		return ID_Ordine;
@@ -208,26 +264,28 @@ public class Info_Ordine
 	public void setID_Fornitore(int iD_Fornitore) {
 		ID_Fornitore = iD_Fornitore;
 	}
-	public boolean isConcluso() {
-		return concluso;
-	}
-	public void setConcluso(boolean concluso) {
-		this.concluso = concluso;
-	}
-
 	public Date getData_apertura() {
 		return data_apertura;
 	}
-
 	public void setData_apertura(Date data_apertura) {
 		this.data_apertura = data_apertura;
 	}
-
 	public Date getData_chiusura() {
 		return data_chiusura;
 	}
-
 	public void setData_chiusura(Date data_chiusura) {
 		this.data_chiusura = data_chiusura;
+	}
+	public boolean isNotificato() {
+		return notificato;
+	}
+	public void setNotificato(boolean notificato) {
+		this.notificato = notificato;
+	}
+	public boolean isSuccesso() {
+		return successo;
+	}
+	public void setSuccesso(boolean successo) {
+		this.successo = successo;
 	}
 }

@@ -15,19 +15,16 @@ public class Delega extends ActionSupport
 	private String tipoMembro;
 	private String username;
 	private List<Info_Ordine> listaOrdiniCompleta;
-	private List<Integer> listaOrdini = new ArrayList<Integer>();
-	/*private List<Membro> listaUtentiCompleta;
-	Map<Integer,String> listaUtentiDelegabili=new HashMap<Integer, String>();*/
+	private List<Integer> listaOrdini;
 	
 	public String execute()
 	{
-		try {
-			listaOrdiniCompleta = Info_Ordine.getOrdini(Info_Ordine.TipoOrdine.CHIUSO, idMembro, 1);
-			//listaUtentiCompleta = Membro.getMembriDelegabili(idMembro);
+		try
+		{
+			listaOrdini = new ArrayList<Integer>();
+			listaOrdiniCompleta = Info_Ordine.getListaOrdiniFromIdMembroCheAcquista(Info_Ordine.TipoOrdine.CHIUSO, idMembro, 1);
 			for(Info_Ordine i : listaOrdiniCompleta)
 				listaOrdini.add(i.getID_Ordine());
-			/*for(Membro m: listaUtentiCompleta)
-					listaUtentiDelegabili.put(m.getID_Membro(), m.getNome()+" "+m.getCognome());*/
 		} catch (DBException e) {
 			System.out.println(e.getMessage());
 			return Action.ERROR;

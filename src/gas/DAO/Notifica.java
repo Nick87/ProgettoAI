@@ -26,7 +26,7 @@ public class Notifica
 		try
 		{
 			conn = DBConnection.getDBConnection();
-			String query = "INSERT INTO `notifica`(`ID_Membro`, `data`, `testo`, `letta`) VALUES (?, ?, ?, 0)";
+			String query = "INSERT INTO `notifica`(`ID_Membro`, `data`, `testo`, `letta`, `eliminata`) VALUES (?, ?, ?, 0, 0)";
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setInt(1, idMembroDestinatario);
 			java.util.Date now = new java.util.Date();

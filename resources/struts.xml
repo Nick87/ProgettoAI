@@ -161,13 +161,17 @@
 		
 		<!-- Azioni Responsabile -->
 		
-		<action name="statoOrdineResponsabile" class="gas.Controller.Responsabile.StatoOrdineResponsabile">
+		<action name="statoOrdiniResponsabile" class="gas.Controller.Responsabile.StatoOrdiniResponsabile">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
-		    <result name="success">statoOrdineResponsabile.jsp</result>
+		    <result name="success">statoOrdiniResponsabile.jsp</result>
 		</action>
-		<action name="inviaNotificaChiusuraOrdine" class="gas.Controller.Responsabile.InviaNotificaChiusuraOrdine">
+		<action name="inviaNotificaOrdine" class="gas.Controller.Responsabile.InviaNotificaOrdine">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
-		    <result name="success">statoOrdineResponsabile.jsp</result>
+		    <result name="success">inviaNotificaOrdine.jsp</result>
+		</action>
+		<action name="doInviaNotificaOrdine" class="gas.Controller.Responsabile.DoInviaNotificaOrdine">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		    <result name="success">inviaNotificaOrdine.jsp</result>
 		</action>
 		
 		<!-- Azioni Amministratore -->

@@ -452,7 +452,7 @@ ul.actionMessage { list-style:none; }
 	float: right;
 }
 .toggleLink:hover { color: #77BACE !important; }
-#inviaNotificaChiusuraOrdine
+.inviaNotificaOrdine
 {
 	background-image:url("../../images/admin/icn_alert_success.png");
 	display:block;

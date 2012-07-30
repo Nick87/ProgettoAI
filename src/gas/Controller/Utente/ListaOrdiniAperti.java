@@ -20,7 +20,7 @@ public class ListaOrdiniAperti extends ActionSupport
 	public String execute()
 	{
 		try {
-			ordiniAperti = Info_Ordine.getOrdini(TipoOrdine.APERTO, idMembro, -1);
+			ordiniAperti = Info_Ordine.getListaOrdiniFromIdMembroCheAcquista(TipoOrdine.APERTO, idMembro, -1);
 		} catch (DBException e) {
 			System.out.println(e.getMessage());
 			return Action.ERROR;

@@ -23,7 +23,7 @@ public class GetMembriDelegabili extends ActionSupport
 	public String execute()
 	{
 		try {
-			listaOrdiniCompleta = Info_Ordine.getOrdini(Info_Ordine.TipoOrdine.CHIUSO, idMembro, 1);
+			listaOrdiniCompleta = Info_Ordine.getListaOrdiniFromIdMembroCheAcquista(Info_Ordine.TipoOrdine.CHIUSO, idMembro, 1);
 			for(Info_Ordine i : listaOrdiniCompleta)
 				listaOrdini.add(i.getID_Ordine());
 			listaUtentiCompleta = Membro.getMembriDelegabili(idMembro,ordine_scelto);

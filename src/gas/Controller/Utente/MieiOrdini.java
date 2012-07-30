@@ -20,9 +20,9 @@ public class MieiOrdini extends ActionSupport
 	{
 		try {
 			if(tipoOrdini.equals("aperti"))
-				listaOrdini = Info_Ordine.getOrdini(Info_Ordine.TipoOrdine.APERTO, idMembro, 1);
+				listaOrdini = Info_Ordine.getListaOrdiniFromIdMembroCheAcquista(Info_Ordine.TipoOrdine.APERTO, idMembro, 1);
 			else
-				listaOrdini = Info_Ordine.getOrdini(Info_Ordine.TipoOrdine.CHIUSO, idMembro, 1);
+				listaOrdini = Info_Ordine.getListaOrdiniFromIdMembroCheAcquista(Info_Ordine.TipoOrdine.CHIUSO, idMembro, 1);
 		} catch (DBException e) {
 			System.out.println(e.getMessage());
 			return Action.ERROR;

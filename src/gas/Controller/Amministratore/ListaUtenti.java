@@ -15,12 +15,10 @@ public class ListaUtenti extends ActionSupport
 	private String tipoMembro;
 	private String username;
 	private List<Membro> lista_utenti;
+	
 	public String execute()
 	{
-		try
-		{			
-			/*if(Membro.getListaUtentiFromTipoMembro(tipoMembro) == null)
-				return Action.ERROR;*/
+		try {			
 			lista_utenti = Membro.getListaUtentiFromTipoMembro(tipoMembro);
 		} catch (DBException e) {
 			System.out.println(e.getMessage());
