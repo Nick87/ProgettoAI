@@ -94,7 +94,9 @@ public class Info_Ordine
 			
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setInt(1, idResponsabile);
-			if(tipoOrdine != TipoOrdine.ANY){
+			if(tipoOrdine == TipoOrdine.APERTO || tipoOrdine == TipoOrdine.CHIUSO ||
+			   tipoOrdine == TipoOrdine.CHIUSO_NOTIFICATO || tipoOrdine == TipoOrdine.CHIUSO_NON_NOTIFICATO)
+			{
 				java.util.Date now = new java.util.Date();
 		    	java.sql.Date date = new java.sql.Date(now.getTime());
 		    	ps.setDate(2, date);
@@ -125,49 +127,47 @@ public class Info_Ordine
 	{
 		Connection conn = DBConnection.getDBConnection();
 		ArrayList<Info_Ordine> list = new ArrayList<Info_Ordine>();
-		String query = "SELECT DISTINCT I.ID_Ordine, I.ID_Responsabile, I.ID_Fornitore, I.data_apertura, I.data_chiusura, I.concluso, I.notificato, I.successo " +
+		String query = "SELECT DISTINCT I.ID_Ordine, I.ID_Responsabile, I.ID_Fornitore, I.data_apertura, I.data_chiusura, I.notificato, I.successo " +
 				       "FROM info_ordine I";
 		
-		if(idMembro > 0 && flag == 1)
+		if(flag == 1)
 			query += ", scheda_di_acquisto S";
 		
 		if(tipoOrdine == TipoOrdine.APERTO)
-			query += " AND data_chiusura > ?";
+			query += " WHERE data_chiusura > ?";
 		else if(tipoOrdine == TipoOrdine.CHIUSO)
-			query += " AND data_chiusura <= ?";
+			query += " WHERE data_chiusura <= ?";
 		else if(tipoOrdine == TipoOrdine.NOTIFICATO)
-			query += " AND notificato = 1";
+			query += " WHERE notificato = 1";
 		else if(tipoOrdine == TipoOrdine.NON_NOTIFICATO)
-			query += " AND notificato = 0";
+			query += " WHERE notificato = 0";
 		else if(tipoOrdine == TipoOrdine.CHIUSO_NOTIFICATO)
-			query += " AND data_chiusura <= ? AND notificato = 1";
+			query += " WHERE data_chiusura <= ? AND notificato = 1";
 		else if(tipoOrdine == TipoOrdine.CHIUSO_NON_NOTIFICATO)
-			query += " AND data_chiusura <= ? AND notificato = 0";
+			query += " WHERE data_chiusura <= ? AND notificato = 0";
 		else if(tipoOrdine == TipoOrdine.SUCCESSO)
-			query += " AND successo = 1";
+			query += " WHERE successo = 1";
 		else if(tipoOrdine == TipoOrdine.NON_SUCCESSO)
-			query += " AND successo = 0";
+			query += " WHERE successo = 0";
 		
-		if(idMembro > 0 && flag == 1)
+		if(flag == 1)
 			query += " AND I.ID_Ordine = S.ID_Ordine AND S.ID_membro_che_acquista = ?";
-		if(flag == -1)
+		else
 			query+="AND I.ID_Ordine NOT IN(SELECT DISTINCT ID_Ordine from scheda_di_acquisto WHERE ID_membro_che_acquista = ?)";
 		try
 		{
 			PreparedStatement ps = conn.prepareStatement(query);
-			if(tipoOrdine != TipoOrdine.ANY){
+			if(tipoOrdine == TipoOrdine.APERTO || tipoOrdine == TipoOrdine.CHIUSO ||
+			   tipoOrdine == TipoOrdine.CHIUSO_NOTIFICATO || tipoOrdine == TipoOrdine.CHIUSO_NON_NOTIFICATO)
+			{
 				java.util.Date now = new java.util.Date();
 		    	java.sql.Date date = new java.sql.Date(now.getTime());
 		    	ps.setDate(1, date);
+		    	ps.setInt(2, idMembro);
 			}
-			if(idMembro > 0 && flag == 1){
-				if(tipoOrdine == TipoOrdine.ANY)
-					ps.setInt(1, idMembro);
-				else
-					ps.setInt(2, idMembro);
-			}
-			if(flag == -1)
-				ps.setInt(2, idMembro);
+			else
+				ps.setInt(1, idMembro);
+			
 			ResultSet rs = ps.executeQuery();
 			Info_Ordine infoOrdine;
 	    	while(rs.next())

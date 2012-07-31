@@ -35,9 +35,11 @@ $(function(){
 		});
 	});
 	$("#allCommands").on("click", "a", function(e){
+		var target = $(e.target);
+		if(target.attr("href") == "scaricaLog")
+			return true;
 		e.stopPropagation();
 		e.preventDefault();
-		var target = $(e.target);
 		if(target.attr("id") == "logout" || target.attr("href") == "#")
 			return true;
 		if(target.attr("href") == "toggle") {

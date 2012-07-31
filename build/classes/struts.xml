@@ -194,12 +194,6 @@
 		    <result name="input">listaUtenti.jsp</result>
 		    <result name="error">listaUtenti.jsp</result>
 		</action>
-		<action name="saveLog" class="gas.Controller.Amministratore.SaveLog">
-		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
-		    <result name="success">logScaricato.jsp</result>
-		    <result name="input">welcome.jsp</result>
-		    <result name="error">welcom.jsp</result>
-		</action>
 		<action name="scaricaLog" class="gas.Controller.Amministratore.ScaricaLog">
 		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
 		    <result name="success" type="stream">
@@ -211,7 +205,7 @@
 		    <result name="input">welcome.jsp</result>
 		    <result name="error">welcome.jsp</result>
 		</action>
-		
+
 		<!-- Altro -->
 		
 		<action name="*">

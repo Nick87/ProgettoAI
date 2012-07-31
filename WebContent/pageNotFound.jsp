@@ -21,7 +21,8 @@
 					</div>
 				</div>
 				<div id="pageNotFoundMessage">
-					Ci dispiace.<br/>La pagina che stai cercando non esiste.
+					Ci dispiace.<br/>La pagina che stai cercando non esiste.<br/>
+					<div id="back">Torna alla <a href="index.jsp">home page</a></div>
 				</div>
 			</header>
 		</div>
