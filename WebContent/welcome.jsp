@@ -210,9 +210,21 @@ $(window).load(function(){
 				 	  	<li><a href="riepilogoRitiro">Riepilogo ritiro</a></li>
 			 	  	</ul>
 					<% } else if(tipoMembro.equals("A")) { %>
+					<h3>Gestione Utenti</h3>
 					<ul>
 						<li><a href="listaUtenti">Lista utenti</a></li>
-						<li><a href="scaricaLog">Scarica log</a></li>
+					</ul>
+					<h3>Gestione Log</h3>
+					<ul>
+						<li><a href="#">Operazioni Log</a><a class="toggleLink" href="toggle">HIDE</a>
+							<ul id="log">
+							<li><a href="scaricaLog">Scarica log</a></li>
+							<s:url action="consultaLog" var="consultaLog">
+								<s:param name="num_pag">0</s:param>
+							</s:url>
+<%-- 				 	  			<li><a href="${scaricaLog}">Scarica Log</a></li> --%>
+ 				 	  			<li><a href="${consultaLog}">Consulta Log</a></li>
+							</ul>
 					</ul>
 					<% } %>
 				</div>

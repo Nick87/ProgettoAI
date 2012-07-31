@@ -205,7 +205,13 @@
 		    <result name="input">welcome.jsp</result>
 		    <result name="error">welcome.jsp</result>
 		</action>
-
+		<action name="consultaLog" class="gas.Controller.Amministratore.ConsultaLog">
+		    <interceptor-ref name="myInterceptorStack"></interceptor-ref>
+		    <result name="success">consultaLog.jsp</result>
+		    <result name="input">welcome.jsp</result>
+		    <result name="error">welcom.jsp</result>
+		</action>
+		
 		<!-- Altro -->
 		
 		<action name="*">

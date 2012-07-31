@@ -4,39 +4,26 @@ import gas.DAO.Log;
 import gas.Exception.DBException;
 import gas.Exception.InvalidOperationException;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintStream;
 import java.sql.SQLException;
 import java.util.List;
+
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class ScaricaLog extends ActionSupport
+public class ConsultaLog extends ActionSupport
 {
 	private int idMembro;
 	private String tipoMembro;
 	private String username;
+	private String num_pag;
+	private int num_pagina_int;
 	private List<Log> lista_log;
-	private InputStream fileInputStream;
 	
 	public String execute()
 	{
-		try
-		{						
-			lista_log = Log.getLogContent();
-			FileOutputStream prova = new FileOutputStream("out.log");
-	        PrintStream scrivi = new PrintStream(prova);
-	        for(Log l : lista_log)
-	        	scrivi.println(l.getID_Operazione() + " " + l.getContent() + " " + l.getTimestamp().toString());
-	        scrivi.flush();
-	        scrivi.close();
-			File f = new File("out.log");
-			fileInputStream = new FileInputStream(f);
-			f.delete();
+		try {						
+			num_pagina_int=Integer.parseInt(num_pag);
+			lista_log = Log.getLogContentforPage(num_pagina_int);
 		} catch (DBException e) {
 			System.out.println(e.getMessage());
 			return Action.ERROR;
@@ -46,10 +33,7 @@ public class ScaricaLog extends ActionSupport
 		} catch (InvalidOperationException e) {
 			System.out.println(e.getMessage());
 			return Action.ERROR;
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-			return Action.ERROR;
-	    }
+		}
 		return Action.SUCCESS;
 	}
 
@@ -71,16 +55,22 @@ public class ScaricaLog extends ActionSupport
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	public String getNum_pag() {
+		return num_pag;
+	}
+	public void setNum_pag(String num_pag) {
+		this.num_pag = num_pag;
+	}
 	public List<Log> getLista_log() {
 		return lista_log;
 	}
 	public void setLista_log(List<Log> lista_log) {
 		this.lista_log = lista_log;
 	}
-	public InputStream getFileInputStream() {
-		return fileInputStream;
+	public int getNum_pagina_int() {
+		return num_pagina_int;
 	}
-	public void setFileInputStream(InputStream fileInputStream) {
-		this.fileInputStream = fileInputStream;
+	public void setNum_pagina_int(int num_pagina_int) {
+		this.num_pagina_int = num_pagina_int;
 	}
 }
