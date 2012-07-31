@@ -218,13 +218,13 @@ $(window).load(function(){
 					<ul>
 						<li><a href="#">Operazioni Log</a><a class="toggleLink" href="toggle">HIDE</a>
 							<ul id="log">
-							<li><a href="scaricaLog">Scarica log</a></li>
-							<s:url action="consultaLog" var="consultaLog">
-								<s:param name="num_pag">0</s:param>
-							</s:url>
-<%-- 				 	  			<li><a href="${scaricaLog}">Scarica Log</a></li> --%>
+								<li><a href="scaricaLog">Scarica log</a></li>
+								<s:url action="consultaLog" var="consultaLog">
+									<s:param name="num_pag">0</s:param>
+								</s:url>
  				 	  			<li><a href="${consultaLog}">Consulta Log</a></li>
 							</ul>
+						</li>
 					</ul>
 					<% } %>
 				</div>
