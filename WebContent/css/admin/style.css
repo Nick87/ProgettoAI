@@ -42,7 +42,7 @@ html, body
 .right { float:right; }
 .handPointer {  cursor:pointer; }
 .hide { display:none; }
-
+a.noStyle { text-decoration: none; color:black; }
 /* Header */
 
 header#header
@@ -50,13 +50,6 @@ header#header
 	height: 55px;
 	width: 100%;
 	background: #222222 url(../../images/admin/header_bg.png) repeat-x;
-}
-
-.header_fixed
-{
-	position:fixed;
-	top:0px;
-	z-index:99999;
 }
 
 header#header h1.site_title, header#header h2.section_title

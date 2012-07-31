@@ -24,7 +24,7 @@ public class SaveLog extends ActionSupport
 	{
 		try
 		{						
-			lista_log=Log.getLogContent(tipoMembro);
+			lista_log = Log.getLogContent(tipoMembro);
 			String workingDir = System.getProperty("user.dir");
 			FileOutputStream prova = new FileOutputStream(workingDir + "/out.log");
 	        PrintStream scrivi = new PrintStream(prova);

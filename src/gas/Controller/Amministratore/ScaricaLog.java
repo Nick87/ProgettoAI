@@ -15,7 +15,7 @@ public class ScaricaLog extends ActionSupport
 		String workingDir = System.getProperty("user.dir");
 		File f = new File(workingDir + "/out.log");
 		fileInputStream = new FileInputStream(f);
-		//Dopo averlo scritto, cancello il file di log dal sistema
+		// Dopo averlo scritto, cancello il file di log dal sistema
 		f.delete();
 		return Action.SUCCESS;
 	}

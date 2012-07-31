@@ -230,6 +230,25 @@ public class Info_Ordine
 		return id_responsabile;
 	}
 	
+	public static int getIdFornitorefromIdOrdine(int idOrdine) throws DBException, SQLException
+	{
+		Connection conn = DBConnection.getDBConnection();
+		String query = "SELECT ID_Fornitore FROM info_ordine " +
+				       "WHERE ID_Ordine = ?";
+		int id_responsabile = 0;
+		try
+		{
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, idOrdine);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next())
+				id_responsabile=rs.getInt("ID_Fornitore");
+		} finally {
+			DBConnection.closeConnection(conn);
+		}
+		return id_responsabile;
+	}
+	
 	public static void setNotificato(int idOrdine) throws DBException, SQLException, ItemNotFoundException
 	{
 		Connection conn = null;

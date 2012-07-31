@@ -40,16 +40,13 @@ $(function(){
 		var target = $(e.target);
 		if(target.attr("id") == "logout" || target.attr("href") == "#")
 			return true;
-		if(target.attr("href") == "toggle")
-		{
+		if(target.attr("href") == "toggle") {
 			target.next().slideToggle();
 			if(target.html() == "HIDE")
 				target.html("SHOW");
 			else
 				target.html("HIDE");
-		}
-		else
-		{
+		} else {
 			var params = { 
 				idMembro:<%= idMembro %>,
 				tipoMembro:"<%= tipoMembro %>",
@@ -63,8 +60,13 @@ $(function(){
 	});
 	$("#breadcrumbs_container a").click(function(){ return false; });
 	$(window).scroll(function() {
-        if ($(this).scrollTop() > 54) { $('#secondary_bar').addClass('secondary_bar_fixed'); /*$("header#header").addClass("header_fixed");*/ }
-        if ($(this).scrollTop() < 54) { $('#secondary_bar').removeClass('secondary_bar_fixed'); /*$("header#header").removeClass("header_fixed");*/ }
+        if ($(this).scrollTop() > 54) {
+        	$('#secondary_bar').addClass('secondary_bar_fixed');
+        	$("#allCommands").css("margin-top", $(this).scrollTop()-18);
+       	} else {
+       		$('#secondary_bar').removeClass('secondary_bar_fixed');
+       		$("#allCommands").css("margin-top", 0);
+       	}
     });
 	window.addEventListener("popstate", function(e){
 		if(windowLoaded){

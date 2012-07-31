@@ -42,8 +42,11 @@ $("#sendDiscussioneResultBox").on("click", "div", function(e){
 $("#listaUtentiDestinatari").on("click", function(e){
 	var target = $(e.target);
 	if(target.is(".userName")){
-		$(".textareaMessageDiv").slideUp("fast");
 		target.closest("td").find(".textareaMessageDiv").slideToggle("medium");
+		$(".textareaMessageDiv").each(function(){
+			if($(this)[0] !== target.next()[0])
+				$(this).slideUp("fast");
+		});
 	} else if(target.is(".userNameShowChat")) {
 		var params = {
 			idDiscussione:target.closest("td").find("input[type=hidden]#idDiscussione").val(),

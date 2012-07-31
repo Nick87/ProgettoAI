@@ -18,18 +18,31 @@ public class DoInviaNotificaOrdine extends ActionSupport
 	private int idOrdine;
 	private int idMembro;
 	private boolean successo;
+	private String who;
+	private String content;
 	private List<Info_Ordine> lista_ordini;
 	
 	public String execute()
 	{
 		try
 		{
-			List<Integer> membriDaNotificare = Membro.getIdMembriFromOrdine(idOrdine); // Notifichiamo utenti e fornitore
-			String content = "Ordine " + idOrdine + " chiuso ";
-			content += (successo) ? "con successo" : "senza successo";
-			for(Integer idMembro : membriDaNotificare)
-				Notifica.addNotifica(content, idMembro);
+			String notifica = "";
+			if(content.equals("")){
+				notifica = "Ordine " + idOrdine + " chiuso ";
+				notifica += (successo) ? "con successo" : "senza successo";
+			} else {
+				notifica = content;
+			}
+			
+			if(who.equals("utenti")) {
+				List<Integer> membriDaNotificare = Membro.getIdUtentiFromOrdine(idOrdine);
+				for(Integer idMembro : membriDaNotificare)
+					Notifica.addNotifica(notifica, idMembro);
+			} else {
+				Notifica.addNotifica(notifica, Info_Ordine.getIdFornitorefromIdOrdine(idOrdine));
+			}
 			Info_Ordine.setNotificato(idOrdine);
+			
 			//Siccome redirigiamo nella stessa pagina, cosi' il reponsabile visualizza la lista aggiornata
 			lista_ordini = Info_Ordine.getListaInfoOrdineFromIdResponsabile(TipoOrdine.CHIUSO_NON_NOTIFICATO, idMembro);
 			addActionMessage("Notifica inviata con successo");
@@ -69,5 +82,17 @@ public class DoInviaNotificaOrdine extends ActionSupport
 	}
 	public void setIdMembro(int idMembro) {
 		this.idMembro = idMembro;
+	}
+	public String getWho() {
+		return who;
+	}
+	public void setWho(String who) {
+		this.who = who;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
 	}
 }
